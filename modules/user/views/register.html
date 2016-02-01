@@ -1,0 +1,30 @@
+<md-dialog id="login" ng-controller="RegisterCtrl">
+   <md-toolbar class="md-toolbar-tools">
+      <span flex></span>
+      <span class="md-title">Register</span>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()" aria-label="Cancel">
+         <md-icon md-svg-src="assets/images/ic_close_48px.svg"></md-icon>
+      </md-button>
+   </md-toolbar>
+   <div name="registerForm" layout="column" layout-padding>
+      <md-input-container>
+         <label>Username:</label>
+         <input name="username" type="text" ng-model="user.username" required md-maxlength="20">
+         <div ng-messages="registerForm.username.$error" ng-show="registerForm.username.$dirty">
+            <div ng-message="required">Please input username.</div>
+            <div ng-message="md-maxlength">Max length is 20.</div>
+         </div>
+      </md-input-container>
+      <md-input-container>
+         <label>Password:</label>
+         <input name="password" type="password" ng-model="user.password" required md-maxlength="16">
+         <div ng-messages="registerForm.password.$error" ng-show="registerForm.password.$dirty">
+            <div ng-message="required">Please input password.</div>
+            <div ng-message="md-maxlength">Max length is 16.</div>
+         </div>
+      </md-input-container>
+      <md-checkbox ng-checkd="toggleShowPassword()">Show password</md-checkbox>
+      <md-button class="md-raised md-primary" ng-click="register()" aria-label="Register">Register</md-button>
+   </div>
+</md-dialog>
