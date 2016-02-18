@@ -1,11 +1,8 @@
 #app-name, #left-menu-title {
     margin-left: 15px;
 }
-#user-profile {
-    background-color: grey;
-}
-#back-button {
-    float: right;
+.nav-item-text {
+    margin-left: 10px;
 }
 #content {
     padding-left: 15px;

@@ -12,17 +12,32 @@ angular.module('phyman', ['phyman.user','ui.router', 'ngAnimate', 'ngMaterial'])
         })
 
     }])
-    .controller('navCtrl', ['$state', '$scope', '$mdSidenav', 'AuthDialog',
-        function($state, $scope, $mdSidenav, AuthDialog) {
+    .controller('navCtrl', ['$state', '$scope', '$mdSidenav',
+        function($state, $scope, $mdSidenav) {
         $scope.menuItems = [{
             title: 'Notifications',
-            state: 'notifications'
+            state: 'notifications',
+            img: '/assets/images/ic_new_releases_48px.svg'
         },{
             title: 'Votes',
-            state: 'votes'
+            state: 'votes',
+            img: '/assets/images/ic_check_48px.svg'
         },{
-            title: 'Login',
-            state: 'login'
+            title: 'Comments',
+            state: 'comments',
+            img: '/assets/images/ic_chat_48px.svg'
+        },{
+            title: 'Marked',
+            state: 'marked',
+            img: '/assets/images/ic_bookmark_48px.svg'
+        },{
+            title: 'Deleted',
+            state: 'deleted',
+            img: '/assets/images/ic_close_48px.svg'
+        },{
+            title: 'Settings',
+            state: 'settings',
+            img: '/assets/images/ic_settings_48px.svg'
         }];
 
         $scope.clickMenuItem = function(state) {
@@ -31,16 +46,16 @@ angular.module('phyman', ['phyman.user','ui.router', 'ngAnimate', 'ngMaterial'])
         $scope.toggleList = function() {
             $mdSidenav('left').toggle();
         };
-        $scope.showLoginDialog = function() {
-            AuthDialog.showLoginDialog();
-        };
-        $scope.showRegisterDialog = function() {
-            AuthDialog.showRegisterDialog();
-        };
     }])
-    .controller('toolbarCtrl', ['$state', '$scope', '$mdSidenav',
-        function($state, $scope, $mdSidenav) {
+    .controller('toolbarCtrl', ['$state', '$scope', '$mdSidenav', 'AuthDialog',
+        function($state, $scope, $mdSidenav, AuthDialog) {
         $scope.toggleList = function() {
             $mdSidenav('left').toggle();
+        };
+        $scope.showLoginDlg = function() {
+            AuthDialog.showLoginDialog();
+        };
+        $scope.showRegisterDlg = function() {
+            AuthDialog.showRegisterDialog();
         };
     }]);
