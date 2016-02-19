@@ -5,42 +5,56 @@ angular.module('phyman.user')
     };
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-.factory('AuthService', ['$http', '$rootScope', 'jwtHelper', function($http, $rootScope, jwtHelper) {
+.factory('AuthService', ['$http', '$q', '$rootScope', 'jwtHelper', function($http, $q, $rootScope, jwtHelper) {
 
     function UserKlass() {
         this.user = {};
-        this.isLoggedInError = false;
-        this.isRegisteredErroe = false;
+        this.isLoggedIn = false;
     };
 
-    UserKlass.prototype.onIdentity = function(response) {};
+    UserKlass.prototype.onIdentity = function(response) {
+        //Do something at backend on identity secceed.
+    };
 
-    UserKlass.prototype.onIdFail = function(response) {};
+    UserKlass.prototype.onIdFail = function(error) {
+        //Do something at backend on identity failed.
+    };
 
     UserKlass.prototype.register = function(user) {
+        var deferred = $q.defer();
         $http.post('/register', {
             username: user.username,
             password: user.password
         })
-        .success(this.onIdentity.bind(this))
-        .error(this.onIdFail.bind(this));
+        .then(function(response) {
+            UserKlass.prototype.onIdentity(response);
+            deferred.resolve(response);
+        }, function(error) {
+            UserKlass.prototype.onIdFail(error);
+            deferred.reject(error);
+        });
+        return deferred.promise;
     };
 
     UserKlass.prototype.login = function(user) {
+        var deferred = $q.defer();
         $http.post('/login', {
             username: user.username,
             password: user.password
         })
-        .success(this.onIdentity.bind(this))
-        .error(this.onIdFail.bind(this));
+        .then(function(response) {
+            UserKlass.prototype.onIdentity(response);
+            deferred.resolve(response);
+        }, function(error) {
+            UserKlass.prototype.onIdFail(error);
+            deferred.reject(error);
+        });
+        return deferred.promise;
     };
 
     UserKlass.prototype.logout = function(user) {
-        this.username = null;
-        this.email = null;
-        this.stdNo = null;
+        this.user = null;
         this.isLoggedIn = false;
-        this.level = 0;
         $http.get('/logout').success(function() {
             localStorage.removeItem('id_token');
             $rootScope.$emit('logout');
@@ -53,13 +67,16 @@ angular.module('phyman.user')
         $http.post('/reset_password', {
             new_password: user.password
         })
-        .success(this.onIdentity.bind(this))
-        .error(this.onIdFail.bind(this));
+        .then(function(response) {
+
+        }, function(error) {
+
+        });
     };
 
     UserKlass.prototype.checkLoggedIn = function() {
         var token = localStorage.getItem('id_token');
-        if(token === null || jwtHelper.isTokenExpired(token)) {
+        if(angular.equals(token, null) || jwtHelper.isTokenExpired(token)) {
             return false;
         }
         return true;
@@ -67,7 +84,7 @@ angular.module('phyman.user')
 
     UserKlass.prototype.checkLoggedOut = function() {
         var token = localStorage.getItem('id_token');
-        if(token === null || jwtHelper.isTokenExpired(token)) {
+        if(angular.equals(token, null) || jwtHelper.isTokenExpired(token)) {
             return true;
         }
         return false;

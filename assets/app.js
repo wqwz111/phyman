@@ -1,14 +1,32 @@
 angular.module('phyman', ['phyman.user','ui.router', 'ngAnimate', 'ngMaterial'])
+    .constant('API_HOST', 'http://foo.com/api')
     .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+    }])
+    .config(['$httpProvider', 'API_HOST', function($httpProvider, API_HOST) {
+        $httpProvider.interceptors.push(function() {
+            return {
+                'request': function(config) {
+                    if(angular.equals(config.method, 'POST')) {
+                        config.url = API_HOST + config.url;
+                        config.timeout = 8000;
+                    }
+                    
+                    return config;
+                },
+                'response': function(response) {
+                    return response;
+                }
+            };
+        });
     }])
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/');
 
         $stateProvider.state('index', {
             url: '/',
-            template: '<p>Hello world</p>'
+            template: '<p>Main content here.</p>'
         })
 
     }])
@@ -52,10 +70,10 @@ angular.module('phyman', ['phyman.user','ui.router', 'ngAnimate', 'ngMaterial'])
         $scope.toggleList = function() {
             $mdSidenav('left').toggle();
         };
-        $scope.showLoginDlg = function() {
-            AuthDialog.showLoginDialog();
+        $scope.showLoginDlg = function(ev) {
+            AuthDialog.showLoginDialog(ev);
         };
-        $scope.showRegisterDlg = function() {
-            AuthDialog.showRegisterDialog();
+        $scope.showRegisterDlg = function(ev) {
+            AuthDialog.showRegisterDialog(ev);
         };
     }]);

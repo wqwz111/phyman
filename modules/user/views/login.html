@@ -7,24 +7,23 @@
          <md-icon md-svg-src="assets/images/ic_close_48px.svg"></md-icon>
       </md-button>
    </md-toolbar>
-   <div name="loginForm" layout="column" layout-padding>
+   <md-progress-linear md-mode="indeterminate" ng-show="isLoggingIn"></md-progress-linear>
+   <form name="loginForm" layout="column" layout-padding>
       <md-input-container>
          <label>Username:</label>
-         <input name="username" ng-model="user.username" required md-maxlength="20">
+         <input name="username" type="text" ng-disabled="isLoggingIn" ng-model="user.username" ng-pattern="/^\w{8,20}$/" required>
          <div ng-messages="loginForm.username.$error" ng-show="loginForm.username.$dirty">
-            <div ng-message="required">Please input username.</div>
-            <div ng-message="md-maxlength">Max length is 20.</div>
+            <div ng-message="pattern">Username should be between 8 to 20 characters.</div>
          </div>
       </md-input-container>
       <md-input-container>
          <label>Password:</label>
-         <input name="password" ng-model="user.password" required md-maxlength="16">
+         <input name="password" type="password" ng-disabled="isLoggingIn" ng-model="user.password" ng-pattern="/^\w{8,16}$/" required>
          <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
-            <div ng-message="required">Please input password.</div>
-            <div ng-message="md-maxlength">Max length is 16.</div>
+            <div ng-message="pattern"> Password should be between 8 to 16 characters.</div>
          </div>
       </md-input-container>
-      <md-button class="md-raised md-primary" ng-click="login()">Login</md-button>
+      <md-button class="md-raised md-primary" ng-disabled="loginForm.$pristine || loginForm.$invalid || !loginForm.$error || isLoggingIn" ng-click="onLoginClick()">Login</md-button>
       <md-button class="md-primary" href="#/forget_password" aria-label="Forget Password">Forget password?</md-button>
-   </div>
+   </form>
 </md-dialog>
