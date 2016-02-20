@@ -13,11 +13,9 @@ angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router'])
             $scope.isRegistering = true;
             var promise = AuthService.register($scope.user);
             promise.then(function(response) {
-                $log.log("Hello, register success.");
                 $scope.isRegistering = false;
                 AuthDialog.hide();
             }, function(error) {
-                $log.log($scope.isRegistering);
                 $scope.isRegistering = false;
             });
         };
@@ -45,5 +43,5 @@ angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router'])
     }])
     .controller('ForgetPasswordCtrl', ['$scope', '$rootScope', 'AuthService',
         function($scope, $rootScope, AuthService){
-        
+    
     }]);

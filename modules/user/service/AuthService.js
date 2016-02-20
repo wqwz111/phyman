@@ -1,95 +1,87 @@
 angular.module('phyman.user')
 .config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider) {
+    jwtInterceptorProvider.urlParam = 'access_token';
     jwtInterceptorProvider.tokenGetter = function() {
         return localStorage.getItem('id_token');
     };
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-.factory('AuthService', ['$http', '$q', '$rootScope', 'jwtHelper', function($http, $q, $rootScope, jwtHelper) {
-
-    function UserKlass() {
-        this.user = {};
-        this.isLoggedIn = false;
-    };
-
-    UserKlass.prototype.onIdentity = function(response) {
+.factory('AuthService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
+    function($http, $q, $rootScope, jwtHelper, $log) {
+    var user = {};
+    var onIdentity = function(response) {
         //Do something at backend on identity secceed.
     };
-
-    UserKlass.prototype.onIdFail = function(error) {
+     var onIdFail = function(error) {
         //Do something at backend on identity failed.
     };
 
-    UserKlass.prototype.register = function(user) {
-        var deferred = $q.defer();
-        $http.post('/register', {
-            username: user.username,
-            password: user.password
-        })
-        .then(function(response) {
-            UserKlass.prototype.onIdentity(response);
-            deferred.resolve(response);
-        }, function(error) {
-            UserKlass.prototype.onIdFail(error);
-            deferred.reject(error);
-        });
-        return deferred.promise;
-    };
+    return {
+        getUser: function() {
+            return user;
+        },
+        register: function(params) {
+            var deferred = $q.defer();
+            $http.post('/register', {
+                username: params.username,
+                password: params.password
+            })
+            .then(function(response) {
+                onIdentity(response);
+                deferred.resolve(response);
+            }, function(error) {
+                onIdFail(error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        },
+        login: function(user) {
+            var deferred = $q.defer();
+            $http.post('/login', {
+                username: user.username,
+                password: user.password
+            })
+            .then(function(response) {
+                onIdentity(response);
+                deferred.resolve(response);
+            }, function(error) {
+                onIdFail(error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        },
+        logout: function(user) {
+            user = null;
+            $http.get('/logout').success(function() {
+                localStorage.removeItem('id_token');
+            });
+        },
+        forgetPassword: function(user) {
 
-    UserKlass.prototype.login = function(user) {
-        var deferred = $q.defer();
-        $http.post('/login', {
-            username: user.username,
-            password: user.password
-        })
-        .then(function(response) {
-            UserKlass.prototype.onIdentity(response);
-            deferred.resolve(response);
-        }, function(error) {
-            UserKlass.prototype.onIdFail(error);
-            deferred.reject(error);
-        });
-        return deferred.promise;
-    };
+        },
+        resetPassword: function(user) {
+            $http.post('/reset_password', {
+                new_password: user.password
+            })
+            .then(function(response) {
 
-    UserKlass.prototype.logout = function(user) {
-        this.user = null;
-        this.isLoggedIn = false;
-        $http.get('/logout').success(function() {
-            localStorage.removeItem('id_token');
-            $rootScope.$emit('logout');
-        });
-    };
+            }, function(error) {
 
-    UserKlass.prototype.forgetPassword = function(user) {};
-
-    UserKlass.prototype.resetPassword = function(user) {
-        $http.post('/reset_password', {
-            new_password: user.password
-        })
-        .then(function(response) {
-
-        }, function(error) {
-
-        });
-    };
-
-    UserKlass.prototype.checkLoggedIn = function() {
-        var token = localStorage.getItem('id_token');
-        if(angular.equals(token, null) || jwtHelper.isTokenExpired(token)) {
+            });
+        },
+        checkLoggedIn: function() {
+            var token = localStorage.getItem('id_token');
+            if(angular.equals(token, null) || jwtHelper.isTokenExpired(token)) {
+                return false;
+            }
+            return true;
+        },
+        checkLoggedOut: function() {
+            var token = localStorage.getItem('id_token');
+            if(angular.equals(token, null) || jwtHelper.isTokenExpired(token)) {
+                return true;
+            }
             return false;
         }
-        return true;
     };
-
-    UserKlass.prototype.checkLoggedOut = function() {
-        var token = localStorage.getItem('id_token');
-        if(angular.equals(token, null) || jwtHelper.isTokenExpired(token)) {
-            return true;
-        }
-        return false;
-    };
-
-    var User = new UserKlass();
-    return User;
 }]);

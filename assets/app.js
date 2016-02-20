@@ -10,7 +10,7 @@ angular.module('phyman', ['phyman.user','ui.router', 'ngAnimate', 'ngMaterial'])
                 'request': function(config) {
                     if(angular.equals(config.method, 'POST')) {
                         config.url = API_HOST + config.url;
-                        config.timeout = 8000;
+                        config.timeout = 5000;
                     }
                     
                     return config;
