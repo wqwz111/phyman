@@ -1,0 +1,146 @@
+ <div ng-controller="notilistCtrl" layout="column" flex="100%" layout-fill="100%" ng-cloak="" 
+class="subheaderdemoBasicUsage">
+  <md-toolbar md-scroll-shrink="">
+    <div class="md-toolbar-tools" width="800px">通知</div>
+  </md-toolbar>
+
+  <md-content style="height: 400px;" md-theme="altTheme">
+
+    <section>
+      <md-subheader class="md-primary">本月                           </md-subheader>
+      <md-list layout-padding="">
+        <md-list-item class="md-3-line" ng-repeat="list in noti track by $index">
+          
+            <a ui-sref="NotiDetail" class="md-list-item-text" ng-click="notiDetail(list.id)">
+           
+              <h3>{{list.title}}</h3>
+              <h4>{{list.date}}</h4>
+              <p>
+                {{list.grade}}
+              </p>
+              
+            </a>
+        </md-list-item>
+      </md-list>
+    </section>
+
+   <section>
+      <md-subheader class="md-primary">上月</md-subheader>
+      <md-list layout-padding="">
+        <md-list-item class="md-3-line" ng-repeat="list in noti track by $index">
+          
+            <div class="md-list-item-text">
+              <h3>{{list.title}}</h3>
+              <h4>{{list.date}}</h4>
+              <p>
+                {{list.grade}}
+              </p>
+              
+            </div>
+        </md-list-item>
+      </md-list>
+    </section>
+
+   <section>
+      <md-subheader class="md-primary">更早</md-subheader>
+      <md-list layout-padding="">
+        <md-list-item class="md-3-line" ng-repeat="list in noti track by $index">
+          
+            <div class="md-list-item-text">
+              <h3>{{list.title}}</h3>
+              <h4>{{list.date}}</h4>
+              <p>
+                {{list.grade}}
+              </p>
+              
+            </div>
+        </md-list-item>
+      </md-list>
+    </section>
+   </md-content>
+</div>
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->
+
+
+
+
+
+
+
+
+<!-- 
+
+<div ng-controller="subCtrl"  layout="column" class="subheaderdemoBasicUsage">
+  <md-toolbar md-scroll-shrink="">
+    <div class="md-toolbar-tools">My Messages</div>
+  </md-toolbar>
+
+  <md-content style="height: 400px;" md-theme="altTheme">
+
+    <section>
+      <md-subheader class="md-primary">本月</md-subheader>
+      <md-list layout-padding="">
+        <md-list-item class="md-3-line" ng-repeat="list in noti track by $index">
+          
+            <div class="md-list-item-text">
+              <h3>{{list.title}}</h3>
+              <h4>{{list.date}}</h4>
+              <p>
+                {{list.grade}}
+              </p>
+              
+            </div>
+        </md-list-item>
+      </md-list>
+    </section>
+ -->
+    <!-- <section>
+      <md-subheader class="md-warn">上月</md-subheader>
+      <md-list layout="column" layout-padding="">
+        <md-list-item class="md-3-line" ng-repeat="list in listlast">
+
+          <div class="md-list-item-text">
+           <h3>{{list.title}}</h3>
+              <h4>{{list.datetime}}</h4>
+              <p>
+                {{list.type}}
+              </p>
+          </div>
+        </md-list-item>
+      </md-list>
+    </section>
+
+    <section>
+      <md-subheader>更远</md-subheader>
+      <md-list layout="column" layout-padding="">
+        <md-list-item class="md-3-line" ng-repeat="list in listearly">
+        
+          <div class="md-list-item-text"><a ng-sref="">
+           <h3>{{list.title}}</h3>
+              <h4>{{list.datetime}}</h4>
+              <p>
+                {{list.type}}
+              </p>
+              </a>
+          </div>
+        </md-list-item>
+      </md-list>
+    </section> -->
+
+<!--   </md-content>
+</div> -->
+
+<!--
+<!-- <section id="test123" ng-controller="subCtrl">
+<p>hello world</p>
+<p>{{noti}}</p>
+<p>{{noti.list}}</p>
+<p>{{list}}</p>
+<P>{{access_token}}</P>
+<p>{{list}}</p>
+<p ng-bind="noti.list"></p>
+</section> -->

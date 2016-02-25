@@ -6,14 +6,17 @@ angular.module('phyman.user')
     };
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-.factory('AuthService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
-    function($http, $q, $rootScope, jwtHelper, $log) {
+.factory('AuthService', ['$http', '$q', '$rootScope', 'jwtHelper',
+    function($http, $q, $rootScope, jwtHelper) {
     var user = {};
     var onIdentity = function(response) {
         //Do something at backend on identity secceed.
+        $rootScope.isLoggedIn = true;
+        user=response;
     };
      var onIdFail = function(error) {
         //Do something at backend on identity failed.
+        $rootScope.isLoggedIn = false;
     };
 
     return {
@@ -44,6 +47,8 @@ angular.module('phyman.user')
             .then(function(response) {
                 onIdentity(response);
                 deferred.resolve(response);
+                $rootScope.username=response.data.username;
+                $rootScope.access_token=response.data.access_token;
             }, function(error) {
                 onIdFail(error);
                 deferred.reject(error);

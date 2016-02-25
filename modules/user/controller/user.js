@@ -1,6 +1,6 @@
-angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router'])
-    .controller('RegisterCtrl', ['$scope', '$rootScope', 'AuthService', 'AuthDialog', '$log',
-        function($scope, $rootScope, AuthService, AuthDialog, $log){
+angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router', 'ngGrid'])
+    .controller('RegisterCtrl', ['$scope', '$rootScope', 'AuthService', 'AuthDialog',
+        function($scope, $rootScope, AuthService, AuthDialog){
         $scope.showPassword = false;
         $scope.isRegistering = false;
         $scope.toggleShowPassword = function() {
@@ -31,6 +31,25 @@ angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router'])
             var promise = AuthService.login($scope.user);
             promise.then(function(response) {
                 $scope.isLoggingIn = false;
+                if(response.data.log==0){
+                //alert("Login成功");
+                $state.go("NotiList",null,{
+                    reload:true
+                });
+                //alert("NotiList成功");
+                /* var promise1 =AuthService.getlist();
+                 promise.then(function(response) {
+                     alert("NotiList成功");
+                     alert($scope.user.list);
+                     $state.go("NotiList");
+                 },function(response){
+                     alert("NotiList fail");
+                     $state.go("login");
+                 });*/
+              } else
+                $state.go("login",null,{
+                    reload:true
+                });
                 AuthDialog.hide();
             }, function(response) {
                 $scope.isLoggingIn = false;
@@ -44,4 +63,14 @@ angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router'])
     .controller('ForgetPasswordCtrl', ['$scope', '$rootScope', 'AuthService',
         function($scope, $rootScope, AuthService){
     
+    }])
+    .controller('dataCtrl',['$scope', '$rootScope','AuthService',
+        function($scope,$rootScope,AuthService){
+            $scope.user=AuthService.getUser().data;
+            
+    }])
+    .controller('getdataCtrl',['$scope', '$rootScope', 'AuthService',
+        function($scope,$rootScope,AuthService){
+        $scope.jsonData=AuthService.getjson;
+        
     }]);

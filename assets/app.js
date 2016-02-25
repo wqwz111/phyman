@@ -1,8 +1,10 @@
 angular.module('phyman', ['phyman.user','ui.router', 'ngAnimate', 'ngMaterial'])
     .constant('API_HOST', 'http://foo.com/api')
-    .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
+    .run(['$rootScope', '$state', '$stateParams', 'AuthService',
+        function($rootScope, $state, $stateParams, AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+        $rootScope.isLoggedIn = AuthService.checkLoggedIn();
     }])
     .config(['$httpProvider', 'API_HOST', function($httpProvider, API_HOST) {
         $httpProvider.interceptors.push(function() {
@@ -11,8 +13,7 @@ angular.module('phyman', ['phyman.user','ui.router', 'ngAnimate', 'ngMaterial'])
                     if(angular.equals(config.method, 'POST')) {
                         config.url = API_HOST + config.url;
                         config.timeout = 5000;
-                    }
-                    
+                    }  
                     return config;
                 },
                 'response': function(response) {
@@ -23,15 +24,14 @@ angular.module('phyman', ['phyman.user','ui.router', 'ngAnimate', 'ngMaterial'])
     }])
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/');
-
         $stateProvider.state('index', {
             url: '/',
             template: '<p>Main content here.</p>'
         })
 
     }])
-    .controller('navCtrl', ['$state', '$scope', '$mdSidenav',
-        function($state, $scope, $mdSidenav) {
+    .controller('navCtrl', ['$state', '$scope', '$rootScope', '$mdSidenav',
+        function($state, $scope, $rootScope, $mdSidenav) {
         $scope.menuItems = [{
             title: 'Notifications',
             state: 'notifications',
