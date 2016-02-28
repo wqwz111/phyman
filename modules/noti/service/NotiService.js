@@ -1,71 +1,92 @@
 angular.module('phyman.noti')
-.config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider) {
-    jwtInterceptorProvider.urlParam = 'access_token';
-    jwtInterceptorProvider.tokenGetter = function() {
-        return localStorage.getItem('id_token');
-    };
-    $httpProvider.interceptors.push('jwtInterceptor');
-}])
-.factory('NotiService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
-    function($http, $q, $rootScope, jwtHelper, $log) {
+.factory('NotiService',['$http','$q','$rootScope',
+    function($http,$q,$rootScope) {
     var noti={};
-    //var notidetail={};
-    var onIdentity  = function(response) {
-        //Do something at backend on identity secceed.
-    	 noti=response.data.list;
-     }
-    var onNotidetail= function(response){
-    	noti.detail=response.data.notification;
-    }
-	var onIdFail = function(error) {
-        //Do something at backend on identity failed.
+    var notiId;
+    var onFail = function(error) {
+        //Do something at backend on failed.
     };
 
     return {
-        /*getlistdetail: function() {
-            return this.list;
-        },*/
-        getlist:function(id) {
+        getList:function(id) {
             var deferred = $q.defer();
-            $http.post('/PHYMAN/index.php/Home/Noti/getList', {
-                username: $rootScope.username,
-                access_token: $rootScope.access_token
-            })
+            $http.get($rootScope.API_HOST + '/noti')
             .then(function(response) {
-            	onIdentity(response);
+                noti = response.data;
                 deferred.resolve(response);
-            }, function(error) {
-            	console.log(erro);
-                onIdFail(error);
+            },function(error) {
+                onFail(error);
                 deferred.reject(error);
             });
             return deferred.promise;
         },
-        setnotiid:function(id){
-        	$rootScope.detailid=id;
-        	$rootScope.type="Noti";
-        	console.log($rootScope.notiid);
-        	console.log($rootScope.type);
-        }
-        
-  /*      getdetail: function(id) {
-        	 var deferred = $q.defer();
-             $http.post('/PHYMAN/index.php/Home/Noti/getNotiDetail', {
-            	 username: $rootScope.username,
-            	 access_token: $rootScope.access_token,
-            	 id:id,//$rootScope.notiid,
+        setNotiid:function(id){
+            notiId = id;
+        },
+        getDetail: function(id) {
+             var deferred = $q.defer();
+             $http.post($rootScope.API_HOST + '/noti/findOne',{
+                id:id
              })
              .then(function(response) {
-             	console.log("response");
-             	console.log(response.data);
-                 //onNotidetail(response);
+                 noti.detail=response.data.notification;
                  deferred.resolve(response);
-             }, function(error) {
-                 onIdFail(error);
+             },function(error) {
+                 onFail(error);
                  deferred.reject(error);
              });
              return deferred.promise;
+        },
+        updateNoti: function(noti) {
+            var deferred = $q.defer();
+            $http.post($rootScope.API_HOST + '/noti/update',{
+                noti: noti
+            })
+            .then(function(response) {
+                deferred.resolve(response);
+            }),function(error) {
+                onFail(error);
+                deferred.reject(error);
+            };
+            return deferred.promise;
+        },
+        deleteNoti: function(id) {
+            var deferred = $q.defer();
+            $http.post($rootScope.API_HOST + '/noti/deleteOne',{
+                id:id
+            })
+            .then(function(response) {
 
-        }*/       
+            },function(error) {
+                onFail(error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
     };
-}]);
+}])
+.filter('notiFilter',function() {
+    return function(items,createdTime) {
+        var now = new Date();
+        var month = now.getMonth() + 1;
+        var thisMonth = now.getFullYear() + '-' + (month > 10 ? month : '0' + month) + '-01';
+        var filterItems = new Array();
+        if(angular.equals(createdTime,'new')) {
+            angular.forEach(items,function(item) {
+                if(item.date.slice(0,10) >= thisMonth) {
+                    filterItems.push(item);
+                }
+            });
+            return filterItems;
+        } 
+        if(angular.equals(createdTime,'old')) {
+            angular.forEach(items,function(item) {
+                if(item.date.slice(0,10) < thisMonth) {
+                    filterItems.push(item);
+                }
+            });
+            return filterItems;
+        }
+        return items;
+    }
+});

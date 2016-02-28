@@ -1,6 +1,6 @@
-angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router', 'ngGrid'])
-    .controller('RegisterCtrl', ['$scope', '$rootScope', 'AuthService', 'AuthDialog',
-        function($scope, $rootScope, AuthService, AuthDialog){
+angular.module('phyman.user',['ngMessages','angular-jwt','ui.router','ngMaterial'])
+    .controller('RegisterCtrl',['$scope','$rootScope','AuthService','AuthDialog',
+        function($scope,$rootScope,AuthService,AuthDialog){
         $scope.showPassword = false;
         $scope.isRegistering = false;
         $scope.toggleShowPassword = function() {
@@ -15,13 +15,14 @@ angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router', 'ngGrid
             promise.then(function(response) {
                 $scope.isRegistering = false;
                 AuthDialog.hide();
-            }, function(error) {
+            },function(error) {
                 $scope.isRegistering = false;
+                //TODO: handle error
             });
         };
     }])
-    .controller('LoginCtrl', ['$scope', '$rootScope', 'AuthService', 'AuthDialog',
-        function($scope, $rootScope, AuthService, AuthDialog){
+    .controller('LoginCtrl',['$scope','$rootScope','AuthService','AuthDialog',
+        function($scope,$rootScope,AuthService,AuthDialog){
         $scope.isLoggingIn = false;
         $scope.cancel = function() {
             AuthDialog.cancel();
@@ -31,46 +32,18 @@ angular.module('phyman.user', ['ngMessages', 'angular-jwt', 'ui.router', 'ngGrid
             var promise = AuthService.login($scope.user);
             promise.then(function(response) {
                 $scope.isLoggingIn = false;
-                if(response.data.log==0){
-                //alert("Login成功");
-                $state.go("NotiList",null,{
-                    reload:true
-                });
-                //alert("NotiList成功");
-                /* var promise1 =AuthService.getlist();
-                 promise.then(function(response) {
-                     alert("NotiList成功");
-                     alert($scope.user.list);
-                     $state.go("NotiList");
-                 },function(response){
-                     alert("NotiList fail");
-                     $state.go("login");
-                 });*/
-              } else
-                $state.go("login",null,{
-                    reload:true
-                });
                 AuthDialog.hide();
-            }, function(response) {
+            },function(error) {
                 $scope.isLoggingIn = false;
+                //TODO: handle error
             });
         };
     }])
-    .controller('ResetPasswordCtrl', ['$scope', '$rootScope', 'AuthService',
-        function($scope, $rootScope, AuthService){
+    .controller('ResetPasswordCtrl',['$scope','$rootScope','AuthService',
+        function($scope,$rootScope,AuthService){
         
     }])
-    .controller('ForgetPasswordCtrl', ['$scope', '$rootScope', 'AuthService',
-        function($scope, $rootScope, AuthService){
+    .controller('ForgetPasswordCtrl',['$scope','$rootScope','AuthService',
+        function($scope,$rootScope,AuthService){
     
-    }])
-    .controller('dataCtrl',['$scope', '$rootScope','AuthService',
-        function($scope,$rootScope,AuthService){
-            $scope.user=AuthService.getUser().data;
-            
-    }])
-    .controller('getdataCtrl',['$scope', '$rootScope', 'AuthService',
-        function($scope,$rootScope,AuthService){
-        $scope.jsonData=AuthService.getjson;
-        
     }]);

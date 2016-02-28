@@ -1,5 +1,5 @@
 angular.module('phyman.user')
-    .factory('AuthDialog', ['$mdDialog', function($mdDialog){
+    .factory('AuthDialog',['$mdDialog',function($mdDialog){
         return {
             cancel: function() {
                 $mdDialog.cancel();
