@@ -1,4 +1,4 @@
-<md-dialog id="register-dialog" ng-controller="RegisterCtrl">
+<md-dialog id="register-dialog">
    <md-toolbar class="md-toolbar-tools">
       <span flex></span>
       <span class="md-title">注册</span>
@@ -8,7 +8,7 @@
       </md-button>
    </md-toolbar>
    <md-progress-linear md-mode="indeterminate" ng-show="isRegistering"></md-progress-linear>
-   <form name="registerForm" layout="column" layout-padding>
+   <ng-form name="registerForm" layout="column" layout-padding>
       <md-input-container>
          <label>用户名：</label>
          <input name="username" type="text" ng-disabled="isRegistering" ng-model="user.username" ng-pattern="/^\w{8,12}$/" required>
@@ -25,5 +25,5 @@
       </md-input-container>
       <md-checkbox id="show-passwd-checkbox" ng-click="toggleShowPassword()">显示密码</md-checkbox>
       <md-button class="md-raised md-primary"ng-disabled="registerForm.$pristine || registerForm.$invalid || !registerForm.$error || isRegistering" ng-click="onRegisterClick()" aria-label="Register">注册</md-button>
-   </form>
+   </ng-form>
 </md-dialog>

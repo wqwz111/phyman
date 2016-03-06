@@ -11,8 +11,8 @@ angular.module('phyman.user',['ngMessages','angular-jwt','ui.router','ngMaterial
         };
         $scope.onRegisterClick = function() {
             $scope.isRegistering = true;
-            var promise = AuthService.register($scope.user);
-            promise.then(function(response) {
+            AuthService.register($scope.user)
+              .then(function(response) {
                 $scope.isRegistering = false;
                 AuthDialog.hide();
             },function(error) {
@@ -29,8 +29,8 @@ angular.module('phyman.user',['ngMessages','angular-jwt','ui.router','ngMaterial
         };
         $scope.onLoginClick = function() {
             $scope.isLoggingIn = true;
-            var promise = AuthService.login($scope.user);
-            promise.then(function(response) {
+            AuthService.login($scope.user)
+              .then(function(response) {
                 $scope.isLoggingIn = false;
                 AuthDialog.hide();
             },function(error) {

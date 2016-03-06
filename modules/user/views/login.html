@@ -1,4 +1,4 @@
-<md-dialog id="login-dialog" ng-controller="LoginCtrl">
+<md-dialog id="login-dialog">
    <md-toolbar class="md-toolbar-tools">
       <span flex></span>
       <span class="md-title">登录</span>
@@ -8,7 +8,7 @@
       </md-button>
    </md-toolbar>
    <md-progress-linear md-mode="indeterminate" ng-show="isLoggingIn"></md-progress-linear>
-   <form name="loginForm" layout="column" layout-padding>
+   <ng-form name="loginForm" layout="column" layout-padding>
       <md-input-container>
          <label>用户名：</label>
          <input name="username" type="text" ng-disabled="isLoggingIn" ng-model="user.username" ng-pattern="/^\w{8,20}$/" required>
@@ -25,5 +25,5 @@
       </md-input-container>
       <md-button class="md-raised md-primary" ng-disabled="loginForm.$pristine || loginForm.$invalid || !loginForm.$error || isLoggingIn" ng-click="onLoginClick()">登录</md-button>
       <md-button class="md-primary" href="#/forget_password" aria-label="Forget Password">忘记密码？</md-button>
-   </form>
+   </ng-form>
 </md-dialog>
