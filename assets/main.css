@@ -25,3 +25,14 @@ md-fab-speed-dial {
 #load-progress {
     position: fixed;
 }
+.page-container {
+    padding:32px;
+}
+.page {
+    background-color: white;
+    max-width: 900px;
+    padding:20px;
+}
+.page h2 {
+    text-align: center;
+}

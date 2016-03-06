@@ -25,8 +25,10 @@ angular.module('phyman.noti')
         },
         getDetail: function(id) {
              var deferred = $q.defer();
-             $http.post($rootScope.API_HOST + '/noti/findOne',{
-                id:id
+             $http.get($rootScope.API_HOST + '/noti/findOne',{
+                params:{
+                    id: id
+                }
              })
              .then(function(response) {
                  noti.detail=response.data.notification;
@@ -89,4 +91,9 @@ angular.module('phyman.noti')
         }
         return items;
     }
+})
+.filter('trustedHtml',function($sce) {
+    return function(text) {
+        return $sce.trustAsHtml(text);
+    };
 });

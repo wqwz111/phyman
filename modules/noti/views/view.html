@@ -1,1 +1,6 @@
-<article ng-model="content"></article>
+<div class="page-container">
+  <md-content ng-model="noti" class="page md-whiteframe-1dp">
+    <h2 class="page-title">{{noti.title}}</h2>
+    <div ng-bind-html="noti.content | trustedHtml"></div>
+  </md-content>
+</div>

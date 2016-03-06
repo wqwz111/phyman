@@ -1,29 +1,63 @@
-angular.module('phyman',['phyman.user','phyman.noti','ui.router','ngAnimate','ngMaterial'])
-    .run(['$rootScope','AuthService',function($rootScope,AuthService) {
+angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
+    'phyman.user','phyman.noti',])
+    .run(['$rootScope','AuthService','PermissionStore',
+      function($rootScope,AuthService,PermissionStore) { 
         $rootScope.API_HOST = 'http://localhost:8081/api';
         $rootScope.isLoggedIn = AuthService.checkLoggedIn();
+
+        // Define admin permission
+        PermissionStore.definePermission('admin',function(stateParams) {
+            if(AuthService.checkLoggedIn()) {
+                var user = AuthService.getUser();
+                return user.permission === 'admin' ? true : false;
+            }
+            return false;
+        });
+        // Define user permission
+        PermissionStore.definePermission('user',function(stateParams) {
+            if(AuthService.checkLoggedIn()) {
+                var user = AuthService.getUser();
+                return user.permission === 'user' ? true : false;
+            }
+            return false;
+        });
+        // Define anonymous permission
+        PermissionStore.definePermission('anonymous',function(stateParams) {
+            return !AuthService.checkLoggedIn();
+        });
+
+        // Add events listener
         $rootScope.$on('$stateChangeStart',
           function(event,toState,toParams,fromState,fromParams,options) {
             $rootScope.showLoadProgress = true;
         });
         $rootScope.$on('$stateChangeSuccess',
           function(event,toState,toParams,fromState,fromParams,options) {
-            $rootScope.showLoadProgress = false;
+            // Handle $stateChangeSuccess events except those emitted by angular-permission.
+            if(toState) {
+                $rootScope.showLoadProgress = false;
+            }
         });
     }])
-    .config(['$logProvider','$mdThemingProvider',function($logProvider,$mdThemingProvider) {
-        //Set the flag to 'false' in production environment.
-        $logProvider.debugEnabled(true);
-
+    .config(['$mdThemingProvider',function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
           .backgroundPalette('grey',{'default': '100'});
     }])
     .config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
-        $urlRouterProvider.otherwise('/');
+        // Do not change this code segment to $urlRouterProvider.otherwise('/somestate')
+        // as a known issue of angular-permission.
+        $urlRouterProvider.otherwise( function($injector) {
+            var $state = $injector.get("$state");
+            $state.go('index');
+        });
         $stateProvider.state('index',{
             url: '/',
             template: '<p>Main content here.</p>'
         })
+        .state('error',{
+            url: '/error',
+            template: '<p>Something goes wrong.</p>'
+        });
 
     }])
     .controller('navCtrl',['$state','$scope','$rootScope','$mdSidenav',
@@ -62,8 +96,8 @@ angular.module('phyman',['phyman.user','phyman.noti','ui.router','ngAnimate','ng
             $mdSidenav('left').toggle();
         };
     }])
-    .controller('toolbarCtrl',['$scope','$rootScope','$mdSidenav','AuthDialog','AuthService',
-        function($scope,$rootScope,$mdSidenav,AuthDialog,AuthService) {
+    .controller('toolbarCtrl',['$scope','$state','$rootScope','$mdSidenav','AuthDialog','AuthService',
+        function($scope,$state,$rootScope,$mdSidenav,AuthDialog,AuthService) {
         $scope.toggleList = function() {
             $mdSidenav('left').toggle();
         };
@@ -76,5 +110,6 @@ angular.module('phyman',['phyman.user','phyman.noti','ui.router','ngAnimate','ng
         $scope.logout = function() {
             AuthService.logout();
             $rootScope.isLoggedIn = false;
+            $state.go('index',null,{reload:true});
         };
     }]);

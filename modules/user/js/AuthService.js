@@ -13,7 +13,6 @@ angular.module('phyman.user')
         //Do something at backend on identity secceed.
         localStorage.setItem('id_token',response.data.jwt);
         $rootScope.isLoggedIn = true;
-        user = response;
     };
      var onIdFail = function(error) {
         //Do something at backend on identity failed.
@@ -22,6 +21,8 @@ angular.module('phyman.user')
 
     return {
         getUser: function() {
+            var token = localStorage.getItem('id_token');
+            user = jwtHelper.decodeToken(token);
             return user;
         },
         register: function(params) {

@@ -4,12 +4,24 @@ angular.module('phyman.user')
             .state('forget_password',{
                 url: '/forget_password',
                 templateUrl: 'modules/user/views/forget_password.html',
-                controller: 'ForgetPasswordCtrl'
+                controller: 'ForgetPasswordCtrl',
+                data: {
+                    permissions: {
+                        except: ['anonymous'],
+                        redirectTo: 'error'
+                    }
+                }
             })
             .state('reset_password',{
                 url: '/reset_password',
                 templateUrl: 'modules/user/views/reset_password.html',
-                controller: 'ResetPasswordCtrl'
+                controller: 'ResetPasswordCtrl',
+                data: {
+                    permissions: {
+                        except: ['anonymous'],
+                        redirectTo: 'error'
+                    }
+                }
             });
             
     }]);

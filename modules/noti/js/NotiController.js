@@ -6,31 +6,30 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
             plugins: 'fullscreen,preview,table',
             toolbar: 'undo,redo,bold,italic,styleselect,fontsizeselect,removeformat,'+
                 'bullist,numlist,outdent,indent,table,preview,fullscreen',
+            trusted: true,
             menubar: false,
             statusbar: false,
             min_height:400,
             max_width:900
         };
+        $scope.noti = {};
         $scope.submit = function() {
-            var notiNewer = {};
-            notiNewer.title = $scope.noti.title;
-            notiNewer.content = $scope.noti.content;
-            NotiService.updateNoti(notiNewer)
+            NotiService.updateNoti($scope.noti)
               .then(function(response) {
-                $state.go('noti.list');
+                $state.go('^.list',null,{reload:true});
             },function(error) {
 
             });
         };
     }])
     .controller('NotiCtrl',['$scope','$rootScope','$state','$mdDialog','NotiService',
-      'noti',function($scope,$rootScope,$state,$mdDialog,NotiService,noti) {
-        $scope.noti = noti.data;
+      'noti_list',function($scope,$rootScope,$state,$mdDialog,NotiService,noti_list) {
+        $scope.noti = noti_list.data;
         $scope.viewNoti = function(id) {
             NotiService.setNotiid(id);
             $state.go('^.detail',
             {
-                noti_id: id
+                id: id
             },{
                 reload:true
             });
@@ -65,7 +64,7 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
                 },function() {});
         };
     }])
-    .controller('NotiViewCtrl',['$scope','$state','$stateParams',
-      'NotiService',function($scope,$state,$stateParams,NotiService) {
-        $scope.content = NotiService.getDetail($stateParams.noti_id);
+    .controller('NotiViewCtrl',['$scope','$state','$stateParams','$sce',
+      'noti',function($scope,$state,$stateParams,$sce,noti) {
+        $scope.noti = noti.data
     }]);
