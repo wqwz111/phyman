@@ -10,7 +10,7 @@ angular.module('phyman.user')
             showLoginDialog: function(ev) {
                 $mdDialog.show({
                     controller: 'LoginCtrl',
-                    templateUrl: 'modules/user/views/login.html',
+                    templateUrl: 'views/login.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose: false
@@ -19,11 +19,11 @@ angular.module('phyman.user')
             showRegisterDialog: function(ev) {
                 $mdDialog.show({
                     controller: 'RegisterCtrl',
-                    templateUrl: 'modules/user/views/register.html',
+                    templateUrl: 'views/register.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose: false
                 });
             }
         };
-    }])
+    }]);

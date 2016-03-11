@@ -3,7 +3,7 @@ angular.module('phyman.user')
         $stateProvider
             .state('forget_password',{
                 url: '/forget_password',
-                templateUrl: 'modules/user/views/forget_password.html',
+                templateUrl: 'views/forget_password.html',
                 controller: 'ForgetPasswordCtrl',
                 data: {
                     permissions: {
@@ -14,7 +14,7 @@ angular.module('phyman.user')
             })
             .state('reset_password',{
                 url: '/reset_password',
-                templateUrl: 'modules/user/views/reset_password.html',
+                templateUrl: 'views/reset_password.html',
                 controller: 'ResetPasswordCtrl',
                 data: {
                     permissions: {

@@ -9,7 +9,7 @@
      <title>Phyman</title>
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic">
-      <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+      <link rel="stylesheet" href="assets/angular-material.min.css">
       <link rel="stylesheet" href="assets/main.css">
 
      <style>
@@ -67,32 +67,21 @@
       <section id="content" ui-view layout="column" layout-fill></section>
     </div>
 
-      <script src="bower_components/angular/angular.js"></script>
-      <script src="bower_components/angular-material/angular-material.js"></script>
-      <script src="bower_components/angular-aria/angular-aria.js"></script>
-      <script src="bower_components/angular-animate/angular-animate.js"></script>
-      <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script src="bower_components/angular-permission/dist/angular-permission.min.js"></script>
-      <script src="bower_components/angular-messages/angular-messages.js"></script>
-      <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
-      <script src="bower_components/tinymce-dist/tinymce.js"></script>
-      <script src="bower_components/angular-ui-tinymce/dist/tinymce.min.js"></script>
+      <script src="lib/angular.min.js"></script>
+      <script src="lib/angular-material.min.js"></script>
+      <script src="lib/angular-aria.min.js"></script>
+      <script src="lib/angular-animate.min.js"></script>
+      <script src="lib/angular-ui-router.min.js"></script>
+      <script src="lib/angular-permission.min.js"></script>
+      <script src="lib/angular-messages.min.js"></script>
+      <script src="lib/angular-jwt.min.js"></script>
+      <script src="lib/angular-ui-tinymce.min.js"></script>
+      <script src="lib/tinymce/tinymce.min.js"></script>
 
-      <script src="modules/user/js/UserController.js"></script>
-      <script src="modules/user/js/UserRoute.js"></script>
-      <script src="modules/user/js/AuthService.js"></script>
-      <script src="modules/user/js/AuthDialog.js"></script>
-
-      <script src="modules/noti/js/NotiController.js"></script>
-      <script src="modules/noti/js/NotiRoute.js"></script>
-      <script src="modules/noti/js/NotiService.js"></script>
-
-      <script src="modules/vote/controller/vote.js"></script>
-      <script src="modules/vote/route/vote.js"></script>
-      <script src="modules/vote/service/VoteService.js"></script>
+      <script src="js/user.js"></script>
+      <script src="js/noti.js"></script>
 
       <script src="app.js"></script>
-
    </body>
 
 </html>

@@ -10,12 +10,10 @@ angular.module('phyman.user')
     function($http,$q,$rootScope,jwtHelper) {
     var user = {};
     var onIdentity = function(response) {
-        //Do something at backend on identity secceed.
         localStorage.setItem('id_token',response.data.jwt);
         $rootScope.isLoggedIn = true;
     };
-     var onIdFail = function(error) {
-        //Do something at backend on identity failed.
+    var onIdFail = function(error) {
         $rootScope.isLoggedIn = false;
     };
 

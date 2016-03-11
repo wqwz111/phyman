@@ -15,7 +15,7 @@ angular.module('phyman.noti')
     })
     .state('noti.list',{
         url: '/list',
-        templateUrl:'modules/noti/views/list.html',
+        templateUrl:'views/noti_list.html',
         resolve: {
             noti_list: ['NotiService',function(NotiService) {
                return NotiService.getList();
@@ -25,7 +25,7 @@ angular.module('phyman.noti')
     })
     .state('noti.detail',{
         url: '/detail/:id',
-        templateUrl: '/modules/noti/views/view.html',
+        templateUrl: 'views/noti_view.html',
         resolve: {
             noti: ['NotiService','$stateParams',function(NotiService,$stateParams) {
                 return NotiService.getDetail($stateParams.id);
@@ -35,7 +35,7 @@ angular.module('phyman.noti')
      })
     .state('noti.edit',{
         url: '/edit',
-        templateUrl: '/modules/noti/views/edit.html',
+        templateUrl: 'views/noti_edit.html',
         controller: 'NotiEditorCtrl',
         data: {
             permissions: {
@@ -46,7 +46,7 @@ angular.module('phyman.noti')
     })
     .state('noti.new',{
         url: '/new',
-        templateUrl: '/modules/noti/views/edit.html',
+        templateUrl: 'views/noti_edit.html',
         'controller': 'NotiEditorCtrl',
         data: {
             permissions: {
