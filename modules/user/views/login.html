@@ -1,29 +1,29 @@
-<md-dialog id="login-dialog" ng-controller="LoginCtrl">
+<md-dialog id="login-dialog">
    <md-toolbar class="md-toolbar-tools">
       <span flex></span>
-      <span class="md-title">Login</span>
+      <span class="md-title">登录</span>
       <span flex></span>
       <md-button class="md-icon-button" ng-click="cancel()" aria-label="Cancel">
          <md-icon md-svg-src="assets/images/ic_close_48px.svg"></md-icon>
       </md-button>
    </md-toolbar>
    <md-progress-linear md-mode="indeterminate" ng-show="isLoggingIn"></md-progress-linear>
-   <form name="loginForm" layout="column" layout-padding>
+   <ng-form name="loginForm" layout="column" layout-padding>
       <md-input-container>
-         <label>Username:</label>
+         <label>用户名：</label>
          <input name="username" type="text" ng-disabled="isLoggingIn" ng-model="user.username" ng-pattern="/^\w{8,20}$/" required>
          <div ng-messages="loginForm.username.$error" ng-show="loginForm.username.$dirty">
-            <div ng-message="pattern">Username should be between 8 to 20 characters.</div>
+            <div ng-message="pattern">请输入8-12位用户名</div>
          </div>
       </md-input-container>
       <md-input-container>
-         <label>Password:</label>
+         <label>密码：</label>
          <input name="password" type="password" ng-disabled="isLoggingIn" ng-model="user.password" ng-pattern="/^\w{8,16}$/" required>
          <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
-            <div ng-message="pattern"> Password should be between 8 to 16 characters.</div>
+            <div ng-message="pattern"> 请输入8-16位密码</div>
          </div>
       </md-input-container>
-      <md-button class="md-raised md-primary" ng-disabled="loginForm.$pristine || loginForm.$invalid || !loginForm.$error || isLoggingIn" ng-click="onLoginClick()">Login</md-button>
-      <md-button class="md-primary" href="#/forget_password" aria-label="Forget Password">Forget password?</md-button>
-   </form>
+      <md-button class="md-raised md-primary" ng-disabled="loginForm.$pristine || loginForm.$invalid || !loginForm.$error || isLoggingIn" ng-click="onLoginClick()">登录</md-button>
+      <md-button class="md-primary" href="#/forget_password" aria-label="Forget Password">忘记密码？</md-button>
+   </ng-form>
 </md-dialog>

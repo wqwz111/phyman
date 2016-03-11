@@ -4,5 +4,17 @@
   "scripts": {},
   "engines": {},
   "devDependencies": {
+    "grunt": "^0.4.5",
+    "bower": ">=1.7.6",
+    "grunt-contrib-copy": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-connect": "latest",
+    "grunt-bowercopy": "latest"
+  },
+  "scripts": {
+  	"install": "bower install"
   }
 }
