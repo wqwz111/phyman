@@ -22,11 +22,50 @@ angular.module('phyman.vote')
         getlistdetail: function() {
             return this.list;
         },
-        setvoteid:function(id){
-        	$rootScope.detailid=id;
-        	$rootScope.type="Vote";
+        newVote:function(vote,options){
+        	
+       	 var deferred = $q.defer();
+            $http.post('/PHYMAN/index.php/Home/Admin/newVote', {
+                username: $rootScope.username,
+                title:vote.title,
+                content:vote.content,
+                type:vote.type,
+                options:options,
+                date:vote.date,
+                access_token: $rootScope.access_token
+            })
+            .then(function(response) {
+            	//$rootScope.list=response.data.list;
+            	onIdentity(response);
+                deferred.resolve(response);
+            }, function(error) {
+            	console.log(erro);
+                onIdFail(error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
         },
-        getlist:function() {
+        setVote:function(item,id){
+        	console.log(item);
+        	 var deferred = $q.defer();
+             $http.post('/PHYMAN/index.php/Home/Vote/userVote', {
+                 username: $rootScope.username,
+                 choose:item,
+                 id:id,
+                 access_token: $rootScope.access_token
+             })
+             .then(function(response) {
+             	//$rootScope.list=response.data.list;
+             	onIdentity(response);
+                 deferred.resolve(response);
+             }, function(error) {
+             	console.log(erro);
+                 onIdFail(error);
+                 deferred.reject(error);
+             });
+             return deferred.promise;
+        },
+        getList:function() {
             var deferred = $q.defer();
             $http.post('/PHYMAN/index.php/Home/Vote/getList', {
                 username: $rootScope.username,
@@ -43,18 +82,35 @@ angular.module('phyman.vote')
             });
             return deferred.promise;
         },
-        
-        getdetail: function(noti) {
+        getResult: function(id){
+        	var deferred = $q.defer();
+            $http.post('/PHYMAN/index.php/Home/Vote/getVoteResult', {
+                username: $rootScope.username,
+                id:id,
+                access_token: $rootScope.access_token
+            })
+            .then(function(response) {
+            	//$rootScope.list=response.data.list;
+            	onIdentity(response);
+                deferred.resolve(response);
+            }, function(error) {
+            	console.log(erro);
+                onIdFail(error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        },
+        getDetail: function(vote) {
         	 var deferred = $q.defer();
              $http.post('/PHYMAN/index.php/Home/Vote/getVoteDetail', {
             	 username: $rootScope.username,
             	 access_token: $rootScope.access_token,
-            	 noti:noti
+            	 id:vote
              })
              .then(function(response) {
              	console.log("response");
              	console.log(response.data);
-                 onNotidetail(response);
+                // onVotedetail(response);
                  deferred.resolve(response);
              }, function(error) {
                  onIdFail(error);
@@ -64,4 +120,48 @@ angular.module('phyman.vote')
 
         }       
     };
-}]);
+}])
+.filter('votedetailFilter',function() {
+	return function(input,num){
+		var out=input*100/num;
+		console.log(out);
+	return out;
+	}
+	
+})
+.filter('perFilter',function() {
+	return function(input,num){
+		var out=input*100/num;
+		console.log(out);
+	return out.toFixed(2)+"%";
+	}
+	
+})
+
+
+
+.filter('voteFilter',function() {
+    return function(items,createdTime) {
+        var now = new Date();
+        var month = now.getMonth() + 1;
+        var thisMonth = now.getFullYear() + '-' + (month > 10 ? month : '0' + month) + '-01';
+        var filterItems = new Array();
+        if(angular.equals(createdTime,'new')) {
+            angular.forEach(items,function(item) {
+                if(item.begtime.slice(0,10) >= thisMonth) {
+                    filterItems.push(item);
+                }
+            });
+            return filterItems;
+        } 
+        if(angular.equals(createdTime,'old')) {
+            angular.forEach(items,function(item) {
+                if(item.begtime.slice(0,10) < thisMonth) {
+                    filterItems.push(item);
+                }
+            });
+            return filterItems;
+        }
+        return items;
+    }
+});
