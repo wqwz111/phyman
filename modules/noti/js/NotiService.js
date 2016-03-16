@@ -39,9 +39,9 @@ angular.module('phyman.noti')
              });
              return deferred.promise;
         },
-        updateNoti: function(noti) {
+        addNoti: function(noti) {
             var deferred = $q.defer();
-            $http.post($rootScope.API_HOST + '/noti/update',{
+            $http.post($rootScope.API_HOST + '/noti/add',{
                 noti: noti
             })
             .then(function(response) {
@@ -58,7 +58,7 @@ angular.module('phyman.noti')
                 id:id
             })
             .then(function(response) {
-
+                deferred.resolve(response);
             },function(error) {
                 onFail(error);
                 deferred.reject(error);
@@ -92,8 +92,8 @@ angular.module('phyman.noti')
         return items;
     }
 })
-.filter('trustedHtml',function($sce) {
+.filter('trustedHtml',['$sce',function($sce) {
     return function(text) {
         return $sce.trustAsHtml(text);
     };
-});
+}]);

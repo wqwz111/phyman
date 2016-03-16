@@ -36,3 +36,6 @@ md-fab-speed-dial {
 .page h2 {
     text-align: center;
 }
+.item-title {
+    display: block;
+}
