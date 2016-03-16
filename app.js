@@ -75,10 +75,6 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
             state: 'comments',
             img: '/assets/images/ic_chat_48px.svg'
         },{
-            title: '已标记',
-            state: 'marked',
-            img: '/assets/images/ic_bookmark_48px.svg'
-        },{
             title: '已删除',
             state: 'deleted',
             img: '/assets/images/ic_close_48px.svg'

@@ -33,17 +33,6 @@ angular.module('phyman.noti')
         },
         controller: 'NotiViewCtrl'
      })
-    .state('noti.edit',{
-        url: '/edit',
-        templateUrl: 'views/noti_edit.html',
-        controller: 'NotiEditorCtrl',
-        data: {
-            permissions: {
-                only: ['admin'],
-                redirectTo: 'error'
-            }
-        }
-    })
     .state('noti.new',{
         url: '/new',
         templateUrl: 'views/noti_edit.html',

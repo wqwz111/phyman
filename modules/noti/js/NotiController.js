@@ -14,7 +14,7 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
         };
         $scope.noti = {};
         $scope.submit = function() {
-            NotiService.updateNoti($scope.noti)
+            NotiService.addNoti($scope.noti)
               .then(function(response) {
                 $state.go('^.list',null,{reload:true});
             },function(error) {
@@ -37,18 +37,7 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
         $scope.newNoti = function() {
             $state.go('^.new');
         };
-        $scope.editNoti = function(id) {
-            $state.go('^.edit',
-            {
-                noti_id: id
-            },{
-                reload:true
-            });
-        };
-        $scope.markNoti = function(id) {
-
-        };
-        $scope.deleteNoti = function(id,ev) {
+        $scope.deleteNoti = function(id,ev,index) {
             $mdDialog.show($mdDialog.confirm()
                 .title('是否要删除该通知？')
                 .textContent('该通知删除后将不可恢复。')
@@ -58,6 +47,7 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
                     NotiService.deleteNoti(id)
                       .then(function(response) {
                         //do something when succeed.
+                        $scope.noti.splice(index,1);
                     },function(error) {
                         //do something when failed
                     });
