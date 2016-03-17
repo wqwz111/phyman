@@ -22,7 +22,10 @@ module.exports = function(grunt) {
                     'dist/js/noti.js': [
                         'modules/noti/js/NotiController.js',
                         'modules/noti/js/NotiService.js',
-                        'modules/noti/js/NotiRoute.js']
+                        'modules/noti/js/NotiRoute.js'],
+                    'dist/js/settings.js': [
+                        'modules/settings/js/SettingsController.js',
+                        'modules/settings/js/SettingsRoute.js']
                 }
             }
         },

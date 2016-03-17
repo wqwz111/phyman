@@ -11,17 +11,6 @@ angular.module('phyman.user')
                         redirectTo: 'error'
                     }
                 }
-            })
-            .state('reset_password',{
-                url: '/reset_password',
-                templateUrl: 'views/reset_password.html',
-                controller: 'ResetPasswordCtrl',
-                data: {
-                    permissions: {
-                        except: ['anonymous'],
-                        redirectTo: 'error'
-                    }
-                }
             });
             
-    }]);
+}]);

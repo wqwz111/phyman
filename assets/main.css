@@ -10,10 +10,19 @@ body {
 #show-passwd-checkbox {
     margin: 5px;
 }
+#main {
+    min-height: 100%;
+}
+#content {
+    width: 100%;
+    min-height: 100%;
+}
 .content-list {
     background-color: white;
     max-width: 1000px;
 }
+
+/*noti*/
 md-fab-speed-dial {
     float: left;
     position: fixed;
@@ -38,4 +47,15 @@ md-fab-speed-dial {
 }
 .item-title {
     display: block;
+}
+
+/*settings*/
+#account-settings {
+    margin: 0 auto;
+    padding-top: 50px;
+}
+#reset-passwd-form {
+    width: 350px;
+    height: 300px;
+    padding-top: 20px;
 }

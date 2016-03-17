@@ -62,15 +62,18 @@ angular.module('phyman.user')
         forgetPassword: function(user) {
 
         },
-        resetPassword: function(user) {
+        resetPassword: function(password) {
+            var deferred = $q.defer();
             $http.post($rootScope.API_HOST + '/reset_password',{
-                new_password: user.password
+                new_password: password
             })
             .then(function(response) {
-
+                onIdentity(response);
+                deferred.resolve(response);
             },function(error) {
-
+                deferred.reject(error);
             });
+            return deferred.promise;
         },
         checkLoggedIn: function() {
             var token = localStorage.getItem('id_token');
