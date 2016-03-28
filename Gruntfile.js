@@ -25,7 +25,9 @@ module.exports = function(grunt) {
                         'modules/noti/js/NotiRoute.js'],
                     'dist/js/settings.js': [
                         'modules/settings/js/SettingsController.js',
-                        'modules/settings/js/SettingsRoute.js']
+                        'modules/settings/js/SettingsRoute.js'],
+                    'dist/js/message.js': [
+                        'modules/message/js/Message.js']
                 }
             }
         },
@@ -35,6 +37,8 @@ module.exports = function(grunt) {
                     destPrefix: 'dist/lib/'
                 },
                 files: {
+                    'jquery.min.js': 'jquery/dist/jquery.min.js',
+                    'jquery.min.map': 'jquery/dist/jquery.min.map',
                     'angular-ui-router.min.js': 'angular-ui-router/release/angular-ui-router.min.js',
                     'angular-permission.min.js': 'angular-permission/dist/angular-permission.min.js',
                     'angular-permission.min.js.map': 'angular-permission/dist/angular-permission.min.js.map',
@@ -52,7 +56,8 @@ module.exports = function(grunt) {
                     'tinymce/tinymce.min.js': 'tinymce-dist/tinymce.min.js',
                     'tinymce/plugins': 'tinymce-dist/plugins',
                     'tinymce/skins': 'tinymce-dist/skins',
-                    'tinymce/themes': 'tinymce-dist/themes'
+                    'tinymce/themes': 'tinymce-dist/themes',
+                    'socket.io.js': 'socket.io-client/socket.io.js'
                 }
             },
             assets: {
