@@ -15,34 +15,26 @@ angular.module('phyman.vote')
     })
     .state('vote.list',{
         url: '/list',
-        templateUrl:'./Background/Home/phyman-1/modules/vote/views/list.html'
+        templateUrl:'./Background/Home/phyman-1/modules/vote/views/vote_list.html'
     })
     .state('vote.detail',{
         url: '/detail/{id}',
-        templateUrl: './Background/Home/phyman-1/modules/vote/views/view.html',
+        templateUrl: './Background/Home/phyman-1/modules/vote/views/vote_view.html',
         controller: 'VoteViewCtrl'
      })
     .state('vote.result',{
     	url:'/result/{id}',
-    	templateUrl:'./Background/Home/phyman-1/modules/vote/views/result.html',
+    	templateUrl:'./Background/Home/phyman-1/modules/vote/views/vote_result.html',
     	controller:'VoteResultCtrl'
     })
     .state('vote.edit',{
         url: '/edit',
-        templateUrl: './Background/Home/phyman-1/modules/vote/views/edit.html',
+        templateUrl: './Background/Home/phyman-1/modules/vote/views/vote_edit.html',
         controller: 'VoteEditorCtrl'
     })
     .state('vote.new',{
         url: '/new',
-        templateUrl: './Background/Home/phyman-1/modules/vote/views/edit.html',
+        templateUrl: './Background/Home/phyman-1/modules/vote/views/vote_edit.html',
         'controller': 'VoteEditorCtrl'
     })
  }]);
-    /*.state('/PHYMAN/index.php',{
-        	template:'<p>hello world</p>'
-    })*/
-/*    .state('VoteList', {
-    	url: '/VoteList',
-        templateUrl: '/PHYMAN/Background/Home/phyman-1/modules/vote/views/list.html',
-     })*/
-/* }]);*/

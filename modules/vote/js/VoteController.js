@@ -1,4 +1,4 @@
-angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages', 'angular-jwt', 'ui.router','ngGrid','phyman.user'])
+angular.module('phyman.vote',['ngMaterial', 'ngMessages', 'angular-jwt', 'ui.router','ngGrid','phyman.user'])
 .config(function($mdThemingProvider) {
 	  $mdThemingProvider.theme('altTheme')
 	    .primaryPalette('purple');
@@ -8,10 +8,10 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages', 'angular-
         function($scope,$rootScope,$state,$mdDialog,VoteService) {
     		var promise =VoteService.getList();
    	 			promise.then(function(response) {
-   	 				alert(response.data.list);
+   	 				//alert(response.data.list);
    	 				$scope.vote=JSON.parse(response.data.list);
    	 			},function(response){
-   	 				alert("VoteList fail");
+   	 				//alert("VoteList fail");
    	 				$state.transitionTo("VoteDetail",null,{
    	 					reload:true
    	 				});
@@ -51,9 +51,9 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages', 'angular-
     	  		promise.then(function(response){
     	  			$scope.detail=response.data;
     	  			$scope.result=JSON.parse($scope.detail.result);
-    	  			alert($scope.detail.options);
+    	  		//	alert($scope.detail.options);
     	  		},function(response){
-    	  			alert("VoteResult fail");
+    	  			//alert("VoteResult fail");
      				$state.transitionTo(" vote.list",null,{
      					reload:true
      				});
@@ -65,28 +65,36 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages', 'angular-
  			promise.then(function(response) {
  				$scope.detail=response.data;
  				$scope.items=JSON.parse(response.data.options);
- 				alert($scope.items);
+ 				$scope.ifsingle=response.data.type;
+ 			//	alert($scope.items);
  			},function(response){
- 				alert("VoteList fail");
+ 			//	alert("VoteList fail");
  				$state.transitionTo(" VoteDetail",null,{
  					reload:true
  				});
  			});
+ 			
  			$scope.selected = [];
  			$scope.votenow = function(){
- 				var promise =VoteService.setVote($scope.selected,$stateParams.id);
- 				$id=$stateParams.id;
- 				$state.go('^.result',
- 		        		{
- 		        			id: $id
- 		        		},{
- 		        			reload:true
- 		        		});
+ 				if($scope.ifsingle==0&&count($scope.selected)!=1)
+ 					alert("当前为单选，请选择一个选项");
+ 				else{
+	 				var promise =VoteService.setVote($scope.selected,$stateParams.id);
+	 				$id=$stateParams.id;
+	 				$state.go('^.result',
+	 		        		{
+	 		        			id: $id
+	 		        		},{
+	 		        			reload:true
+	 		        		});
+ 				}
  			};
  		    $scope.toggle = function (item, list) {
  		       var idx = list.indexOf(item);
- 		       if (idx > -1) list.splice(idx, 1);
- 		       else list.push(item);
+ 		       if (idx > -1) 
+ 		    	   list.splice(idx, 1);
+ 		       else 
+ 		    	   list.push(item);
  		     };
  		     $scope.exists = function (item, list) {
  		       return list.indexOf(item) > -1;
@@ -176,24 +184,8 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages', 'angular-
              $scope.isLoggingIn = false;
          });
 	 };
-	/*var promise =VoteService.getlist();
-	 promise.then(function(response) {
-		 $scope.vote=JSON.parse(response.data.list);
-	 },function(response){
-		 alert("VoteList fail");
-		 $state.go("login");
-	 });
-	 $scope.voteDetail=function(id){
-		 VoteService.setvoteid(id);
-		 $state.go('VoteList',null,{
-			 reload:true
-		 });
-	 };*/
-  }])
-/*.config(function($mdThemingProvider) {
-  $mdThemingProvider.theme('altTheme')
-    .primaryPalette('purple');
-})*/;  
+	
+  }]);  
 
 /**
 Copyright 2016 Google Inc. All Rights Reserved. 

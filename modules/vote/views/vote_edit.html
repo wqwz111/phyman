@@ -5,11 +5,17 @@
       <md-input-container>
         <label>标题</label>
         <input name="title" type="text" ng-disabled="isNewVote" ng-model="vote.title" ng-manlength="20" required>
+        <div ng-show="vote.title.$dirty">
+            <div ng-message="pattern">title should be less than 20 characters.</div>
+         </div>
       </md-input-container>
       
       <md-input-container>
         <label>说明</label> 
         <input name="content" type="text" ng-disabled="isNewVote" ng-model="vote.content" ng-manlength="200" required>
+        <div ng-show="vote.content.$dirty">
+            <div ng-message="pattern">content should be less than 200 characters.</div>
+         </div>
       </md-input-container>
       <h4>截止日期</h4>
     <md-datepicker ng-model="vote.date" md-placeholder="Enter date" required></md-datepicker>
@@ -27,11 +33,14 @@
       <md-input-container >
         <label>选项{{number.optid}}:</label>
         <input ng-model="number.optcontent">
+        <div ng-show="number.optcontent.$dirty">
+            <div ng-message="pattern">options should be less than 20 characters.</div>
+         </div>
       </md-input-container>
       </section>
       <section>
       
-      <md-button class="md-raised" ng-disabled="isNewVote" ng-click="votenew()">确定</md-button>
+      <md-button class="md-raised" ng-disabled="!vote.$error || isNewVote"  ng-click="votenew()">确定</md-button>
       </section>
     </div>
   </div>

@@ -6,53 +6,30 @@ angular.module('phyman.noti')
         url: '/noti',
         template: '<div ui-view></div>',
         abstract: true,
-        data: {
-            permissions: {
-                except: ['anonymous'],
-                redirectTo: 'error'
-            }
-        }
-    })
-    .state('noti.list',{
-        url: '/list',
-        templateUrl:'views/noti_list.html',
         resolve: {
-            noti_list: ['NotiService',function(NotiService) {
+            noti: ['NotiService',function(NotiService) {
                return NotiService.getList();
             }]
         },
         controller: 'NotiCtrl'
     })
+    .state('noti.list',{
+        url: '/list',
+        templateUrl:'./Background/Home/phyman-1/modules/noti/views/noti_list.html'
+    })
     .state('noti.detail',{
-        url: '/detail/:id',
-        templateUrl: 'views/noti_view.html',
-        resolve: {
-            noti: ['NotiService','$stateParams',function(NotiService,$stateParams) {
-                return NotiService.getDetail($stateParams.id);
-            }]
-        },
+        url: '/detail/{id}',
+        templateUrl: './Background/Home/phyman-1/modules/noti/views/noti_view.html',
         controller: 'NotiViewCtrl'
      })
     .state('noti.edit',{
         url: '/edit',
-        templateUrl: 'views/noti_edit.html',
-        controller: 'NotiEditorCtrl',
-        data: {
-            permissions: {
-                only: ['admin'],
-                redirectTo: 'error'
-            }
-        }
+        templateUrl: './Background/Home/phyman-1/modules/noti/views/noti_edit.html',
+        controller: 'NotiEditorCtrl'
     })
     .state('noti.new',{
         url: '/new',
-        templateUrl: 'views/noti_edit.html',
-        'controller': 'NotiEditorCtrl',
-        data: {
-            permissions: {
-                only: ['admin'],
-                redirectTo: 'error'
-            }
-        }
+        templateUrl: './Background/Home/phyman-1/modules/noti/views/noti_edit.html',
+        'controller': 'NotiEditorCtrl'
     })
  }]);

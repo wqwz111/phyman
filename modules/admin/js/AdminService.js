@@ -1,4 +1,4 @@
-angular.module('phyman.noti')
+angular.module('phyman.admin')
 .config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider) {
     jwtInterceptorProvider.urlParam = 'access_token';
     jwtInterceptorProvider.tokenGetter = function() {
@@ -6,10 +6,10 @@ angular.module('phyman.noti')
     };
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-.factory('NotiService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
+.factory('AdminService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
     function($http, $q, $rootScope, jwtHelper, $log) {
-    var noti={};
-    var notiId;
+    var admin={};
+    var adminId;
     //var notidetail={};
    /* var onIdentity  = function(response) {
         //Do something at backend on identity secceed.
@@ -51,12 +51,15 @@ angular.module('phyman.noti')
         	console.log($rootScope.type);*/
         },
         
-        getDetail: function(id) {
+        addUser: function(admin) {
         	 var deferred = $q.defer();
-             $http.post('/PHYMAN/index.php/Home/Noti/getNotiDetail', {
+             $http.post('/PHYMAN/index.php/Home/Admin/addUser', {
             	 username: $rootScope.username,
-            	 access_token: $rootScope.access_token,
-            	 id:id,//$rootScope.notiid,
+            	 id:admin.id,//$rootScope.notiid,
+            	 name:admin.name,
+            	 sex:admin.sex,
+            	 authority:admin.authority,
+            	 grade:admin.grade
              })
              .then(function(response) {
              	console.log("response");

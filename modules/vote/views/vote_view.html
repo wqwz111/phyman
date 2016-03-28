@@ -7,8 +7,9 @@
           @see https://github.com/philipwalton/flexbugs#9-some-html-elements-cant-be-flex-containers
         -->
         <fieldset class="standard" >
-        
-          <legend>{{detail.title}}</legend>
+         
+          <legend ng-if="ifsingle==0">单选：{{detail.title}}</legend>
+          <legend ng-if="ifsingle!=0">多选：{{detail.title}}</legend>
            <md-content flex layout-padding >
     		<p>{{detail.content}}</p>
  			</md-content>
