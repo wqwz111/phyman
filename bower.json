@@ -9,7 +9,8 @@
     "angular-jwt": "^0.0.9",
     "angular-ui-router": "^0.2.17",
     "angular-ui-tinymce": "latest",
-    "angular-permission": "latest"
+    "angular-permission": "latest",
+    "socket.io-client": "^1.4.5"
   },
   "ignore": []
 }

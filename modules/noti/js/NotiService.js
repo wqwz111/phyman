@@ -10,7 +10,7 @@ angular.module('phyman.noti')
     return {
         getList:function(id) {
             var deferred = $q.defer();
-            $http.get($rootScope.API_HOST + '/noti')
+            $http.get($rootScope.API_HOST + '/noti/list')
             .then(function(response) {
                 noti = response.data;
                 deferred.resolve(response);

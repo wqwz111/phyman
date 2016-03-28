@@ -1,9 +1,12 @@
 angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
-    'phyman.user','phyman.noti',])
+    'phyman.user','phyman.noti','phyman.settings','phyman.message'])
     .run(['$rootScope','AuthService','PermissionStore',
       function($rootScope,AuthService,PermissionStore) { 
         $rootScope.API_HOST = 'http://localhost:8081/api';
         $rootScope.isLoggedIn = AuthService.checkLoggedIn();
+        if(AuthService.checkLoggedIn()) {
+            $rootScope.user = AuthService.getUser();
+        }
 
         // Define admin permission
         PermissionStore.definePermission('admin',function(stateParams) {

@@ -46,6 +46,7 @@
       </md-menu>
     </md-toolbar>
     <md-progress-linear id="load-progress" md-mode="indeterminate" ng-show="showLoadProgress"></md-progress-linear>
+    <notice/>
     <div id="main" layout="row">
       <nav id="sidenav" ng-controller = 'navCtrl' ng-show="isLoggedIn">
         <md-sidenav class="md-sidenav-left"
@@ -61,7 +62,7 @@
           </md-list>
         </md-sidenav>
       </nav>
-      <section id="content" ui-view layout="column" layout-fill></section>
+      <div id="content" ui-view layout="column"></div>
     </div>
 
       <script src="lib/angular.min.js"></script>
@@ -74,9 +75,12 @@
       <script src="lib/angular-jwt.min.js"></script>
       <script src="lib/angular-ui-tinymce.min.js"></script>
       <script src="lib/tinymce/tinymce.min.js"></script>
+      <script src="lib/socket.io.js"></script>
 
       <script src="js/user.js"></script>
       <script src="js/noti.js"></script>
+      <script src="js/settings.js"></script>
+      <script src="js/message.js"></script>
 
       <script src="app.js"></script>
    </body>
