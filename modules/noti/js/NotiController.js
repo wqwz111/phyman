@@ -54,7 +54,15 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
                 },function() {});
         };
     }])
-    .controller('NotiViewCtrl',['$scope','$state','$stateParams','$sce',
-      'noti',function($scope,$state,$stateParams,$sce,noti) {
-        $scope.noti = noti.data
+    .controller('NotiViewCtrl',['$scope','$state','$stateParams','$sce','NotiService',
+      'noti',function($scope,$state,$stateParams,$sce,noti,NotiService) {
+        $scope.noti = noti.data;
+        $scope.viewStat = function(id) {
+            NotiService.viewStat(id)
+              .then(function(response) {
+                $scope.stat.vStds = response.data;
+              },function(error) {
+
+              });
+        };
     }]);

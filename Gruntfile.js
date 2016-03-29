@@ -37,8 +37,6 @@ module.exports = function(grunt) {
                     destPrefix: 'dist/lib/'
                 },
                 files: {
-                    'jquery.min.js': 'jquery/dist/jquery.min.js',
-                    'jquery.min.map': 'jquery/dist/jquery.min.map',
                     'angular-ui-router.min.js': 'angular-ui-router/release/angular-ui-router.min.js',
                     'angular-permission.min.js': 'angular-permission/dist/angular-permission.min.js',
                     'angular-permission.min.js.map': 'angular-permission/dist/angular-permission.min.js.map',

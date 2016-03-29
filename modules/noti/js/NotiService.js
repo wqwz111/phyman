@@ -64,6 +64,19 @@ angular.module('phyman.noti')
                 deferred.reject(error);
             });
             return deferred.promise;
+        },
+        viewStat: function(id) {
+            var deferred = $q.defer();
+            $http.get($rootScope.API_HOST + '/noti/stat',{
+                id:id
+            })
+            .then(function(response) {
+                deferred.resolve(response);
+            },function(error) {
+                onFail(error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
         }
     };
 }])

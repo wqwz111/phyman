@@ -11,10 +11,11 @@ angular.module('phyman.user')
     var user = {};
     var onIdentity = function(response) {
         localStorage.setItem('id_token',response.data.jwt);
-        $rootScope.isLoggedIn = true;
+        var user = jwtHelper.decodeToken(response.data.jwt);
+        $rootScope.$emit('loginSuccess', user);
     };
     var onIdFail = function(error) {
-        $rootScope.isLoggedIn = false;
+        $rootScope.$emit('loginFail');
     };
 
     return {
@@ -58,6 +59,7 @@ angular.module('phyman.user')
         logout: function() {
             user = null;
             localStorage.removeItem('id_token');
+            $rootScope.$emit('logoutSuccess');
         },
         forgetPassword: function(user) {
 

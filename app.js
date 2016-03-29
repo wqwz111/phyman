@@ -1,7 +1,7 @@
 angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
     'phyman.user','phyman.noti','phyman.settings','phyman.message'])
-    .run(['$rootScope','AuthService','PermissionStore',
-      function($rootScope,AuthService,PermissionStore) { 
+    .run(['$rootScope','AuthService','MsgService','PermissionStore',
+      function($rootScope,AuthService,MsgService,PermissionStore) { 
         $rootScope.API_HOST = 'http://localhost:8081/api';
         $rootScope.isLoggedIn = AuthService.checkLoggedIn();
         if(AuthService.checkLoggedIn()) {
@@ -30,6 +30,17 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         });
 
         // Add events listener
+        $rootScope.$on('loginSuccess',function(event,user) {
+            $rootScope.user = user;
+            $rootScope.isLoggedIn = true;
+            MsgService.emit('login',{id:user.id,viewlevel:user.viewlevel});
+        });
+        $rootScope.$on('loginFail',function(event) {
+            $rootScope.isLoggedIn = false;
+        });
+        $rootScope.$on('logoutSuccess',function(event) {
+            MsgService.emit('disconnect');
+        });
         $rootScope.$on('$stateChangeStart',
           function(event,toState,toParams,fromState,fromParams,options) {
             $rootScope.showLoadProgress = true;

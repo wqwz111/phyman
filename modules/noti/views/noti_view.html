@@ -1,6 +1,17 @@
-<div class="page-container">
+<div class="page-container" layout="column">
   <md-content ng-model="noti" class="page md-whiteframe-1dp">
     <h2 class="page-title">{{noti.title}}</h2>
     <div ng-bind-html="noti.content | trustedHtml"></div>
   </md-content>
+  <section permission only="'admin'">
+    <md-grid-list
+        md-cols-gt-md="12" md-cols="3" md-cols-md="9"
+        md-row-height-gt-md="1:1" md-row-height="4:3"
+        md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
+      <md-gird-tile md-colspan-gt-sm="1" md-rowspan-gt-sm="3" ng-repeat="item in stat.vStds">
+        <p id="name">{{item.name}}</p>
+        <p id="stdno">{{item.stdNo}}</p>
+      </md-gird-tile>
+    </md-grid-list>
+  </section>
 </div>
