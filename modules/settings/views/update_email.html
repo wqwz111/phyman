@@ -1,0 +1,9 @@
+<ng-form id="update-email-form" name="updateEmailForm" class="md-whiteframe-1dp" layout="column" layout-padding>
+    <span class="md-subhead">请设置Email：</span>
+    <md-input-container>
+        <label>Email：</label>
+        <input name="email" type="email" ng-model="email" required>
+    </md-input-container>
+    <md-button class="md-raised md-primary" ng-click="onUpdateEmailClick()" aria-label="Update Email"
+    ng-disabled="updateEmailForm.$pristine || updateEmailForm.$invalid || !updateEmailForm.$error">修改</md-button>
+</ng-form>
