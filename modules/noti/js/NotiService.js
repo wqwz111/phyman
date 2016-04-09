@@ -31,7 +31,7 @@ angular.module('phyman.noti')
                 }
              })
              .then(function(response) {
-                 noti.detail=response.data.notification;
+                 noti.detail=response.data;
                  deferred.resolve(response);
              },function(error) {
                  onFail(error);

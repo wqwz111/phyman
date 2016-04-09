@@ -1,7 +1,7 @@
 angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
     'phyman.user','phyman.noti','phyman.settings','phyman.message'])
-    .run(['$rootScope','AuthService','MsgService','PermissionStore',
-      function($rootScope,AuthService,MsgService,PermissionStore) { 
+    .run(['$rootScope','$mdToast','AuthService','MsgService','PermissionStore',
+      function($rootScope,$mdToast,AuthService,MsgService,PermissionStore) { 
         $rootScope.API_HOST = 'http://localhost:8081/api';
         $rootScope.isLoggedIn = AuthService.checkLoggedIn();
         if(AuthService.checkLoggedIn()) {
@@ -41,17 +41,48 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         $rootScope.$on('logoutSuccess',function(event) {
             MsgService.emit('disconnect');
         });
-        $rootScope.$on('$stateChangeStart',
-          function(event,toState,toParams,fromState,fromParams,options) {
-            $rootScope.showLoadProgress = true;
+        $rootScope.$on('toastError',function(event,message) {
+            $mdToast.show(
+                $mdToast.simple()
+                  .textContent(message)
+                  .hideDelay(1500)
+            );
         });
-        $rootScope.$on('$stateChangeSuccess',
-          function(event,toState,toParams,fromState,fromParams,options) {
-            // Handle $stateChangeSuccess events except those emitted by angular-permission.
-            if(toState) {
+    }])
+    .factory('ApiInterceptor', ['$rootScope','$q', function($rootScope,$q){
+        return {
+            request: function(config) {
+                $rootScope.showLoadProgress = true;
+                return config;
+            },
+            requestError: function(err) {
                 $rootScope.showLoadProgress = false;
+                return $q.reject(err);
+            },
+            response: function(res) {
+                $rootScope.showLoadProgress = false;
+                return res;
+            },
+            responseError: function(err) {
+                $rootScope.showLoadProgress = false;
+                var msg;
+                switch(err.status) {
+                    case -1:
+                        msg = "无法连接到服务器，请稍后重试";
+                        break;
+                    case 404:
+                        msg = "没有相应资源";
+                        break;
+                    default:
+                        msg = "系统出现了问题，请稍后重试";
+                }
+                $rootScope.$emit('toastError',msg);
+                return $q.reject(err);
             }
-        });
+        };
+    }])
+    .config(['$httpProvider',function($httpProvider) {
+        $httpProvider.interceptors.push('ApiInterceptor');
     }])
     .config(['$mdThemingProvider',function($mdThemingProvider) {
         $mdThemingProvider.theme('default')

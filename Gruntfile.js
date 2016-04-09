@@ -27,7 +27,8 @@ module.exports = function(grunt) {
                         'modules/settings/js/SettingsController.js',
                         'modules/settings/js/SettingsRoute.js'],
                     'dist/js/message.js': [
-                        'modules/message/js/Message.js']
+                        'modules/message/js/Message.js'],
+                    'dist/lib/langs/zh_CN.js': 'assets/langs/zh_CN.js'
                 }
             }
         },
@@ -51,10 +52,10 @@ module.exports = function(grunt) {
                     'angular.min.js': 'angular/angular.min.js',
                     'angular.min.js.map': 'angular/angular.min.js.map',
                     'angular-ui-tinymce.min.js': 'angular-ui-tinymce/dist/tinymce.min.js',
-                    'tinymce/tinymce.min.js': 'tinymce-dist/tinymce.min.js',
-                    'tinymce/plugins': 'tinymce-dist/plugins',
-                    'tinymce/skins': 'tinymce-dist/skins',
-                    'tinymce/themes': 'tinymce-dist/themes',
+                    'tinymce.min.js': 'tinymce-dist/tinymce.min.js',
+                    'plugins': 'tinymce-dist/plugins',
+                    'skins': 'tinymce-dist/skins',
+                    'themes': 'tinymce-dist/themes',
                     'socket.io.js': 'socket.io-client/socket.io.js'
                 }
             },
