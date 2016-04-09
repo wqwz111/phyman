@@ -48,8 +48,6 @@ angular.module('phyman.user')
             .then(function(response) {
                 onIdentity(response);
                 deferred.resolve(response);
-                $rootScope.username=response.data.username;
-                $rootScope.access_token=response.data.access_token;
             },function(error) {
                 onIdFail(error);
                 deferred.reject(error);
