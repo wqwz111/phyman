@@ -1,8 +1,8 @@
-<div id="notice" class="md-whiteframe-1dp" ng-show="showNotice" ng-click="onClick($event)">
+<div id="notice" class="md-whiteframe-1dp" ng-show="showNotice" ng-click="onClick()">
    <div id="triangle-topleft"></div>
    <div id="notice-container">
-      <span id="notice-title">{{notice.title}}</span>
-      <span id="notice-content">{{notice.date}}</span>
+      <span id="notice-title">{{notice.from}}</span>
+      <span id="notice-content">{{notice.content}}</span>
    </div>
    <md-button id="notice-close-button" class="md-icon-button" aria-label="Ignore notice" ng-click="showNotice=false">
       <md-icon md-svg-src="assets/images/ic_close_48px.svg"></md-icon>

@@ -1,11 +1,10 @@
 <md-fab-speed-dial md-direction="up">
-  <md-fab-trigger permission-only="'admin'">
+  <md-fab-trigger permission only="'admin'">
     <md-button aria-label="menu" class="md-fab md-warn" ng-click="newNoti()">
       <md-icon md-svg-src="assets/images/ic_add_48px.svg"></md-icon>
     </md-button>
   </md-fab-trigger>
 </md-fab-speed-dial>
-
 <div flex-gt-sm="90" layout-padding layout="column">
   <section ng-show="(noti | notiFilter: 'new').length != 0">
     <md-subheader class="md-primary">本月</md-subheader>
@@ -16,7 +15,7 @@
             <span class="md-title item-title">{{item.title}}</span>
             <span class="md-caption">{{item.date | date:'MM-dd'}}</span>
           </div>
-          <div permission-only="'admin'">
+          <div permission only="'admin'">
             <md-icon class="md-secondary" md-svg-src="assets/images/ic_close_48px.svg" ng-click="deleteNoti(item.id,$event,$index)" aria-label="edit"></md-icon>
           </div>
         <md-divider ng-if="!$last"></md-divider>

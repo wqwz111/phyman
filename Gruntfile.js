@@ -23,30 +23,11 @@ module.exports = function(grunt) {
                         'modules/noti/js/NotiController.js',
                         'modules/noti/js/NotiService.js',
                         'modules/noti/js/NotiRoute.js'],
-                    /*'dist/js/vote.js': [
-                        'modules/vote/js/VoteController.js',
-                        'modules/vote/js/VoteService.js',
-                        'modules/vote/js/VoteRoute.js'],*/
-                    'dist/js/qa.js': [
-                        'modules/qa/js/QaController.js',
-                        'modules/qa/js/QaService.js',
-                        'modules/qa/js/QaRoute.js'],
-                    'dist/js/admin.js': [
-                        'modules/admin/js/AdminController.js',
-                        'modules/admin/js/AdminService.js',
-                        'modules/admin/js/AdminRoute.js'
-                        ],
-                    'dist/js/vote.js': [
-                        'modules/vote/js/VoteController.js',
-                        'modules/vote/js/VoteService.js',
-                        'modules/vote/js/VoteRoute.js'
-                        ],
                     'dist/js/settings.js': [
                         'modules/settings/js/SettingsController.js',
                         'modules/settings/js/SettingsRoute.js'],
                     'dist/js/message.js': [
-                        'modules/message/js/Message.js'],
-                    'dist/lib/langs/zh_CN.js': 'assets/langs/zh_CN.js'
+                        'modules/message/js/Message.js']
                 }
             }
         },
@@ -56,7 +37,8 @@ module.exports = function(grunt) {
                     destPrefix: 'dist/lib/'
                 },
                 files: {
-                    'jquery-1.9.1.js':'jquery-1.9.1.js',
+                    'jquery.min.js': 'jquery/dist/jquery.min.js',
+                    'jquery.min.map': 'jquery/dist/jquery.min.map',
                     'angular-ui-router.min.js': 'angular-ui-router/release/angular-ui-router.min.js',
                     'angular-permission.min.js': 'angular-permission/dist/angular-permission.min.js',
                     'angular-permission.min.js.map': 'angular-permission/dist/angular-permission.min.js.map',
@@ -68,20 +50,16 @@ module.exports = function(grunt) {
                     'angular-aria.min.js.map': 'angular-aria/angular-aria.min.js.map',
                     'angular-animate.min.js': 'angular-animate/angular-animate.min.js',
                     'angular-animate.min.js.map': 'angular-animate/angular-animate.min.js.map',
-                    'angular.js': 'angular/angular.js',
                     'angular.min.js': 'angular/angular.min.js',
                     'angular.min.js.map': 'angular/angular.min.js.map',
-                    'ng-grid.debug.js':'ng-grid-2.0.12/ng-grid.debug.js',
                     'angular-ui-tinymce.min.js': 'angular-ui-tinymce/dist/tinymce.min.js',
-                    'tinymce.min.js': 'tinymce-dist/tinymce.min.js',
-                    'plugins': 'tinymce-dist/plugins',
-                    'skins': 'tinymce-dist/skins',
-                    'themes': 'tinymce-dist/themes',
-                    'socket.io.js': 'socket.io-client/socket.io.js',
-                    'ng-file-upload-shim.min.js':'ng-file-upload/ng-file-upload-shim.min.js',
-                    'ng-file-upload.min.js':'ng-file-upload/ng-file-upload.min.js'
+                    'tinymce/tinymce.min.js': 'tinymce-dist/tinymce.min.js',
+                    'tinymce/plugins': 'tinymce-dist/plugins',
+                    'tinymce/skins': 'tinymce-dist/skins',
+                    'tinymce/themes': 'tinymce-dist/themes',
+                    'socket.io.js': 'socket.io-client/socket.io.js'
                 }
-            },  
+            },
             assets: {
                 options: {
                     destPrefix: 'dist/',
@@ -106,7 +84,7 @@ module.exports = function(grunt) {
         uglify: {
             js: {
                 files: [{
-                    expand: false,
+                    expand: true,
                     cwd: 'dist',
                     src: 'js/*.js',
                     dest: 'dist/'

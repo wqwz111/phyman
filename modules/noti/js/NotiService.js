@@ -10,9 +10,8 @@ angular.module('phyman.noti')
     return {
         getList:function(id) {
             var deferred = $q.defer();
-             $http.post($rootScope.API_HOST + '/Home/Noti/getList', {
-                username:$rootScope.uid
-            }).then(function(response) {
+            $http.get($rootScope.API_HOST + '/noti/list')
+            .then(function(response) {
                 noti = response.data;
                 deferred.resolve(response);
             },function(error) {
@@ -26,11 +25,13 @@ angular.module('phyman.noti')
         },
         getDetail: function(id) {
              var deferred = $q.defer();
-             $http.post($rootScope.API_HOST + '/Home/Noti/getNotiDetail',{
-                    id: id,
-                    userid:$rootScope.uid
+             $http.get($rootScope.API_HOST + '/noti/findOne',{
+                params:{
+                    id: id
+                }
              })
-            .then(function(response) {
+             .then(function(response) {
+                 noti.detail=response.data.notification;
                  deferred.resolve(response);
              },function(error) {
                  onFail(error);
@@ -40,11 +41,8 @@ angular.module('phyman.noti')
         },
         addNoti: function(noti) {
             var deferred = $q.defer();
-
-            $http.post($rootScope.API_HOST + '/Home/Admin/newNoti',{
-                content: noti.content,
-                title:noti.title,
-                uid:$rootScope.uid
+            $http.post($rootScope.API_HOST + '/noti/add',{
+                noti: noti
             })
             .then(function(response) {
                 deferred.resolve(response);
@@ -56,20 +54,7 @@ angular.module('phyman.noti')
         },
         deleteNoti: function(id) {
             var deferred = $q.defer();
-             $http.post($rootScope.API_HOST + '/Home/Noti/deleteOne',{
-                id:id
-            })
-            .then(function(response) {
-                deferred.resolve(response);
-            },function(error) {
-                onFail(error);
-                deferred.reject(error);
-            });
-            return deferred.promise;
-        },
-        viewStat: function(id) {
-            var deferred = $q.defer();
-            $http.post($rootScope.API_HOST + '/Home/Noti/stat',{
+            $http.post($rootScope.API_HOST + '/noti/deleteOne',{
                 id:id
             })
             .then(function(response) {
