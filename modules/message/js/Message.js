@@ -1,35 +1,34 @@
 angular.module('phyman.message',['ngMaterial'])
-  .controller('messageCtrl',['$scope','$state','MsgService',
-    function($scope,$state,MsgService){
+  .controller('messageCtrl',['$scope','$rootScope','$state','MsgService',
+    function($scope,$rootScope,$state,MsgService){
     $scope.showNotice = false;
     MsgService.getUnreadMsg()
      .then(function(response) {
-        $scope.notice = response.data;
+        $scope.notice = response.data.message;
         $scope.showNotice = true;
-     }).then(function(error) {
+     },function(error) {
         $scope.notice = {};
         $scope.showNotice = false;
      });
-    MsgService.on('connect',function(data) {
-        MsgService.emit('login',$rootScope.user.id,$rootScope.user.viewlevel);
-    });
     MsgService.on('new_msg',function(data) {
         // Message is a json object.
         // {
         //   from: '',
-        //   to: '',
         //   content: '',
-        //   viewlevel: '',
         //   action: ''
         // }
-        $scope.notice = response.data;
+        $scope.notice = angular.fromJson(data);
+        console.log(angular.fromJson(data));
+        $scope.showNotice = true;
     });
-    $scope.onClick = function(index) {
-        $state.go($scope.notice.action);
+    $scope.onClick = function($event) {
+        // Do something when clicking the message.
+        // $event.stopPropagation();
+        // $state.go($scope.notice.action);
     }
   }])
   .factory('MsgService',['$rootScope','$http','$q',function($rootScope,$http,$q){
-    var SOCKET_HOST = 'http://localhost:2120';
+    var SOCKET_HOST = 'http://119.29.6.121:2120';
     var socket = io.connect(SOCKET_HOST);
     return {
         on: function(eventName,callback) {
@@ -40,7 +39,7 @@ angular.module('phyman.message',['ngMaterial'])
                 });
             });
         },
-        emit: function(eventName,callback) {
+        emit: function(eventName,data,callback) {
             socket.emit(eventName,data,function() {
                 var args = arguments;
                 $rootScope.$apply(function() {
@@ -51,8 +50,8 @@ angular.module('phyman.message',['ngMaterial'])
             });
         },
         getUnreadMsg: function() {
-            var deferred = $q.deferred();
-            $http.get($rootScope.API_HOST + '/messages')
+            var deferred = $q.defer();
+            $http.get($rootScope.API_HOST + 'Home/Admin/messages')
              .then(function(response) {
                 deferred.resolve(response);
              }).then(function(error) {

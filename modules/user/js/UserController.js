@@ -13,7 +13,7 @@ angular.module('phyman.user',['ngMessages','angular-jwt','ui.router','ngMaterial
             $scope.isRegistering = true;
             AuthService.register($scope.user)
               .then(function(response) {
-                $scope.isRegistering = false;
+                $scope.isRegistering = true;
                 AuthDialog.hide();
             },function(error) {
                 $scope.isRegistering = false;
@@ -31,7 +31,7 @@ angular.module('phyman.user',['ngMessages','angular-jwt','ui.router','ngMaterial
             $scope.isLoggingIn = true;
             AuthService.login($scope.user)
               .then(function(response) {
-                $scope.isLoggingIn = false;
+                $scope.isLoggingIn = true;
                 AuthDialog.hide();
             },function(error) {
                 $scope.isLoggingIn = false;

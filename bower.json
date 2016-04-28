@@ -2,15 +2,20 @@
   "name": "phyman",
   "private": true,
   "dependencies": {
-    "angular": "^1.4.9",
+    "angular": "^1.4.x",
     "angular-material": "latest",
-    "angular-aria": "^1.4.9",
-    "angular-animate": "^1.4.9",
+    "angular-aria": "^1.4.x",
+    "angular-animate": "^1.4.x",
     "angular-jwt": "^0.0.9",
     "angular-ui-router": "^0.2.17",
     "angular-ui-tinymce": "latest",
     "angular-permission": "latest",
+    "ng-file-upload": "^12.0.4",
     "socket.io-client": "^1.4.5"
+  
+  },
+  "resolutions":{
+    "angular": "1.4.x"
   },
   "ignore": []
 }
