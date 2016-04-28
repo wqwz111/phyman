@@ -11,10 +11,14 @@ angular.module('phyman.user')
     var user = {};
     var onIdentity = function(response) {
         localStorage.setItem('id_token',response.data.jwt);
-        $rootScope.isLoggedIn = true;
+        var user = jwtHelper.decodeToken(response.data.jwt);
+        $rootScope.username=user.uid;
+        console.log(user);
+        console.log(user.id);
+        $rootScope.$emit('loginSuccess', user);
     };
     var onIdFail = function(error) {
-        $rootScope.isLoggedIn = false;
+        $rootScope.$emit('loginFail');
     };
 
     return {
@@ -30,6 +34,7 @@ angular.module('phyman.user')
                 password: params.password
             })
             .then(function(response) {
+
                 onIdentity(response);
                 deferred.resolve(response);
             },function(error) {
@@ -40,15 +45,14 @@ angular.module('phyman.user')
         },
         login: function(user) {
             var deferred = $q.defer();
-            $http.post($rootScope.API_HOST + '/login',{
+              $http.post($rootScope.API_HOST+'/Home/Index/login', {
                 username: user.username,
                 password: user.password
             })
             .then(function(response) {
+                $rootScope.uid=response.data.username;
                 onIdentity(response);
                 deferred.resolve(response);
-                $rootScope.username=response.data.username;
-                $rootScope.access_token=response.data.access_token;
             },function(error) {
                 onIdFail(error);
                 deferred.reject(error);
@@ -58,13 +62,14 @@ angular.module('phyman.user')
         logout: function() {
             user = null;
             localStorage.removeItem('id_token');
+            $rootScope.$emit('logoutSuccess');
         },
         forgetPassword: function(user) {
 
         },
         resetPassword: function(password) {
             var deferred = $q.defer();
-            $http.post($rootScope.API_HOST + '/reset_password',{
+            $http.post($rootScope.API_HOST + '/Home/Index/reset_password',{
                 new_password: password
             })
             .then(function(response) {

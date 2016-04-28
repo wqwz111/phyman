@@ -1,8 +1,9 @@
 angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
-    'phyman.user','phyman.noti','phyman.settings','phyman.message'])
-    .run(['$rootScope','AuthService','PermissionStore',
-      function($rootScope,AuthService,PermissionStore) { 
-        $rootScope.API_HOST = 'http://localhost:8081/api';
+    'phyman.user','phyman.noti','phyman.settings','phyman.message','phyman.vote','phyman.qa','phyman.admin'])
+    .run(['$rootScope','$mdToast','AuthService','MsgService','PermissionStore',
+      function($rootScope,$mdToast,AuthService,MsgService,PermissionStore) { 
+        $rootScope.API_HOST = 'http://192.168.0.104:8081/PHYMAN/index.php';
+		$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';
         $rootScope.isLoggedIn = AuthService.checkLoggedIn();
         if(AuthService.checkLoggedIn()) {
             $rootScope.user = AuthService.getUser();
@@ -12,6 +13,8 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         PermissionStore.definePermission('admin',function(stateParams) {
             if(AuthService.checkLoggedIn()) {
                 var user = AuthService.getUser();
+              /*  console.log("user.permission");
+                console.log(user.permission);*/
                 return user.permission === 'admin' ? true : false;
             }
             return false;
@@ -20,27 +23,73 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         PermissionStore.definePermission('user',function(stateParams) {
             if(AuthService.checkLoggedIn()) {
                 var user = AuthService.getUser();
+            /*    console.log("user.permission2");
+                console.log(user.permission);*/
                 return user.permission === 'user' ? true : false;
             }
             return false;
         });
         // Define anonymous permission
         PermissionStore.definePermission('anonymous',function(stateParams) {
+           /* console.log("user.permission3");
+                console.log(user.permission);*/
             return !AuthService.checkLoggedIn();
         });
 
         // Add events listener
-        $rootScope.$on('$stateChangeStart',
-          function(event,toState,toParams,fromState,fromParams,options) {
-            $rootScope.showLoadProgress = true;
+        $rootScope.$on('loginSuccess',function(event,user) {
+            $rootScope.user = user;
+            $rootScope.isLoggedIn = true;
+            MsgService.emit('login',{id:user.id,viewlevel:user.viewlevel});
         });
-        $rootScope.$on('$stateChangeSuccess',
-          function(event,toState,toParams,fromState,fromParams,options) {
-            // Handle $stateChangeSuccess events except those emitted by angular-permission.
-            if(toState) {
+        $rootScope.$on('loginFail',function(event) {
+            $rootScope.isLoggedIn = false;
+        });
+        $rootScope.$on('logoutSuccess',function(event) {
+            MsgService.emit('disconnect');
+        });
+        $rootScope.$on('toastError',function(event,message) {
+            $mdToast.show(
+                $mdToast.simple()
+                  .textContent(message)
+                  .hideDelay(1500)
+            );
+        });
+    }])
+    .factory('ApiInterceptor', ['$rootScope','$q', function($rootScope,$q){
+        return {
+            request: function(config) {
+                $rootScope.showLoadProgress = true;
+                return config;
+            },
+            requestError: function(err) {
                 $rootScope.showLoadProgress = false;
+                return $q.reject(err);
+            },
+            response: function(res) {
+                $rootScope.showLoadProgress = false;
+                return res;
+            },
+            responseError: function(err) {
+                $rootScope.showLoadProgress = false;
+                var msg;
+                switch(err.status) {
+                    case -1:
+                        msg = "无法连接到服务器，请稍后重试";
+                        break;
+                    case 404:
+                        msg = "没有相应资源";
+                        break;
+                    default:
+                        msg = "系统出现了问题，请稍后重试";
+                }
+                $rootScope.$emit('toastError',msg);
+                return $q.reject(err);
             }
-        });
+        };
+    }])
+    .config(['$httpProvider',function($httpProvider) {
+        $httpProvider.interceptors.push('ApiInterceptor');
     }])
     .config(['$mdThemingProvider',function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
@@ -68,23 +117,23 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         $scope.menuItems = [{
             title: '通知',
             state: 'noti.list',
-            img: '/assets/images/ic_new_releases_48px.svg'
+            img: 'assets/images/ic_new_releases_48px.svg'
         },{
             title: '投票',
-            state: 'votes',
-            img: '/assets/images/ic_check_48px.svg'
+            state: 'vote.list',
+            img: 'assets/images/ic_check_48px.svg'
         },{
             title: '提问',
-            state: 'comments',
-            img: '/assets/images/ic_chat_48px.svg'
+            state: 'qa.list',
+            img: 'assets/images/ic_chat_48px.svg'
         },{
-            title: '已删除',
-            state: 'deleted',
-            img: '/assets/images/ic_close_48px.svg'
+            title: '用户管理',
+            state: 'admin.adduser',
+            img: 'assets/images/ic_person_48px.svg'
         },{
             title: '设置',
             state: 'settings',
-            img: '/assets/images/ic_settings_48px.svg'
+            img: 'assets/images/ic_settings_48px.svg'
         }];
 
         $scope.clickMenuItem = function(state) {

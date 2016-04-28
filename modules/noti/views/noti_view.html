@@ -1,6 +1,43 @@
 <div class="page-container">
-  <md-content ng-model="noti" class="page md-whiteframe-1dp">
-    <h2 class="page-title">{{noti.title}}</h2>
-    <div ng-bind-html="noti.content | trustedHtml"></div>
+  <md-content class="page md-whiteframe-1dp">
+    <h2 class="page-title" ng-model="title">{{title}}</h2>
+    <div ng-bind-html="content | trustedHtml"></div>
   </md-content>
+  <div permission-only="'admin'">
+    <h4>查看人数统计：</h4>
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="已查看">
+        <md-grid-list
+        md-cols-gt-md="12" md-cols="6" md-cols-md="8" md-row-height="30px"
+        md-gutter-gt-md="8px" md-gutter-md="8px" md-gutter="4px">
+          <md-grid-tile
+            ng-repeat="item in readStds" md-colspan="2" md-rowspan="2"
+            ng-style="{
+              'background': item.color
+            }">
+            <div layout="column" layout-align="center center">
+              <span class="md-subhead">{{item.name}}</span>
+              <span class="md-body-1">{{item.stdNo}}</span>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+      <md-tab label="未查看">
+        <md-grid-list
+        md-cols-gt-md="12" md-cols="6" md-cols-md="8" md-row-height="30px"
+        md-gutter-gt-md="8px" md-gutter-md="8px" md-gutter="4px">
+          <md-grid-tile
+            ng-repeat="item in unreadStds" md-colspan="2" md-rowspan="2"
+            ng-style="{
+              'background': item.color
+            }">
+            <div layout="column" layout-align="center center">
+              <span class="md-subhead">{{item.name}}</span>
+              <span class="md-body-1">{{item.stdNo}}</span>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-tab>
+    </md-tabs>
+  </div>
 </div>

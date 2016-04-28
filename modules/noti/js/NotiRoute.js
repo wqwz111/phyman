@@ -16,30 +16,25 @@ angular.module('phyman.noti')
     .state('noti.list',{
         url: '/list',
         templateUrl:'views/noti_list.html',
-        resolve: {
+        /*resolve: {
             noti_list: ['NotiService',function(NotiService) {
                return NotiService.getList();
             }]
-        },
+        },*/
         controller: 'NotiCtrl'
     })
     .state('noti.detail',{
         url: '/detail/:id',
         templateUrl: 'views/noti_view.html',
-        resolve: {
-            noti: ['NotiService','$stateParams',function(NotiService,$stateParams) {
-                return NotiService.getDetail($stateParams.id);
-            }]
-        },
         controller: 'NotiViewCtrl'
      })
     .state('noti.new',{
         url: '/new',
         templateUrl: 'views/noti_edit.html',
-        'controller': 'NotiEditorCtrl',
+        controller: 'NotiEditorCtrl',
         data: {
             permissions: {
-                only: ['admin'],
+                except: ['anonymous','user'],
                 redirectTo: 'error'
             }
         }
