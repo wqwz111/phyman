@@ -12,7 +12,7 @@ angular.module('phyman.vote')
     //var notidetail={};
     var onIdentity  = function(response) {
         //Do something at backend on identity secceed.
-    	 noti=response.data.list;
+    	 vote=response.data.list;
      }
 	var onIdFail = function(error) {
         //Do something at backend on identity failed.
@@ -23,13 +23,14 @@ angular.module('phyman.vote')
             return this.list;
         },
         newVote:function(vote,options){
-        	
-       	 var deferred = $q.defer();
+        	console.log($rootScope.user.id);
+       	    var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Admin/newVote', {
-                username: $rootScope.username,
+                username: $rootScope.user.id,
                 title:vote.title,
                 content:vote.content,
                 type:vote.type,
+                grades:vote.grade,
                 options:options,
                 date:vote.date,
                 access_token: $rootScope.access_token
@@ -51,7 +52,7 @@ angular.module('phyman.vote')
             console.log(id);
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST+'/Home/Vote/userVote', {
-                 username:$rootScope.uid,
+                 username:$rootScope.user.id,
                  choose:item,
                  id:id,
              })
@@ -69,7 +70,7 @@ angular.module('phyman.vote')
         getList:function() {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Vote/getList', {
-                username: $rootScope.username,
+                username: $rootScope.user.id,
                 access_token: $rootScope.access_token
             })
             .then(function(response) {
@@ -86,7 +87,7 @@ angular.module('phyman.vote')
         getResult: function(id){
         	var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Vote/getVoteResult', {
-                username: $rootScope.username,
+                username: $rootScope.user.id,
                 id:id,
                 access_token: $rootScope.access_token
             })
@@ -104,7 +105,7 @@ angular.module('phyman.vote')
         getDetail: function(vote) {
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST+'/Home/Vote/getVoteDetail', {
-            	 username: $rootScope.username,
+            	 username: $rootScope.user.id,
             	 access_token: $rootScope.access_token,
             	 id:vote
              })

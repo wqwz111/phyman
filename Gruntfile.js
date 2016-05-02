@@ -23,10 +23,7 @@ module.exports = function(grunt) {
                         'modules/noti/js/NotiController.js',
                         'modules/noti/js/NotiService.js',
                         'modules/noti/js/NotiRoute.js'],
-                    /*'dist/js/vote.js': [
-                        'modules/vote/js/VoteController.js',
-                        'modules/vote/js/VoteService.js',
-                        'modules/vote/js/VoteRoute.js'],*/
+                   
                     'dist/js/qa.js': [
                         'modules/qa/js/QaController.js',
                         'modules/qa/js/QaService.js',
@@ -41,6 +38,11 @@ module.exports = function(grunt) {
                         'modules/vote/js/VoteService.js',
                         'modules/vote/js/VoteRoute.js'
                         ],
+                    'dist/js/scan.js': [
+                        'modules/scan/js/ScanController.js',
+                        'modules/scan/js/ScanService.js',
+                        'modules/scan/js/ScanRoute.js'
+                        ],    
                     'dist/js/settings.js': [
                         'modules/settings/js/SettingsController.js',
                         'modules/settings/js/SettingsRoute.js'],
@@ -56,6 +58,7 @@ module.exports = function(grunt) {
                     destPrefix: 'dist/lib/'
                 },
                 files: {
+                    
                     'jquery-1.9.1.js':'jquery-1.9.1.js',
                     'angular-ui-router.min.js': 'angular-ui-router/release/angular-ui-router.min.js',
                     'angular-permission.min.js': 'angular-permission/dist/angular-permission.min.js',
@@ -80,6 +83,8 @@ module.exports = function(grunt) {
                     'socket.io.js': 'socket.io-client/socket.io.js',
                     'ng-file-upload-shim.min.js':'ng-file-upload/ng-file-upload-shim.min.js',
                     'ng-file-upload.min.js':'ng-file-upload/ng-file-upload.min.js'
+
+
                 }
             },  
             assets: {
@@ -90,6 +95,8 @@ module.exports = function(grunt) {
                 files: {
                     assets: 'assets/*',
                     'assets/angular-material.min.css': 'bower_components/angular-material/angular-material.min.css'
+
+
                 }
             },
             html: {

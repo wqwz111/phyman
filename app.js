@@ -1,5 +1,5 @@
 angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
-    'phyman.user','phyman.noti','phyman.settings','phyman.message','phyman.vote','phyman.qa','phyman.admin'])
+    'phyman.user','phyman.noti','phyman.settings','phyman.message','phyman.scan','phyman.vote','phyman.qa','phyman.admin'])
     .run(['$rootScope','$mdToast','AuthService','MsgService','PermissionStore',
       function($rootScope,$mdToast,AuthService,MsgService,PermissionStore) { 
         $rootScope.API_HOST = 'http://192.168.0.104:8081/PHYMAN/index.php';
@@ -127,12 +127,20 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
             state: 'qa.list',
             img: 'assets/images/ic_chat_48px.svg'
         },{
+            title: '扫码',
+            state: 'scan.detail',
+            img: 'assets/images/ic_bookmark_48px.svg'
+        },{
             title: '用户管理',
             state: 'admin.adduser',
             img: 'assets/images/ic_person_48px.svg'
         },{
             title: '设置',
             state: 'settings',
+            img: 'assets/images/ic_settings_48px.svg'
+        },{
+            title: 'multi',
+            state: 'multi',
             img: 'assets/images/ic_settings_48px.svg'
         }];
 

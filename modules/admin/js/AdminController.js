@@ -1,5 +1,39 @@
 angular.module('phyman.admin',['ngMaterial','ngFileUpload', 'ngMessages', 'angular-jwt', 'ui.router','ngGrid'])
+/*
 
+
+.directive('myDirective', function (httpPostFactory) {
+    return {
+        restrict: 'A',
+        scope: true,
+        link: function (scope, element, attr) {
+
+            element.bind('change', function () {
+                var formData = new FormData();
+                formData.append('file', element[0].files[0]);
+                httpPostFactory('upload_image.php', formData, function (callback) {
+                   // recieve image name to use in a ng-src 
+                    console.log(callback);
+                });
+            });
+
+        }
+    };
+})
+
+.factory('httpPostFactory', function ($http) {
+    return function (file, data, callback) {
+              console.log("here");
+        $http({
+            url: $rootScope.API_HOST + '/Home/Admin/impUser',
+            method: "POST",
+            data: data,
+            headers: {'Content-Type': undefined}
+        }).success(function (response) {
+            callback(response);
+        });
+    };
+})*/
 .controller('AddUserCtrl',['$scope', '$rootScope','$state','AdminService','Upload', '$timeout',
       function($scope,$rootScope,$state,AdminService,Upload, $timeout){
      $scope.authorities = ('管理员 老师 学生').split(' ').map(function (authority) { return { abbrev: authority }; });
@@ -27,7 +61,27 @@ angular.module('phyman.admin',['ngMaterial','ngFileUpload', 'ngMessages', 'angul
 	 
 	 
 	 
-	 
+	  $scope.submit = function() {
+          if ($scope.form.file.$valid && $scope.file) {
+            $scope.upload($scope.file);
+          }
+      };
+       $scope.upload = function (file) {
+            Upload.upload({
+                url: $rootScope.API_HOST + '/Home/Admin/impUser',
+                data: {file: file, 'username': $scope.username}
+            }).then(function (resp) {
+                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            }, function (resp) {
+                console.log('Error status: ' + resp.status);
+            }, function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            });
+        };
+
+
+
 	  $scope.uploadFiles = function(file, errFiles) {
 	        $scope.f = file;
 	        $scope.errFile = errFiles && errFiles[0];

@@ -38,7 +38,7 @@ angular.module('phyman.vote')
     .state('vote.new',{
         url: '/new',
         templateUrl: 'views/vote_edit.html',
-        'controller': 'VoteEditorCtrl',
+        'controller':'VoteEditorCtrl',
          data: {
             permissions: {
                 except: ['anonymous','user'],

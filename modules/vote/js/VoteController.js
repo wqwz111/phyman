@@ -1,5 +1,13 @@
 angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-jwt', 'ui.router','ngGrid','phyman.user'])
-
+.controller('SettingsController', ['$scope', function($scope) {
+            
+            $scope.departments = [{name: 'Department 1', departmentHead: 'Steve'},
+                                        {name: 'Department 2', departmentHead: 'Megan'},
+                                        {name: 'Department 3', departmentHead: 'John'}];
+                                        
+            $scope.users = [{name: 'Steve', id: 1}, {name: 'Megan', id: 2}, {name: 'John', id: 3}];
+  
+        }])
 	.controller('VoteCtrl',['$scope','$rootScope','$state','$mdDialog','VoteService',
         function($scope,$rootScope,$state,$mdDialog,VoteService) {
     		var promise =VoteService.getList();
@@ -50,16 +58,24 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-j
      				});
     	  		});
      }])
-     .controller('VoteViewCtrl',['$scope','$state','$stateParams','VoteService',
-      function($scope,$state,$stateParams,VoteService) {
+     .controller('VoteViewCtrl',['$scope','$state','$http','$stateParams','VoteService',
+      function($scope,$state,$http,$stateParams,VoteService) {
     	 var promise =VoteService.getDetail($stateParams.id);
  			promise.then(function(response) {
- 				$scope.detail=response.data;
- 				$scope.items=JSON.parse(response.data.options);
- 				$scope.ifsingle=response.data.type;
- 			//	alert($scope.items);
+                if(response.data.choose==1){
+                    console.log(response.data.choose);
+                    $state.go('^.result',
+                            {
+                                id: $stateParams.id
+                            },{
+                                reload:true
+                            });
+
+                }
+                $scope.detail=response.data;
+                $scope.items=JSON.parse(response.data.options);
+                $scope.ifsingle=response.data.type;
  			},function(response){
- 			//	alert("VoteList fail");
  				$state.transitionTo(" VoteDetail",null,{
  					reload:true
  				});
@@ -81,6 +97,7 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-j
 	 		        		});
  				}
  			};
+
  		    $scope.toggle = function (item, list) {
  		       var idx = list.indexOf(item);
  		       if (idx > -1) {
@@ -115,72 +132,96 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-j
 		 });
 	 };
   }])
+
+
+
 .controller('VoteEditorCtrl',['$scope', '$rootScope','$state','VoteService',
       function($scope,$rootScope,$state,VoteService){
-        $scope.vote={};
-	 $scope.vote.date=new Date();
-	 $scope.userState = '';
-     $scope.states = ('单选 多选').split(' ').map(function (state) { return { abbrev: state }; });
-     $scope.options=[{
-    	optid:"1",
-    	optcontent:""
-     },{
-    	optid:"2",
-     	optcontent:""
-     },{
-    	optid:"3",
-     	optcontent:""
-     },{
-    	optid:"4",
-     	optcontent:""
-     },{
-    	optid:"5",
-     	optcontent:""
-     },{
-    	optid:"6",
-     	optcontent:"" 
-     },{
-    	optid:"7",
-     	optcontent:""
-     },{
-    	optid:"8",
-     	optcontent:""
-     },{
-    	optid:"9",
-     	optcontent:""
-     },{
-    	optid:"10",
-     	optcontent:""
-     }];
-     $scope.numbers = ('一 二 三 四 五 六 七 八 九 十').split(' ').map(function (number){return {abbrev:number};});
-     $scope.isNewVote = false;
-	 $scope.votenew = function(){
-		 $scope.isNewVote = true;
-		 $options="";
-		 for(var i=0;i<$scope.options.length;i++){
-			   	if(!$scope.options[i]['optcontent']==""){
-			    	$options=$options+$scope.options[i]['optcontent']+";";	
-		     } 
-		 }
-		 alert($options);
-         var promise = VoteService.newVote($scope.vote,$options);
-         promise.then(function(response) {
-             $scope.isNewVote = false;
-             if(response){
-             	//alert("Login成功");
-             	$state.go("vote.list",null,{
-             		reload:true
-             	});
+         $scope.vote={};
+    	 $scope.vote.date=new Date();
+    	 $scope.userState = '';
+         $scope.states = ('单选 多选').split(' ').map(function (state) { return { abbrev: state }; });
+
+         $scope.grades = ('大一 大二 大三 大四 研一 研二 研三 博士').split(' ').map(function (grade) { return { abbrev: grade }; });
+         $scope.selnum1=0;
+         $scope.gradesel=[];
+         $scope.toggle1 = function (item, list) {
+               var idx = list.indexOf(item);
+               if (idx > -1) {
+                   list.splice(idx, 1);
+                   $scope.selnum1-=1;
+               }
+               else {
+                   list.push(item);
+                   $scope.selnum1+=1;
+               }
+             };
+
+         $scope.options=[{
+        	optid:"1",
+        	optcontent:""
+         },{
+        	optid:"2",
+         	optcontent:""
+         },{
+        	optid:"3",
+         	optcontent:""
+         },{
+        	optid:"4",
+         	optcontent:""
+         },{
+        	optid:"5",
+         	optcontent:""
+         },{
+        	optid:"6",
+         	optcontent:"" 
+         },{
+        	optid:"7",
+         	optcontent:""
+         },{
+        	optid:"8",
+         	optcontent:""
+         },{
+        	optid:"9",
+         	optcontent:""
+         },{
+        	optid:"10",
+         	optcontent:""
+         }];
+         $scope.numbers = ('一 二 三 四 五 六 七 八 九 十').split(' ').map(function (number){return {abbrev:number};});
+         $scope.isNewVote = false;
+    	 $scope.votenew = function(){
+    		 $scope.isNewVote = true;
+    		 $options="";
+    		 for(var i=0;i<$scope.options.length;i++){
+    			   	if(!$scope.options[i]['optcontent']==""){
+    			    	$options=$options+$scope.options[i]['optcontent']+";";	
+    		     } 
+    		 }
+    		 if($scope.selnum1<=0){
+                alert("至少选择一个年级");
+             }else if($scope.vote.type==null){
+                alert("请选择单选或多选");
+             }else{
+                var promise = VoteService.newVote($scope.vote,$options);
+                 promise.then(function(response) {
+                     $scope.isNewVote = false;
+                     if(response){
+                       
+                        $state.go("vote.list",null,{
+                            reload:true
+                        });
+                     }
+                     else
+                        $state.go("login",null,{
+                            reload:true
+                        });
+                 }, function(response) {
+                    alert('shibainiao:'+response);
+                    $scope.isLoggingIn = false;
+                 });
              }
-             else
-             	$state.go("login",null,{
-             		reload:true
-             	});
-         }, function(response) {
-         	alert('shibainiao:'+response);
-             $scope.isLoggingIn = false;
-         });
-	 };
+    	 };
 	
   }]);  
 

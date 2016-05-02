@@ -6,6 +6,8 @@ angular.module('phyman.admin')
     };
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
+
+
 .factory('AdminService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
     function($http, $q, $rootScope, jwtHelper, $log) {
     var admin={};
@@ -23,13 +25,24 @@ angular.module('phyman.admin')
     };
 
     return {
+       /* filepost:function (file, data, callback) {
+      
+            $http({
+                url: $rootScope.API_HOST + '/Home/Admin/impUser',
+                method: "POST",
+                data: data,
+                headers: {'Content-Type': undefined}
+            }).success(function (response) {
+                callback(response);
+            });
+        },*/
         /*getlistdetail: function() {
             return this.list;
         },*/
         getList:function(id) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST + '/Home/Noti/getList', {
-                username: $rootScope.username,
+                username: $rootScope.user.id,
                 access_token: $rootScope.access_token
             })
             .then(function(response) {
@@ -54,7 +67,7 @@ angular.module('phyman.admin')
         addUser: function(admin) {
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST + '/Home/Admin/addUser', {
-            	 username: $rootScope.username,
+            	 username: $rootScope.user.id,
             	 id:admin.id,//$rootScope.notiid,
             	 name:admin.name,
             	 sex:admin.sex,
@@ -77,7 +90,7 @@ angular.module('phyman.admin')
         updateNoti: function(noti) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST + '/Home/Admin/newNoti',{
-            	username: $rootScope.username,
+            	username: $rootScope.user.id,
                 title: noti.title,
                 body:noti.content
                 

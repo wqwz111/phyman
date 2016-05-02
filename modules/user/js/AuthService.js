@@ -11,10 +11,8 @@ angular.module('phyman.user')
     var user = {};
     var onIdentity = function(response) {
         localStorage.setItem('id_token',response.data.jwt);
-        var user = jwtHelper.decodeToken(response.data.jwt);
-        $rootScope.username=user.uid;
-        console.log(user);
-        console.log(user.id);
+        var user = JSON.parse(jwtHelper.decodeToken(response.data.jwt));
+        $rootScope.username=user.id;
         $rootScope.$emit('loginSuccess', user);
     };
     var onIdFail = function(error) {
@@ -24,7 +22,7 @@ angular.module('phyman.user')
     return {
         getUser: function() {
             var token = localStorage.getItem('id_token');
-            user = jwtHelper.decodeToken(token);
+            user = JSON.parse(jwtHelper.decodeToken(token));
             return user;
         },
         register: function(params) {
@@ -50,7 +48,7 @@ angular.module('phyman.user')
                 password: user.password
             })
             .then(function(response) {
-                $rootScope.uid=response.data.username;
+                $rootScope.username=response.data.username;
                 onIdentity(response);
                 deferred.resolve(response);
             },function(error) {

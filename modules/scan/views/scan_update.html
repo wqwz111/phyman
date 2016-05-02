@@ -1,0 +1,29 @@
+<div  class="md-padding" ng-cloak >
+  <div>
+    <h1 class="md-title">新增扫码项</h1>
+    <div name="ScanNew" layout="column">
+      <md-input-container>
+        <label>扫码条目</label>
+        <input name="title" type="text" ng-disabled="isNewScan" ng-model="title" ng-manlength="20" required>
+        <div ng-show="title.$dirty">
+            <div ng-messages="pattern">title should be less than 10 characters.</div>
+         </div>
+      </md-input-container>
+      <h2 class="md-title">添加选项</h2>
+      <div flex-gt-sm="90" layout-padding layout="column">
+        <section>
+          <md-list class="content-list md-whiteframe-1dp">
+          <div layout="row" layout-wrap flex>
+            <div flex="90" ng-repeat="item in scan">
+              <md-checkbox ng-checked="exists(item, updated)" ng-click="toggle(item, updated)">
+                学号：{{ item.id }}  姓名: {{item.name}}  扫码数：{{item.count}}   个  <span ng-if="exists(item, updated)"></span>
+              </md-checkbox>
+            </div>
+          </div>
+        </md-list> 
+        <md-button class="md-raised" ng-click="update()">确定 </md-button>
+      </section>
+     </div>
+    </div>
+  </div>
+</div>

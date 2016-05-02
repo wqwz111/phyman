@@ -17,7 +17,7 @@ angular.module('phyman.qa')
         getList:function(id) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Qa/getList', {
-                username: $rootScope.username,
+                username: $rootScope.user.id,
                 access_token: $rootScope.access_token
             })
             .then(function(response) {
@@ -34,7 +34,7 @@ angular.module('phyman.qa')
         newQ:function(qa){
           	 var deferred = $q.defer();
                $http.post($rootScope.API_HOST+'/Home/Qa/newQuestion', {
-                   username:201522040840,// $rootScope.username,
+                   username:$rootScope.user.id,// $rootScope.username,
                    question: qa.question
                })
                .then(function(response) {
@@ -50,7 +50,7 @@ angular.module('phyman.qa')
         newA: function(qa,id) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Qa/newAnswer',{
-            	username: 201522040840,//$rootScope.username,
+            	username: $rootScope.user.id,//$rootScope.username,
             	id:id,
                 answer: qa.answer
             })

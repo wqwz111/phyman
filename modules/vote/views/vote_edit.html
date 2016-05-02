@@ -21,12 +21,24 @@
     <md-datepicker ng-model="vote.date" md-placeholder="Enter date" required></md-datepicker>
       <md-input-container>
         <label>单选/多选</label>
-        <md-select ng-model="vote.type" >
+        <md-select ng-model="vote.type" required>
           <md-option ng-repeat="state in states" value="{{state.abbrev}}">
             {{state.abbrev}}
           </md-option>
         </md-select>
       </md-input-container>
+      
+      <md-input-container>
+        <label>年级</label>
+        <md-select multiple ng-model="vote.grade">
+           <md-option ng-repeat="grade in grades" ng-click="toggle1(grade, gradesel)">
+               {{grade.abbrev}} 
+           </md-option>
+        </md-select>
+      </md-input-container>
+      
+
+
       <h2 class="md-title">添加选项</h2>
       
       <section ng-repeat="number in options">
@@ -45,3 +57,4 @@
     </div>
   </div>
 </div>
+

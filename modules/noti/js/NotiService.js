@@ -11,7 +11,7 @@ angular.module('phyman.noti')
         getList:function(id) {
             var deferred = $q.defer();
              $http.post($rootScope.API_HOST + '/Home/Noti/getList', {
-                username:$rootScope.uid
+                username:$rootScope.user.id
             }).then(function(response) {
                 noti = response.data;
                 deferred.resolve(response);
@@ -28,7 +28,7 @@ angular.module('phyman.noti')
              var deferred = $q.defer();
              $http.post($rootScope.API_HOST + '/Home/Noti/getNotiDetail',{
                     id: id,
-                    userid:$rootScope.uid
+                    userid:$rootScope.user.id
              })
             .then(function(response) {
                  deferred.resolve(response);
@@ -44,7 +44,7 @@ angular.module('phyman.noti')
             $http.post($rootScope.API_HOST + '/Home/Admin/newNoti',{
                 content: noti.content,
                 title:noti.title,
-                uid:$rootScope.uid
+                uid:$rootScope.user.id
             })
             .then(function(response) {
                 deferred.resolve(response);
