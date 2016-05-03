@@ -22,7 +22,7 @@ angular.module('phyman.scan')
             console.log(updated);
         	 var deferred = $q.defer();
                 $http.post($rootScope.API_HOST+'/Home/Admin/updatescan', {
-                    username: $rootScope.user.id,
+                    username: $rootScope.username,
                     title:title,
                     updated:updated,
                     access_token: $rootScope.access_token
@@ -42,7 +42,7 @@ angular.module('phyman.scan')
         getList:function() {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Admin/getScanList', {
-                username: $rootScope.user.id,
+                username: $rootScope.username,
                 access_token: $rootScope.access_token
             })
             .then(function(response) {
@@ -61,7 +61,7 @@ angular.module('phyman.scan')
         getDetail: function() {
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST+'/Home/Admin/getScanDetail', {
-            	 username:$rootScope.user.id,// $rootScope.username,
+            	 username:$rootScope.username,// $rootScope.username,
              })
              .then(function(response) {
              	console.log("response");

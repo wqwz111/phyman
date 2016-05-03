@@ -42,7 +42,7 @@ angular.module('phyman.admin')
         getList:function(id) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST + '/Home/Noti/getList', {
-                username: $rootScope.user.id,
+                username: $rootScope.username,
                 access_token: $rootScope.access_token
             })
             .then(function(response) {
@@ -67,7 +67,7 @@ angular.module('phyman.admin')
         addUser: function(admin) {
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST + '/Home/Admin/addUser', {
-            	 username: $rootScope.user.id,
+            	 username: $rootScope.username,
             	 id:admin.id,//$rootScope.notiid,
             	 name:admin.name,
             	 sex:admin.sex,
@@ -90,7 +90,7 @@ angular.module('phyman.admin')
         updateNoti: function(noti) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST + '/Home/Admin/newNoti',{
-            	username: $rootScope.user.id,
+            	username: $rootScope.username,
                 title: noti.title,
                 body:noti.content
                 

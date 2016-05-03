@@ -1,39 +1,5 @@
 angular.module('phyman.admin',['ngMaterial','ngFileUpload', 'ngMessages', 'angular-jwt', 'ui.router','ngGrid'])
-/*
 
-
-.directive('myDirective', function (httpPostFactory) {
-    return {
-        restrict: 'A',
-        scope: true,
-        link: function (scope, element, attr) {
-
-            element.bind('change', function () {
-                var formData = new FormData();
-                formData.append('file', element[0].files[0]);
-                httpPostFactory('upload_image.php', formData, function (callback) {
-                   // recieve image name to use in a ng-src 
-                    console.log(callback);
-                });
-            });
-
-        }
-    };
-})
-
-.factory('httpPostFactory', function ($http) {
-    return function (file, data, callback) {
-              console.log("here");
-        $http({
-            url: $rootScope.API_HOST + '/Home/Admin/impUser',
-            method: "POST",
-            data: data,
-            headers: {'Content-Type': undefined}
-        }).success(function (response) {
-            callback(response);
-        });
-    };
-})*/
 .controller('AddUserCtrl',['$scope', '$rootScope','$state','AdminService','Upload', '$timeout',
       function($scope,$rootScope,$state,AdminService,Upload, $timeout){
      $scope.authorities = ('管理员 老师 学生').split(' ').map(function (authority) { return { abbrev: authority }; });

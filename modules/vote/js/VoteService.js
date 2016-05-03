@@ -23,10 +23,10 @@ angular.module('phyman.vote')
             return this.list;
         },
         newVote:function(vote,options){
-        	console.log($rootScope.user.id);
+        	console.log($rootScope.username);
        	    var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Admin/newVote', {
-                username: $rootScope.user.id,
+                username: $rootScope.username,
                 title:vote.title,
                 content:vote.content,
                 type:vote.type,
@@ -47,12 +47,12 @@ angular.module('phyman.vote')
             return deferred.promise;
         },
         setVote:function(item,id){
-        	console.log($rootScope.uid);
+        	console.log($rootScope.username);
             console.log(item);
             console.log(id);
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST+'/Home/Vote/userVote', {
-                 username:$rootScope.user.id,
+                 username:$rootScope.username,
                  choose:item,
                  id:id,
              })
@@ -70,7 +70,7 @@ angular.module('phyman.vote')
         getList:function() {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Vote/getList', {
-                username: $rootScope.user.id,
+                username: $rootScope.username,
                 access_token: $rootScope.access_token
             })
             .then(function(response) {
@@ -87,7 +87,7 @@ angular.module('phyman.vote')
         getResult: function(id){
         	var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Vote/getVoteResult', {
-                username: $rootScope.user.id,
+                username: $rootScope.username,
                 id:id,
                 access_token: $rootScope.access_token
             })
@@ -105,7 +105,7 @@ angular.module('phyman.vote')
         getDetail: function(vote) {
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST+'/Home/Vote/getVoteDetail', {
-            	 username: $rootScope.user.id,
+            	 username: $rootScope.username,
             	 access_token: $rootScope.access_token,
             	 id:vote
              })
