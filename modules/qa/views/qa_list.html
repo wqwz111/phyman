@@ -1,0 +1,51 @@
+<md-fab-speed-dial md-direction="up">
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-fab md-warn" ng-click="newQ()">
+      <md-icon md-svg-src="assets/images/ic_add_48px.svg"></md-icon>
+    </md-button>
+  </md-fab-trigger>
+</md-fab-speed-dial>
+<div flex-gt-sm="90" layout-padding layout="column">
+  <section>
+    <md-subheader class="md-primary">本月</md-subheader>
+    <md-list class="content-list md-whiteframe-1dp">
+      <md-list-item class="md-2-line" ng-repeat="item in qa | qaFilter: 'new'" layout-padding layout="column">
+          <section layout=column  ng-click="newA(item.id)" ui-sref="qa.newA({id:item.id}) ">
+          <section class="md-caption">问题：{{item.qname}} {{item.qdate | date:'yyyy-MM-dd'}}</section>
+          <section class="md-title">{{item.question}}</section>
+          </section ng-if="item.id.answer" >
+          
+          <section>
+          
+          </section>
+          <section >
+          <section  ng-if="item.answer!=null" class="md-caption">回答：{{item.aname}} {{item.adate | date:'yyyy-MM-dd'}}</section>
+          <section  ng-if="item.answer==null" class="md-caption">回答：暂无</section>
+          <section class="md-title">{{item.answer}}</section>
+          <md-divider ng-if="!$last"></md-divider>
+           </section>
+          
+      </md-list-item>
+    </md-list>
+  </section>
+  <section>
+    <md-subheader class="md-primary">早期</md-subheader>
+       <md-list class="content-list md-whiteframe-1dp">
+      <md-list-item class="md-2-line" ng-repeat="item in qa | qaFilter: 'old'"  layout-padding layout="column">
+          <section layout=column>
+          <section class="md-caption">问题：{{item.qname}} {{item.qdate | date:'yyyy-MM-dd'}}</section>
+          <section class="md-title">{{item.question}}</section>
+          </section>
+          
+          <section  >
+            <section  ng-if="item.answer!=null" class="md-caption">回答：{{item.aname}} {{item.adate | date:'yyyy-MM-dd'}}</section>
+          <section  ng-if="item.answer==null" class="md-caption">回答：暂无</section>
+           <section class="md-title">{{item.answer}}</section>
+          <md-divider ng-if="!$last"></md-divider> 
+          </section>
+          
+          
+      </md-list-item>
+    </md-list>
+  </section>
+</div>

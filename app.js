@@ -1,8 +1,8 @@
 angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
-    'phyman.user','phyman.noti','phyman.settings','phyman.message'])
+    'phyman.user','phyman.noti','phyman.settings','phyman.message','phyman.scan','phyman.vote','phyman.qa','phyman.admin'])
     .run(['$rootScope','$mdToast','AuthService','MsgService','PermissionStore',
       function($rootScope,$mdToast,AuthService,MsgService,PermissionStore) { 
-        $rootScope.API_HOST = 'http://localhost:8081/api';
+		$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';
         $rootScope.isLoggedIn = AuthService.checkLoggedIn();
         if(AuthService.checkLoggedIn()) {
             $rootScope.user = AuthService.getUser();
@@ -12,6 +12,8 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         PermissionStore.definePermission('admin',function(stateParams) {
             if(AuthService.checkLoggedIn()) {
                 var user = AuthService.getUser();
+              /*  console.log("user.permission");
+                console.log(user.permission);*/
                 return user.permission === 'admin' ? true : false;
             }
             return false;
@@ -20,12 +22,16 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         PermissionStore.definePermission('user',function(stateParams) {
             if(AuthService.checkLoggedIn()) {
                 var user = AuthService.getUser();
+            /*    console.log("user.permission2");
+                console.log(user.permission);*/
                 return user.permission === 'user' ? true : false;
             }
             return false;
         });
         // Define anonymous permission
         PermissionStore.definePermission('anonymous',function(stateParams) {
+           /* console.log("user.permission3");
+                console.log(user.permission);*/
             return !AuthService.checkLoggedIn();
         });
 
@@ -110,23 +116,31 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         $scope.menuItems = [{
             title: '通知',
             state: 'noti.list',
-            img: '/assets/images/ic_new_releases_48px.svg'
+            img: 'assets/images/ic_new_releases_48px.svg'
         },{
             title: '投票',
-            state: 'votes',
-            img: '/assets/images/ic_check_48px.svg'
+            state: 'vote.list',
+            img: 'assets/images/ic_check_48px.svg'
         },{
             title: '提问',
-            state: 'comments',
-            img: '/assets/images/ic_chat_48px.svg'
+            state: 'qa.list',
+            img: 'assets/images/ic_chat_48px.svg'
         },{
-            title: '已删除',
-            state: 'deleted',
-            img: '/assets/images/ic_close_48px.svg'
+            title: '扫码',
+            state: 'scan.detail',
+            img: 'assets/images/ic_bookmark_48px.svg'
+        },{
+            title: '用户管理',
+            state: 'admin.adduser',
+            img: 'assets/images/ic_person_48px.svg'
         },{
             title: '设置',
             state: 'settings',
-            img: '/assets/images/ic_settings_48px.svg'
+            img: 'assets/images/ic_settings_48px.svg'
+        },{
+            title: 'multi',
+            state: 'multi',
+            img: 'assets/images/ic_settings_48px.svg'
         }];
 
         $scope.clickMenuItem = function(state) {

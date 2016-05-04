@@ -1,9 +1,10 @@
 <div class="page-container">
-  <md-content ng-model="noti" class="page md-whiteframe-1dp">
-    <h2 class="page-title">{{noti.title}}</h2>
-    <div ng-bind-html="noti.content | trustedHtml"></div>
+  <md-content class="page md-whiteframe-1dp">
+    <h2 class="page-title" ng-model="title">{{title}}</h2>
+    <div ng-bind-html="content | trustedHtml"></div>
   </md-content>
-  <div permission only="'admin'">
+  <md-border-bottom ng-click="download()">下载附件</md-border-bottom>
+  <div permission-only="'admin'">
     <h4>查看人数统计：</h4>
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="已查看">

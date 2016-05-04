@@ -12,6 +12,7 @@ angular.module('phyman.user')
     var onIdentity = function(response) {
         localStorage.setItem('id_token',response.data.jwt);
         var user = jwtHelper.decodeToken(response.data.jwt);
+        $rootScope.username=JSON.parse(user).id;
         $rootScope.$emit('loginSuccess', user);
     };
     var onIdFail = function(error) {
@@ -31,6 +32,7 @@ angular.module('phyman.user')
                 password: params.password
             })
             .then(function(response) {
+
                 onIdentity(response);
                 deferred.resolve(response);
             },function(error) {
@@ -41,11 +43,13 @@ angular.module('phyman.user')
         },
         login: function(user) {
             var deferred = $q.defer();
-            $http.post($rootScope.API_HOST + '/login',{
+              $http.post($rootScope.API_HOST+'/Home/Index/login', {
                 username: user.username,
                 password: user.password
             })
             .then(function(response) {
+                var user1 = JSON.parse(jwtHelper.decodeToken(response.data.jwt));
+                $rootScope.username=user1.id;
                 onIdentity(response);
                 deferred.resolve(response);
             },function(error) {
@@ -64,7 +68,7 @@ angular.module('phyman.user')
         },
         resetPassword: function(password) {
             var deferred = $q.defer();
-            $http.post($rootScope.API_HOST + '/reset_password',{
+            $http.post($rootScope.API_HOST + '/Home/Index/reset_password',{
                 new_password: password
             })
             .then(function(response) {

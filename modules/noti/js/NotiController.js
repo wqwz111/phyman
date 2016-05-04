@@ -1,6 +1,6 @@
-angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'])
-    .controller('NotiEditorCtrl',['$scope','$state','NotiService',
-      function($scope,$state,NotiService) {
+angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.router','ngMaterial'])
+    .controller('NotiEditorCtrl',['$scope','$rootScope','$state','Upload','NotiService',
+      function($scope,$rootScope,$state,Upload,NotiService) {
         $scope.tinymceOptions = {
             language: 'zh_CN',
             plugins: 'fullscreen,preview,table',
@@ -12,8 +12,23 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
             min_height:400,
             max_width:900
         };
+         $scope.grades = ('大一 大二 大三 大四 研一 研二 研三 博士').split(' ').map(function (grade) { return { abbrev: grade }; });
+         $scope.selnum1=0;
+         $scope.gradesel=[];
+         $scope.toggle1 = function (item, list) {
+               var idx = list.indexOf(item);
+               if (idx > -1) {
+                   list.splice(idx, 1);
+                   $scope.selnum1-=1;
+               }
+               else {
+                   list.push(item);
+                   $scope.selnum1+=1;
+               }
+             };
         $scope.noti = {};
         $scope.submit = function() {
+          $scope.noti.filedir="";
             NotiService.addNoti($scope.noti)
               .then(function(response) {
                 $state.go('^.list',null,{reload:true});
@@ -21,10 +36,69 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
 
             });
         };
+        $scope.canadd=true;
+        $scope.isadd=false;
+        $scope.addfile = function(){
+          if($scope.noti.title!=null&&$scope.noti.content!=null){
+              $scope.isadd=true;
+              $scope.canadd=false;
+              console.log($scope.noti.title);
+              console.log($scope.noti.content);
+          }else{
+            console.log($scope.noti.title);
+            console.log($scope.noti.content);
+            alert("请先完善通知的标题和内容");
+          }
+        };
+        $scope.submitnoti = function(file) {
+          if($scope.noti.title!=null){
+              if ($scope.form.file.$valid && $scope.file) {
+                  $scope.upload(file);
+               }
+              console.log($scope.noti.title);
+          }else{
+            console.log($scope.noti.title);
+            console.log($scope.noti.content);
+            alert("请先完善通知的标题和内容");
+          }
+
+        };
+       $scope.upload = function (file) {
+            Upload.upload({
+                url: $rootScope.API_HOST + '/Home/Admin/addNotiFile',
+                data: {file: file,
+                'username': $scope.username}
+            }).then(function (resp) {
+              console.log('success'+resp.data);
+              $scope.noti.filedir=resp.data;
+
+              NotiService.addNoti($scope.noti)
+                  .then(function(response) {
+                     $state.go('^.list',null,{reload:true});
+                  },function(error) {
+
+                  });
+              console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            }, function (resp) {
+                console.log('Error status: ' + resp.status);
+            }, function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            });
+            $scope.isadd=false;$scope.canadd=false;
+        };
     }])
     .controller('NotiCtrl',['$scope','$rootScope','$state','$mdDialog','NotiService',
-      'noti_list',function($scope,$rootScope,$state,$mdDialog,NotiService,noti_list) {
-        $scope.noti = noti_list.data;
+      function($scope,$rootScope,$state,$mdDialog,NotiService) {
+        var promise =NotiService.getList();
+                promise.then(function(response) {
+                    //alert(response.data.list);
+                    $scope.noti=JSON.parse(response.data.list);
+                },function(response){
+                    $state.transitionTo("NotiDetail",null,{
+                        reload:true
+                    });
+                });
         $scope.viewNoti = function(id) {
             NotiService.setNotiid(id);
             $state.go('^.detail',
@@ -54,8 +128,26 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
                 },function() {});
         };
     }])
-    .controller('NotiViewCtrl',['$scope','$state','$stateParams','NotiService',
-      'noti',function($scope,$state,$stateParams,NotiService,noti) {
+    .controller('NotiViewCtrl',['$scope','$state','$stateParams','NotiService'
+      ,function($scope,$state,$stateParams,NotiService) {
+        $scope.hasfile=false;
+        var promise =NotiService.getDetail($stateParams.id);
+        promise.then(function(response) {
+          $scope.noti=response.data.detail;
+             $scope.content=response.data.content;
+             $scope.title=response.data.title;
+             $scope.filedir=response.data.filedir;
+             if($scope.filedir!="1"){
+              $scope.hasfile=true;
+             }
+             console.log("noti");
+             console.log($scope.content);
+             console.log($scope.title);
+        },function(response){
+          $state.transitionTo("NotiDetail",null,{
+              reload:true
+          });
+        });
         var COLORS = ['#ffebee', '#ffcdd2', '#ef9a9a', '#e57373', '#ef5350', '#f44336',
         '#e53935', '#d32f2f', '#c62828', '#b71c1c', '#ff8a80', '#ff5252', '#ff1744', '#d50000',
         '#f8bbd0', '#f48fb1', '#f06292', '#ec407a', '#e91e63', '#d81b60', '#c2185b', '#ad1457',
@@ -87,14 +179,20 @@ angular.module('phyman.noti',['ui.tinymce','ngMessages','ui.router','ngMaterial'
         '#8d6e63', '#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a',
         '#cfd8dc', '#b0bec5', '#78909c'];
 
-        $scope.noti = noti.data;
-        NotiService.viewStat($scope.noti.id)
+        $scope.download = function(){
+          NotiService.downloadfile($scope.filedir)
+            .then(function(response) {
+                
+              },function(error) {
+
+            });
+        };
+        NotiService.viewStat($stateParams.id)
           .then(function(response) {
-            $scope.unreadStds = response.data.unread;
+            $scope.unreadStds = JSON.parse(response.data.unread);
             for(var i = 0; i < $scope.unreadStds.length; i++) {
                 $scope.unreadStds[i].color = randomColor();
             }
-            
             $scope.readStds = response.data.read;
             for(var i = 0; i < $scope.readStds.length; i++) {
                 $scope.readStds[i].color = randomColor();

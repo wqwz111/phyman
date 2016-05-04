@@ -1,14 +1,34 @@
-<div ng-controller="NotiEditorCtrl">
+<div ng-controller="NotiEditorCtrl" layout="column">
   <md-input-container>
     <label>标题：</label>
+
     <input name="title" type="text" ng-model="noti.title" md-maxlength="40" required>
   </md-input-container>
+  <md-input-container>
+        <label>年级</label>
+        <md-select multiple ng-model="noti.grade">
+           <md-option ng-repeat="grade in grades" ng-click="toggle1(grade, gradesel)">
+               {{grade.abbrev}} 
+           </md-option>
+        </md-select>
+  </md-input-container>
+
   <div flex-gt-sm="85" layout="column">
     <textarea ui-tinymce="tinymceOptions" ng-model="noti.content" flex></textarea>
+
+    <!-- 
+    <md-button aria-label="menu" class="md-fab md-warn" ng-if="canadd" ng-click="addfile()">
+      <md-icon md-svg-src="assets/images/ic_add_48px.svg"></md-icon>
+    </md-button>ng-if="isadd"
+ -->
+  <div class="button" ngf-select="upload($file)" >请先把标题和内容都写好了再点此处添加附件</div>
     <div layout="row">
+
       <span flex></span>
       <md-button class="md-raised md-primary" ng-click="submit()">发布</md-button>
+
     </div>
+  </div>
   </div>
 
 </div>

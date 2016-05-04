@@ -1,0 +1,70 @@
+
+<div  class="md-padding" ng-cloak ><!-- https://material.angularjs.org/latest/demo/input -->
+  <div>
+ <h1 class="md-title">新增多名用户 </h1>
+ 
+   <md-fab-trigger permission-only="'admin'">
+     
+   <div class="button" ngf-select="upload($file)">ADD</div> 
+ 
+</div>
+   
+   
+    </md-fab-trigger>
+  
+  <!-- <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+          accept="excel/*" ngf-max-height="1000" ngf-max-size="1MB">
+      Select File</button>
+        <md-icon md-svg-src="./Background/Home/phyman-1/assets/images/ic_add_48px.svg"></md-icon>
+  <br><br>
+  File:
+  <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+      <span class="progress" ng-show="f.progress >= 0">
+          <div style="width:{{f.progress}}%"  
+               ng-bind="f.progress + '%'"></div>
+      </span>
+  </div>     
+  {{errorMsg}} -->
+
+  
+  
+  
+   
+	
+	
+	
+    <h1 class="md-title">新增用户 </h1>
+    <div name="voteNew" layout="column">
+      <md-input-container>
+        <label>姓名</label>
+        <input name="name" type="text" ng-disabled="isNewUser" ng-model="admin.name" ng-manlength="10" required>
+      </md-input-container>
+      
+      <md-input-container>
+        <label>学号</label> 
+        <input name="id" type="number" ng-disabled="isNewUser" ng-model="admin.id" ng-manlength="12" required>
+      </md-input-container>
+      
+      <md-input-container>
+        <label>性别</label> 
+        <input name="sex" type="text" ng-disabled="isNewUser" ng-model="admin.sex" ng-manlength="1" required>
+      </md-input-container>
+      
+      <md-input-container>
+        <label>年级</label> 
+        <input name="grade" type="text" ng-disabled="isNewUser" ng-model="admin.grade" ng-manlength="2" required>
+      </md-input-container>
+      
+       <md-input-container>
+        <label>用户权限</label>
+        <md-select ng-model="admin.authority" >
+          <md-option ng-repeat="authority in authorities" value="{{authority.abbrev}}">
+            {{authority.abbrev}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-button class="md-raised" ng-disabled="isNewUser" ng-click="usernew()">确定</md-button>
+      </section>
+    </div>
+  </div>
+</div>

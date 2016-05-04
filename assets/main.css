@@ -119,3 +119,89 @@ md-fab-speed-dial {
 .fade.ng-leave.ng-leave-active {
     opacity: 0;
 }
+/*admin*/
+.thumb {
+    width: 24px;
+    height: 24px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+/*vote*/
+.checkboxdemoSyncing .checkboxDemo1 div {
+  clear: both; }
+.checkboxdemoSyncing .checkboxDemo1 md-checkbox {
+  float: left; }
+.checkboxdemoSyncing legend {
+  color: #3F51B5; }
+.checkboxdemoSyncing legend code {
+  color: #3F51B5;
+  font-weight: normal; }
+.checkboxdemoSyncing p {
+  padding-left: 8px; }
+.checkboxdemoSyncing .info {
+  padding-left: 13px; }
+.checkboxdemoSyncing div.standard {
+  padding: 8px;
+  padding-left: 15px; 
+}
+.checkboxdemoSyncing fieldset.standard {
+  border-style: solid;
+  border-width: 1px;
+  height: 100%; 
+}
+.div-left{
+  float:left;
+  color: #3F51B5;
+  font-weight: normal;} 
+
+.subheaderdemoBasicUsage .face {
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  width: 48px;
+  margin: 16px; }
+
+
+/*
+admin*/
+.thumb {
+    width: 24px;
+    height: 24px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+
+

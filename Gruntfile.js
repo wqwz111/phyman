@@ -23,6 +23,26 @@ module.exports = function(grunt) {
                         'modules/noti/js/NotiController.js',
                         'modules/noti/js/NotiService.js',
                         'modules/noti/js/NotiRoute.js'],
+                   
+                    'dist/js/qa.js': [
+                        'modules/qa/js/QaController.js',
+                        'modules/qa/js/QaService.js',
+                        'modules/qa/js/QaRoute.js'],
+                    'dist/js/admin.js': [
+                        'modules/admin/js/AdminController.js',
+                        'modules/admin/js/AdminService.js',
+                        'modules/admin/js/AdminRoute.js'
+                        ],
+                    'dist/js/vote.js': [
+                        'modules/vote/js/VoteController.js',
+                        'modules/vote/js/VoteService.js',
+                        'modules/vote/js/VoteRoute.js'
+                        ],
+                    'dist/js/scan.js': [
+                        'modules/scan/js/ScanController.js',
+                        'modules/scan/js/ScanService.js',
+                        'modules/scan/js/ScanRoute.js'
+                        ],    
                     'dist/js/settings.js': [
                         'modules/settings/js/SettingsController.js',
                         'modules/settings/js/SettingsRoute.js'],
@@ -49,16 +69,20 @@ module.exports = function(grunt) {
                     'angular-aria.min.js.map': 'angular-aria/angular-aria.min.js.map',
                     'angular-animate.min.js': 'angular-animate/angular-animate.min.js',
                     'angular-animate.min.js.map': 'angular-animate/angular-animate.min.js.map',
+                    'angular.js': 'angular/angular.js',
                     'angular.min.js': 'angular/angular.min.js',
                     'angular.min.js.map': 'angular/angular.min.js.map',
+                    'ng-grid.debug.js':'ng-grid-2.0.12/ng-grid.debug.js',
                     'angular-ui-tinymce.min.js': 'angular-ui-tinymce/dist/tinymce.min.js',
                     'tinymce.min.js': 'tinymce-dist/tinymce.min.js',
                     'plugins': 'tinymce-dist/plugins',
                     'skins': 'tinymce-dist/skins',
                     'themes': 'tinymce-dist/themes',
-                    'socket.io.js': 'socket.io-client/socket.io.js'
+                    'socket.io.js': 'socket.io-client/socket.io.js',
+                    'ng-file-upload-shim.min.js':'ng-file-upload/ng-file-upload-shim.min.js',
+                    'ng-file-upload.min.js':'ng-file-upload/ng-file-upload.min.js'
                 }
-            },
+            },  
             assets: {
                 options: {
                     destPrefix: 'dist/',
@@ -67,6 +91,8 @@ module.exports = function(grunt) {
                 files: {
                     assets: 'assets/*',
                     'assets/angular-material.min.css': 'bower_components/angular-material/angular-material.min.css'
+
+
                 }
             },
             html: {
@@ -83,7 +109,7 @@ module.exports = function(grunt) {
         uglify: {
             js: {
                 files: [{
-                    expand: true,
+                    expand: false,
                     cwd: 'dist',
                     src: 'js/*.js',
                     dest: 'dist/'
