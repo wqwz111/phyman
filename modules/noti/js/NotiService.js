@@ -25,7 +25,13 @@ angular.module('phyman.noti')
             notiId = id;
         },
         downloadfile:function(dir){
-            $http.post($rootScope.API_HOST + '/Home/Noti/download/id'+dir);
+            $http.post($rootScope.API_HOST + '/Home/Noti/download/id'+dir,{
+                filedir:dir
+            })
+            .then(function(response){
+                console.log(response);
+
+            });
         },
         getDetail: function(id) {
              var deferred = $q.defer();

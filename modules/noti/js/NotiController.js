@@ -69,8 +69,8 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.route
                 data: {file: file,
                 'username': $scope.username}
             }).then(function (resp) {
-              console.log('success'+resp.data);
-              $scope.noti.filedir=resp.data;
+              console.log('success'+resp);
+              $scope.noti.filedir=resp.data.filedir;
 
               NotiService.addNoti($scope.noti)
                   .then(function(response) {
@@ -137,8 +137,8 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.route
                 },function() {});
         };
     }])
-    .controller('NotiViewCtrl',['$scope','$state','$stateParams','NotiService'
-      ,function($scope,$state,$stateParams,NotiService) {
+    .controller('NotiViewCtrl',['$scope','$rootScope','$state','$stateParams','NotiService','$http'
+      ,function($scope,$rootScope,$state,$stateParams,NotiService,$http) {
         $scope.hasfile=false;
        
          var promise =NotiService.getDetail($stateParams.id);
@@ -188,14 +188,12 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.route
         '#ff6e40', '#ff3d00', '#dd2c00', '#d7ccc8', '#bcaaa4', '#795548', '#d7ccc8', '#bcaaa4',
         '#8d6e63', '#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a',
         '#cfd8dc', '#b0bec5', '#78909c'];
-        $scope.download = function(){
-          NotiService.downloadfile($scope.filedir)
-            .then(function(response) {
-                
-              },function(error) {
-
-            });
+        
+        $scope.getthefile = function(){
+          window.open($rootScope.API_HOST + '/Home/Noti/download/?id='+$scope.filedir,'_blank','');
         };
+        
+
         NotiService.viewStat($stateParams.id)
           .then(function(response) {
             $scope.unreadStds = JSON.parse(response.data.unread);
