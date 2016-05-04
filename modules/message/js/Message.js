@@ -2,6 +2,14 @@ angular.module('phyman.message',['ngMaterial'])
   .controller('messageCtrl',['$scope','$rootScope','$state','MsgService',
     function($scope,$rootScope,$state,MsgService){
     $scope.showNotice = false;
+    MsgService.getUnreadMsg()
+     .then(function(response) {
+        $scope.notice = response.data.message;
+        $scope.showNotice = true;
+     },function(error) {
+        $scope.notice = {};
+        $scope.showNotice = false;
+     });
     MsgService.on('new_msg',function(data) {
         // Message is a json object.
         // {
@@ -10,7 +18,6 @@ angular.module('phyman.message',['ngMaterial'])
         //   action: ''
         // }
         $scope.notice = angular.fromJson(data);
-        console.log(angular.fromJson(data));
         $scope.showNotice = true;
     });
     $scope.onClick = function($event) {
@@ -43,7 +50,7 @@ angular.module('phyman.message',['ngMaterial'])
         },
         getUnreadMsg: function() {
             var deferred = $q.defer();
-            $http.get($rootScope.API_HOST + '/messages')
+            $http.get($rootScope.API_HOST + '/Home/Admin/messages')
              .then(function(response) {
                 deferred.resolve(response);
              }).then(function(error) {
