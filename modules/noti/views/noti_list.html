@@ -1,5 +1,5 @@
 <md-fab-speed-dial md-direction="up">
-  <md-fab-trigger permission-only="'admin'">
+  <md-fab-trigger permission permission-only="'admin'">
     <md-button aria-label="menu" class="md-fab md-warn" ng-click="newNoti()">
       <md-icon md-svg-src="assets/images/ic_add_48px.svg"></md-icon>
     </md-button>
@@ -16,9 +16,8 @@
             <span class="md-title item-title">{{item.title}}</span>
             <span class="md-caption">{{item.date | date:'MM-dd'}}</span>
           </div>
-          <div permission-only="'admin'">
-            <md-icon class="md-secondary" md-svg-src="assets/images/ic_close_48px.svg" ng-click="deleteNoti(item.id,$event,$index)" aria-label="edit"></md-icon>
-          </div>
+          <md-icon permission permission-only="'admin'" class="md-secondary" md-svg-src="assets/images/ic_close_48px.svg"
+            ng-click="deleteNoti(item.id,$event,$index)" aria-label="edit"></md-icon> 
         <md-divider ng-if="!$last"></md-divider>
       </md-list-item>
     </md-list>
@@ -32,6 +31,8 @@
             <span class="md-title item-title">{{item.title}}</span>
             <span class="md-caption">{{item.date | date:'yyyy-MM-dd'}}</span>
           </div>
+          <md-icon permission permission-only="'admin'" class="md-secondary" md-svg-src="assets/images/ic_close_48px.svg"
+            ng-click="deleteNoti(item.id,$event,$index)" aria-label="edit"></md-icon> 
         <md-divider ng-if="!$last"></md-divider>
       </md-list-item>
     </md-list>

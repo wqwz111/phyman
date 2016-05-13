@@ -1,4 +1,4 @@
-angular.module('phyman.qa',['ngMaterial', 'angular-jwt', 'ui.router','ngGrid','phyman.user'])
+angular.module('phyman.qa',[])
 .controller('QaCtrl',['$scope','$rootScope','$state','$mdDialog','QaService','qa',
         function($scope,$rootScope,$state,$mdDialog,QaService,qa) {
     		var promise = QaService.getList();
@@ -13,33 +13,39 @@ angular.module('phyman.qa',['ngMaterial', 'angular-jwt', 'ui.router','ngGrid','p
         	$scope.newQ = function() {
         		$state.go('^.newQ');
         	};
-        	$scope.newA = function(){
-        		//if($rootScope.authority=="admin"){
+        	$scope.newA = function(id){
+              //  console.log($rootScope.user);
+        		if($rootScope.user.permission=="admin"){
+             //       console.log($rootScope.user.permission);
         			$state.go('^.newA',{
-        				id: $id
+        				id: id
         				},{
         					reload:true
         			});
+                }
+
         	}
         	
         	$scope.markNoti = function(id) {
         		
             };
-            $scope.deleteNoti = function(id,ev) {
+            $scope.deleteQa = function(id,ev,index) {
             $mdDialog.show($mdDialog.confirm()
-            		.title('是否要删除该通知？')
-            		.textContent('该通知删除后将不可恢复。')
-            		.targetEvent(ev)
-            		.ok('删除!')
-            		.cancel('点错了')).then(function() {
-            			NotiService.deleteNoti(id)
-            			.then(function(response) {
-            				//do something when succeed.
-            			},function(error) {
-            				//do something when failed
-            			});
-            			},function() {});
-            };
+                .title('是否要删除该问答？')
+                .textContent('删除后将不可恢复。')
+                .targetEvent(ev)
+                .ok('删除!')
+                .cancel('点错了')).then(function() {
+                    QaService.deleteQa(id)
+                      .then(function(response) {
+                        //do something when succeed.
+                        $scope.qa.splice(index,1);
+                    },function(error) {
+                        //do something when failed
+                    });
+                },function() {});
+        };
+
      }])
      .controller('QuestionCtrl',['$scope', '$rootScope','$state','QaService',
          function($scope,$rootScope,$state,QaService){

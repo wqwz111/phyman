@@ -10,9 +10,11 @@
     <md-subheader class="md-primary">本月</md-subheader>
     <md-list class="content-list md-whiteframe-1dp">
       <md-list-item class="md-2-line" ng-repeat="item in qa | qaFilter: 'new'" layout-padding layout="column">
-          <section layout=column  ng-click="newA(item.id)" ui-sref="qa.newA({id:item.id}) ">
+          <section layout=column  ng-click="newA(item.id)" >
           <section class="md-caption">问题：{{item.qname}} {{item.qdate | date:'yyyy-MM-dd'}}</section>
           <section class="md-title">{{item.question}}</section>
+          <md-icon permission permission-only="'admin'" class="md-secondary" md-svg-src="assets/images/ic_close_48px.svg"
+            ng-click="deleteQa(item.id,$event,$index)" aria-label="edit"></md-icon> 
           </section ng-if="item.id.answer" >
           
           <section>
@@ -32,17 +34,22 @@
     <md-subheader class="md-primary">早期</md-subheader>
        <md-list class="content-list md-whiteframe-1dp">
       <md-list-item class="md-2-line" ng-repeat="item in qa | qaFilter: 'old'"  layout-padding layout="column">
-          <section layout=column>
+         <section layout=column  ng-click="newA(item.id)" >
           <section class="md-caption">问题：{{item.qname}} {{item.qdate | date:'yyyy-MM-dd'}}</section>
           <section class="md-title">{{item.question}}</section>
-          </section>
+          <md-icon permission permission-only="'admin'" class="md-secondary" md-svg-src="assets/images/ic_close_48px.svg"
+            ng-click="deleteQa(item.id,$event,$index)" aria-label="edit"></md-icon> 
+          </section ng-if="item.id.answer" >
           
-          <section  >
-            <section  ng-if="item.answer!=null" class="md-caption">回答：{{item.aname}} {{item.adate | date:'yyyy-MM-dd'}}</section>
-          <section  ng-if="item.answer==null" class="md-caption">回答：暂无</section>
-           <section class="md-title">{{item.answer}}</section>
-          <md-divider ng-if="!$last"></md-divider> 
+          <section>
+          
           </section>
+          <section >
+          <section  ng-if="item.answer!=null" class="md-caption">回答：{{item.aname}} {{item.adate | date:'yyyy-MM-dd'}}</section>
+          <section  ng-if="item.answer==null" class="md-caption">回答：暂无</section>
+          <section class="md-title">{{item.answer}}</section>
+          <md-divider ng-if="!$last"></md-divider>
+           </section>
           
           
       </md-list-item>

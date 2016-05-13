@@ -1,13 +1,6 @@
 angular.module('phyman.scan')
-.config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider) {
-    jwtInterceptorProvider.urlParam = 'access_token';
-    jwtInterceptorProvider.tokenGetter = function() {
-        return localStorage.getItem('id_token');
-    };
-    $httpProvider.interceptors.push('jwtInterceptor');
-}])
-.factory('ScanService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
-    function($http, $q, $rootScope, jwtHelper, $log) {
+.factory('ScanService', ['$http', '$q', '$rootScope',
+    function($http, $q, $rootScope) {
     var scan={};
     //var notidetail={};
     var onIdentity  = function(response) {
@@ -22,10 +15,9 @@ angular.module('phyman.scan')
             console.log(updated);
         	 var deferred = $q.defer();
                 $http.post($rootScope.API_HOST+'/Home/Admin/updatescan', {
-                    username: $rootScope.username,
+                    username: $rootScope.user.id,
                     title:title,
-                    updated:updated,
-                    access_token: $rootScope.access_token
+                    updated:updated
                 })
                 .then(function(response) {
                 	//$rootScope.list=response.data.list;
@@ -42,8 +34,7 @@ angular.module('phyman.scan')
         getList:function() {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Admin/getScanList', {
-                username: $rootScope.username,
-                access_token: $rootScope.access_token
+                username: $rootScope.user.id,
             })
             .then(function(response) {
             	//$rootScope.list=response.data.list;
@@ -61,11 +52,11 @@ angular.module('phyman.scan')
         getDetail: function() {
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST+'/Home/Admin/getScanDetail', {
-            	 username:$rootScope.username,// $rootScope.username,
+            	 username:$rootScope.user.id,
              })
              .then(function(response) {
-             	console.log("response");
-             	console.log(response.data);
+             	//console.log("response");
+             	//console.log(response.data);
                  deferred.resolve(response);
              }, function(error) {
                  onIdFail(error);

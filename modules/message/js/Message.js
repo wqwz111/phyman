@@ -18,7 +18,7 @@ angular.module('phyman.message',['ngMaterial'])
         //   action: ''
         // }
         $scope.notice = angular.fromJson(data);
-        console.log(angular.fromJson(data));
+       // console.log(angular.fromJson(data));
         $scope.showNotice = true;
     });
     $scope.onClick = function($event) {

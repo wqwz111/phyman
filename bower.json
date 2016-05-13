@@ -9,7 +9,7 @@
     "angular-jwt": "^0.0.9",
     "angular-ui-router": "^0.2.17",
     "angular-ui-tinymce": "latest",
-    "angular-permission": "latest",
+    "angular-permission": "3.0.1",
     "ng-file-upload": "^12.0.4",
     "socket.io-client": "^1.4.5"
   

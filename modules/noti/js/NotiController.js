@@ -1,4 +1,4 @@
-angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.router','ngMaterial'])
+angular.module('phyman.noti',['ui.tinymce','ngFileUpload'])
     .controller('NotiEditorCtrl',['$scope','$rootScope','$state','Upload','NotiService',
       function($scope,$rootScope,$state,Upload,NotiService) {
         $scope.tinymceOptions = {
@@ -42,11 +42,11 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.route
           if($scope.noti.title!=null&&$scope.noti.content!=null){
               $scope.isadd=true;
               $scope.canadd=false;
-              console.log($scope.noti.title);
-              console.log($scope.noti.content);
+             /// console.log($scope.noti.title);
+             // console.log($scope.noti.content);
           }else{
-            console.log($scope.noti.title);
-            console.log($scope.noti.content);
+           // console.log($scope.noti.title);
+          //  console.log($scope.noti.content);
             alert("请先完善通知的标题和内容");
           }
         };
@@ -55,10 +55,10 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.route
               if ($scope.form.file.$valid && $scope.file) {
                   $scope.upload(file);
                }
-              console.log($scope.noti.title);
+              //console.log($scope.noti.title);
           }else{
-            console.log($scope.noti.title);
-            console.log($scope.noti.content);
+           // console.log($scope.noti.title);
+           // console.log($scope.noti.content);
             alert("请先完善通知的标题和内容");
           }
 
@@ -67,9 +67,9 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.route
             Upload.upload({
                 url: $rootScope.API_HOST + '/Home/Admin/addNotiFile',
                 data: {file: file,
-                'username': $scope.username}
+                'username': $rootScope.user.id}
             }).then(function (resp) {
-              console.log('success'+resp);
+             //console.log('success'+resp);
               $scope.noti.filedir=resp.data.filedir;
 
               NotiService.addNoti($scope.noti)
@@ -78,24 +78,15 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.route
                   },function(error) {
 
                   });
-              console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+              //console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
             }, function (resp) {
-                console.log('Error status: ' + resp.status);
+              //  console.log('Error status: ' + resp.status);
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+              //  console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
             });
             $scope.isadd=false;$scope.canadd=false;
         };
-
-
-
-
-
-
-
-
-
     }])
     .controller('NotiCtrl',['$scope','$rootScope','$state','$mdDialog','NotiService',
       function($scope,$rootScope,$state,$mdDialog,NotiService) {
@@ -150,9 +141,9 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload','ngMessages','ui.route
                        if($scope.filedir!="1"){
                         $scope.hasfile=true;
                        }
-                       console.log("noti");
-                       console.log($scope.content);
-                       console.log($scope.title);
+                      // console.log("noti");
+                      // console.log($scope.content);
+                      // console.log($scope.title);
                 },function(response){
                     $state.transitionTo("NotiDetail",null,{
                         reload:true
