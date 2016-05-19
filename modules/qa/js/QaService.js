@@ -1,13 +1,6 @@
 angular.module('phyman.qa')
-.config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider) {
-    jwtInterceptorProvider.urlParam = 'access_token';
-    jwtInterceptorProvider.tokenGetter = function() {
-        return localStorage.getItem('id_token');
-    };
-    $httpProvider.interceptors.push('jwtInterceptor');
-}])
-.factory('QaService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
-    function($http, $q, $rootScope, jwtHelper, $log) {
+.factory('QaService', ['$http', '$q', '$rootScope',
+    function($http, $q, $rootScope) {
     var qa={};
     var qaId;
 	var onIdFail = function(error) {
@@ -17,15 +10,15 @@ angular.module('phyman.qa')
         getList:function(id) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Qa/getList', {
-                username: $rootScope.username,
+                username: $rootScope.user.id,
                 access_token: $rootScope.access_token
             })
             .then(function(response) {
-            	console.log("QAgetlist");
-            	console.log(response.data.list);
+            	//console.log("QAgetlist");
+            	//console.log(response.data.list);
                 deferred.resolve(response);
             }, function(error) {
-            	console.log(erro);
+            	//console.log(erro);
                 onIdFail(error);
                 deferred.reject(error);
             });
@@ -34,23 +27,36 @@ angular.module('phyman.qa')
         newQ:function(qa){
           	 var deferred = $q.defer();
                $http.post($rootScope.API_HOST+'/Home/Qa/newQuestion', {
-                   username:$rootScope.username,// $rootScope.username,
+                   username:$rootScope.user.id,// $rootScope.username,
                    question: qa.question
                })
                .then(function(response) {
                //	onIdentity(response);
                    deferred.resolve(response);
                }, function(error) {
-               	console.log(erro);
+               	//console.log(erro);
                    onIdFail(error);
                    deferred.reject(error);
                });
                return deferred.promise;
            },
+           deleteQa: function(id) {
+            var deferred = $q.defer();
+             $http.post($rootScope.API_HOST + '/Home/Qa/deleteOne',{
+                id:id
+            })
+            .then(function(response) {
+                deferred.resolve(response);
+            },function(error) {
+                onFail(error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        },
         newA: function(qa,id) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST+'/Home/Qa/newAnswer',{
-            	username: $rootScope.username,//$rootScope.username,
+            	username: $rootScope.user.id,//$rootScope.username,
             	id:id,
                 answer: qa.answer
             })

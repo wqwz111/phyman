@@ -1,7 +1,6 @@
-angular.module('phyman.scan',['ngMaterial', 'ngMessages','ngMessages','angular-jwt', 'ui.router','ngGrid'])
-
-	.controller('ScanCtrl',['$scope','$rootScope','$state','$mdDialog','ScanService',
-        function($scope,$rootScope,$state,$mdDialog,ScanService) {
+angular.module('phyman.scan',[])
+	.controller('ScanCtrl',['$scope','$rootScope','$state','ScanService',
+        function($scope,$rootScope,$state,ScanService) {
     		var promise =ScanService.getDetail();
    	 			promise.then(function(response) {
    	 				//alert(response.data.list);

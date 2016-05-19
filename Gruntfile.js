@@ -61,6 +61,8 @@ module.exports = function(grunt) {
                     'angular-ui-router.min.js': 'angular-ui-router/release/angular-ui-router.min.js',
                     'angular-permission.min.js': 'angular-permission/dist/angular-permission.min.js',
                     'angular-permission.min.js.map': 'angular-permission/dist/angular-permission.min.js.map',
+                    'angular-permission-ui.min.js': 'angular-permission/dist/angular-permission-ui.min.js',
+                    'angular-permission-ui.min.js.map': 'angular-permission/dist/angular-permission-ui.min.js.map',
                     'angular-messages.min.js': 'angular-messages/angular-messages.min.js',
                     'angular-messages.min.js.map': 'angular-messages/angular-messages.min.js.map',
                     'angular-material.min.js': 'angular-material/angular-material.min.js',
