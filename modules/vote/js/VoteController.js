@@ -1,4 +1,4 @@
-angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-jwt', 'ui.router','ngGrid','phyman.user'])
+angular.module('phyman.vote',[])
 .controller('SettingsController', ['$scope', function($scope) {
             
             $scope.departments = [{name: 'Department 1', departmentHead: 'Steve'},
@@ -20,15 +20,19 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-j
    	 					reload:true
    	 				});
    	 			});
-        	/*$scope.newVote = function() {
-        		$state.go('^.new');
-        	};*/
+        	$scope.viewVote = function(id) {
+        		$state.go('^.detail',{
+                        id: id
+                        },{
+                            reload:true
+                    });
+        	};
         	$scope.newVote = function(id) {
         		$state.go('^.new');
         	};
         	$scope.markVote = function(id) {
             };
-            $scope.deleteVote = function(id,ev) {
+            $scope.deleteVote = function(id,ev,index) {
             $mdDialog.show($mdDialog.confirm()
             		.title('是否要删除该通知？')
             		.textContent('该通知删除后将不可恢复。')
@@ -38,6 +42,7 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-j
             			VoteService.deleteVote(id)
             			.then(function(response) {
             				//do something when succeed.
+                            $scope.vote.splice(index,1);
             			},function(error) {
             				//do something when failed
             			});
@@ -63,7 +68,7 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-j
     	 var promise =VoteService.getDetail($stateParams.id);
  			promise.then(function(response) {
                 if(response.data.choose==1){
-                    console.log(response.data.choose);
+                  //  console.log(response.data.choose);
                     $state.go('^.result',
                             {
                                 id: $stateParams.id
@@ -83,7 +88,7 @@ angular.module('phyman.vote',['ngMaterial', 'ngMessages','ngMessages','angular-j
  			$scope.selnum=0;
  			$scope.selected = [];
  			$scope.votenow = function(){
-                console.log($scope.selected);
+                //console.log($scope.selected);
  				if($scope.ifsingle==0&& $scope.selnum!=1 )
  					alert("当前为单选，请选择一个选项");
  				else{

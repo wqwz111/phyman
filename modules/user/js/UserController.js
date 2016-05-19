@@ -1,4 +1,4 @@
-angular.module('phyman.user',['ngMessages','angular-jwt','ui.router','ngMaterial'])
+angular.module('phyman.user',['angular-jwt'])
     .controller('RegisterCtrl',['$scope','$rootScope','AuthService','AuthDialog',
         function($scope,$rootScope,AuthService,AuthDialog){
         $scope.showPassword = false;
@@ -41,9 +41,13 @@ angular.module('phyman.user',['ngMessages','angular-jwt','ui.router','ngMaterial
     }])
     .controller('ResetPasswordCtrl',['$scope','$rootScope','AuthService',
         function($scope,$rootScope,AuthService){
-        
+            
     }])
     .controller('ForgetPasswordCtrl',['$scope','$rootScope','AuthService',
         function($scope,$rootScope,AuthService){
+        $scope.user=[];
+        $scope.getpwd = function(){
+            AuthService.forgetPassword($scope.user);
+        };
     
     }]);

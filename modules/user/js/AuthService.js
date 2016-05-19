@@ -11,8 +11,8 @@ angular.module('phyman.user')
     var user = {};
     var onIdentity = function(response) {
         localStorage.setItem('id_token',response.data.jwt);
-        var user = jwtHelper.decodeToken(response.data.jwt);
-        $rootScope.username=JSON.parse(user).id;
+        var user = JSON.parse(jwtHelper.decodeToken(response.data.jwt));
+        $rootScope.username=user.id;
         $rootScope.$emit('loginSuccess', user);
     };
     var onIdFail = function(error) {
@@ -22,7 +22,7 @@ angular.module('phyman.user')
     return {
         getUser: function() {
             var token = localStorage.getItem('id_token');
-            user = jwtHelper.decodeToken(token);
+            user = JSON.parse(jwtHelper.decodeToken(token));
             return user;
         },
         register: function(params) {
@@ -48,9 +48,13 @@ angular.module('phyman.user')
                 password: user.password
             })
             .then(function(response) {
-                var user1 = JSON.parse(jwtHelper.decodeToken(response.data.jwt));
-                $rootScope.username=user1.id;
-                onIdentity(response);
+                if(response.data.log==0){
+                    onIdentity(response);
+                }else if(response.data.log==1){
+                    alert("密码错误，请重新登录");
+                }else if(response.data.log==2){
+                    alert("该账号未注册");
+                }
                 deferred.resolve(response);
             },function(error) {
                 onIdFail(error);
@@ -64,15 +68,28 @@ angular.module('phyman.user')
             $rootScope.$emit('logoutSuccess');
         },
         forgetPassword: function(user) {
-
+            var deferred = $q.defer();
+            
+            $http.post($rootScope.API_HOST + '/Home/Index/forget_password',{
+               
+                username:user.username
+            })
+            .then(function(response) {
+               alert(response.data.log);
+               deferred.resolve(response);
+            },function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
         },
         resetPassword: function(password) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST + '/Home/Index/reset_password',{
-                new_password: password
+                new_password: password,
+                username:$rootScope.user.id
             })
             .then(function(response) {
-                onIdentity(response);
+               
                 deferred.resolve(response);
             },function(error) {
                 deferred.reject(error);

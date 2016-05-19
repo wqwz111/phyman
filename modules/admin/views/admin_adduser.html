@@ -3,7 +3,7 @@
   <div>
  <h1 class="md-title">新增多名用户 </h1>
  
-   <md-fab-trigger permission-only="'admin'">
+   <md-fab-trigger permission permission-only="'admin'">
      
    <div class="button" ngf-select="upload($file)">ADD</div> 
  
@@ -46,8 +46,8 @@
       </md-input-container>
       
       <md-input-container>
-        <label>性别</label> 
-        <input name="sex" type="text" ng-disabled="isNewUser" ng-model="admin.sex" ng-manlength="1" required>
+        <label>邮箱</label> 
+        <input name="mailbox" type="text" ng-disabled="isNewUser" ng-model="admin.mailbox" ng-manlength="100" required>
       </md-input-container>
       
       <md-input-container>

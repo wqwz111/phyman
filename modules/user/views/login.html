@@ -11,16 +11,16 @@
    <ng-form name="loginForm" layout="column" layout-padding>
       <md-input-container>
          <label>用户名：</label>
-         <input name="username" type="text" ng-disabled="isLoggingIn" ng-model="user.username" ng-pattern="/^\w{8,20}$/" required>
+         <input name="username" type="text" ng-disabled="isLoggingIn" ng-model="user.username" ng-pattern="/^\w{6,13}$/" required>
          <div ng-messages="loginForm.username.$error" ng-show="loginForm.username.$dirty">
-            <div ng-message="pattern">请输入8-12位用户名</div>
+            <div ng-message="pattern">请输入6-13位用户名</div>
          </div>
       </md-input-container>
       <md-input-container>
          <label>密码：</label>
-         <input name="password" type="password" ng-disabled="isLoggingIn" ng-model="user.password" ng-pattern="/^\w{8,16}$/" required>
+         <input name="password" type="password" ng-disabled="isLoggingIn" ng-model="user.password" ng-pattern="/^\w{5,16}$/" required>
          <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
-            <div ng-message="pattern"> 请输入8-16位密码</div>
+            <div ng-message="pattern"> 请输入5-16位密码</div>
          </div>
       </md-input-container>
       <md-button class="md-raised md-primary" ng-disabled="loginForm.$pristine || loginForm.$invalid || !loginForm.$error || isLoggingIn" ng-click="onLoginClick()">登录</md-button>

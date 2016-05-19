@@ -1,15 +1,6 @@
 angular.module('phyman.admin')
-.config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider) {
-    jwtInterceptorProvider.urlParam = 'access_token';
-    jwtInterceptorProvider.tokenGetter = function() {
-        return localStorage.getItem('id_token');
-    };
-    $httpProvider.interceptors.push('jwtInterceptor');
-}])
-
-
-.factory('AdminService', ['$http', '$q', '$rootScope', 'jwtHelper', '$log',
-    function($http, $q, $rootScope, jwtHelper, $log) {
+.factory('AdminService', ['$http', '$q', '$rootScope',
+    function($http, $q, $rootScope) {
     var admin={};
     var adminId;
     //var notidetail={};
@@ -42,15 +33,14 @@ angular.module('phyman.admin')
         getList:function(id) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST + '/Home/Noti/getList', {
-                username: $rootScope.username,
-                access_token: $rootScope.access_token
+                username: $rootScope.user.id
             })
             .then(function(response) {
-            	console.log("getlist");
-            	console.log(response.data.list);
+                //console.log("getlist");
+            //	console.log(response.data.list);
                 deferred.resolve(response);
             }, function(error) {
-            	console.log(erro);
+            	//console.log(erro);
                 onIdFail(error);
                 deferred.reject(error);
             });
@@ -67,16 +57,16 @@ angular.module('phyman.admin')
         addUser: function(admin) {
         	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST + '/Home/Admin/addUser', {
-            	 username: $rootScope.username,
+            	 username: $rootScope.user.id,
             	 id:admin.id,//$rootScope.notiid,
             	 name:admin.name,
-            	 sex:admin.sex,
+            	 mailbox:admin.mailbox,
             	 authority:admin.authority,
             	 grade:admin.grade
              })
              .then(function(response) {
-             	console.log("response");
-             	console.log(response.data);
+             	//console.log("response");
+             	//console.log(response.data);
              	//noti.detail=response.data.notification;
                  //onNotidetail(response);
                  deferred.resolve(response);
@@ -90,7 +80,7 @@ angular.module('phyman.admin')
         updateNoti: function(noti) {
             var deferred = $q.defer();
             $http.post($rootScope.API_HOST + '/Home/Admin/newNoti',{
-            	username: $rootScope.username,
+            	username: $rootScope.user.id,
                 title: noti.title,
                 body:noti.content
                 

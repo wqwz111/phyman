@@ -1,8 +1,8 @@
-angular.module('phyman.admin',['ngMaterial','ngFileUpload', 'ngMessages', 'angular-jwt', 'ui.router','ngGrid'])
+angular.module('phyman.admin',['ngFileUpload'])
 
 .controller('AddUserCtrl',['$scope', '$rootScope','$state','AdminService','Upload', '$timeout',
       function($scope,$rootScope,$state,AdminService,Upload, $timeout){
-     $scope.authorities = ('管理员 老师 学生').split(' ').map(function (authority) { return { abbrev: authority }; });
+     $scope.authorities = ('管理员 普通用户').split(' ').map(function (authority) { return { abbrev: authority }; });
      $scope.isNewUser = false;
 	 $scope.usernew = function(){
 		 $scope.isNewUser = true;
@@ -37,12 +37,12 @@ angular.module('phyman.admin',['ngMaterial','ngFileUpload', 'ngMessages', 'angul
                 url: $rootScope.API_HOST + '/Home/Admin/impUser',
                 data: {file: file, 'username': $scope.username}
             }).then(function (resp) {
-                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+               // console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
             }, function (resp) {
-                console.log('Error status: ' + resp.status);
+               // console.log('Error status: ' + resp.status);
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
             });
         };
 

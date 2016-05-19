@@ -1,5 +1,5 @@
 <md-fab-speed-dial md-direction="up">
-  <md-fab-trigger permission-only="'admin'">
+  <md-fab-trigger permission permission-only="'admin'">
     <md-button aria-label="menu" class="md-fab md-warn" ng-click="newVote()">
       <md-icon md-svg-src="assets/images/ic_add_48px.svg"></md-icon>
     </md-button>
@@ -9,10 +9,14 @@
   <section>
     <md-subheader class="md-primary">本月</md-subheader>
     <md-list class="content-list md-whiteframe-1dp">
-      <md-list-item class="md-2-line" ng-repeat="item in vote | voteFilter: 'new'" ng-click="viewVote(item.id)" ui-sref="vote.detail({id:item.id})">
-          <span class="md-title">{{item.title}}</span>
-          <span flex></span>
+      <md-list-item class="md-2-line" ng-repeat="item in vote | voteFilter: 'new'" 
+      ng-click="viewVote(item.id)">
+        <div>
+          <span class="md-title item-title">{{item.title}}</span>
           <span class="md-caption">{{item.begtime | date:'MM-dd'}}</span>
+          </div>
+          <md-icon permission permission-only="'admin'" class="md-secondary" md-svg-src="assets/images/ic_close_48px.svg"
+            ng-click="deleteVote(item.id,$event,$index)" aria-label="edit"></md-icon> 
         <md-divider ng-if="!$last"></md-divider>
       </md-list-item>
     </md-list>
@@ -20,10 +24,14 @@
   <section>
     <md-subheader class="md-primary">早期</md-subheader>
     <md-list class="content-list md-whiteframe-1dp">
-      <md-list-item class="md-2-line" ng-repeat="item in vote | voteFilter: 'old'" ng-click="viewVote(item.id)" ui-sref="vote.detail({id:item.id})">
-          <span class="md-title">{{item.title}}</span>
+      <md-list-item class="md-2-line" ng-repeat="item in vote | voteFilter: 'old'" ng-click="viewVote(item.id)">
+         <div> 
+          <span class="md-title item-title">{{item.title}}</span>
           <span flex></span>
           <span class="md-caption">{{item.begtime | date:'yyyy-MM-dd'}}</span>
+          </div>
+          <md-icon permission permission-only="'admin'" class="md-secondary" md-svg-src="assets/images/ic_close_48px.svg"
+            ng-click="deleteVote(item.id,$event,$index)" aria-label="edit"></md-icon> 
         <md-divider ng-if="!$last"></md-divider>
       </md-list-item>
     </md-list>
