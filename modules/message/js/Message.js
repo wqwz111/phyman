@@ -2,14 +2,14 @@ angular.module('phyman.message',['ngMaterial'])
   .controller('messageCtrl',['$scope','$rootScope','$state','MsgService',
     function($scope,$rootScope,$state,MsgService){
     $scope.showNotice = false;
-    MsgService.getUnreadMsg()
+    /*MsgService.getUnreadMsg()
      .then(function(response) {
         $scope.notice = response.data.message;
         $scope.showNotice = true;
      },function(error) {
         $scope.notice = {};
         $scope.showNotice = false;
-     });
+     });*/
     MsgService.on('new_msg',function(data) {
         // Message is a json object.
         // {

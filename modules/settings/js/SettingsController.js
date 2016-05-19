@@ -10,7 +10,8 @@ angular.module('phyman.settings',['ngMaterial'])
                   .hideDelay(2000)
             );
             AuthService.logout();
-            $state.go('index');
+            $rootScope.isLoggedIn = false;
+            $state.go('index',null,{reload:true});
             
           },function(error) {
 
