@@ -3,8 +3,12 @@
     <h2 class="page-title" ng-model="title">{{title}}</h2>
     <div ng-bind-html="content | trustedHtml"></div>
   </md-content>
-  <md-border-bottom ng-click="download()">下载附件</md-border-bottom>
-  <div permission-only="'admin'">
+
+  
+  <ul>
+    <li ng-if="hasfile" ng-click="getthefile()">点击下载附件</li>
+    </ul>
+  <div permission permission-only="'admin'">
     <h4>查看人数统计：</h4>
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="已查看">
