@@ -1,9 +1,10 @@
-angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
-    'phyman.user','phyman.noti','phyman.settings','phyman.message','phyman.scan','phyman.vote','phyman.qa','phyman.admin'])
-    .run(['$rootScope','$mdToast','AuthService','MsgService','PermissionStore',
-      function($rootScope,$mdToast,AuthService,MsgService,PermissionStore) { 
-		$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';
-        $rootScope.isLoggedIn = AuthService.checkLoggedIn();
+angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','ngAnimate','ngMaterial',
+    'phyman.user','phyman.noti','phyman.settings','phyman.scan','phyman.vote','phyman.qa','phyman.admin'])
+    .run(['$rootScope','$mdToast','AuthService','PermissionStore',
+      function($rootScope,$mdToast,AuthService,PermissionStore) { 
+        $rootScope.API_HOST = 'http://115.159.180.167:8081/PHYMAN/index.php';
+/*		$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';
+*/        $rootScope.isLoggedIn = AuthService.checkLoggedIn();
         if(AuthService.checkLoggedIn()) {
             $rootScope.user = AuthService.getUser();
         }
@@ -39,13 +40,13 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         $rootScope.$on('loginSuccess',function(event,user) {
             $rootScope.user = user;
             $rootScope.isLoggedIn = true;
-            MsgService.emit('login',{id:user.id,viewlevel:user.viewlevel});
+   /*         MsgService.emit('login',{id:user.id,viewlevel:user.viewlevel});*/
         });
         $rootScope.$on('loginFail',function(event) {
             $rootScope.isLoggedIn = false;
         });
         $rootScope.$on('logoutSuccess',function(event) {
-            MsgService.emit('disconnect');
+          /*  MsgService.emit('disconnect');*/
         });
         $rootScope.$on('toastError',function(event,message) {
             $mdToast.show(
@@ -103,7 +104,7 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         });
         $stateProvider.state('index',{
             url: '/',
-            template: '<p>Main content here.</p>'
+            template: '<img src="assets/images/index.jpg">'
         })
         .state('error',{
             url: '/error',
@@ -126,7 +127,7 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
             state: 'qa.list',
             img: 'assets/images/ic_chat_48px.svg'
         },{
-            title: '扫码',
+            title: '活动情况',
             state: 'scan.detail',
             img: 'assets/images/ic_bookmark_48px.svg'
         },{
@@ -136,10 +137,6 @@ angular.module('phyman',['permission','ui.router','ngAnimate','ngMaterial',
         },{
             title: '设置',
             state: 'settings',
-            img: 'assets/images/ic_settings_48px.svg'
-        },{
-            title: 'multi',
-            state: 'multi',
             img: 'assets/images/ic_settings_48px.svg'
         }];
 
