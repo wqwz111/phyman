@@ -58,31 +58,12 @@ module.exports = function(grunt) {
                     destPrefix: 'dist/lib/'
                 },
                 files: {
-                    'angular-ui-router.min.js': 'angular-ui-router/release/angular-ui-router.min.js',
-                    'angular-permission.min.js': 'angular-permission/dist/angular-permission.min.js',
-                    'angular-permission.min.js.map': 'angular-permission/dist/angular-permission.min.js.map',
-                    'angular-permission-ui.min.js': 'angular-permission/dist/angular-permission-ui.min.js',
-                    'angular-permission-ui.min.js.map': 'angular-permission/dist/angular-permission-ui.min.js.map',
-                    'angular-messages.min.js': 'angular-messages/angular-messages.min.js',
-                    'angular-messages.min.js.map': 'angular-messages/angular-messages.min.js.map',
-                    'angular-material.min.js': 'angular-material/angular-material.min.js',
                     'angular-jwt.min.js': 'angular-jwt/dist/angular-jwt.min.js',
-                    'angular-aria.min.js': 'angular-aria/angular-aria.min.js',
-                    'angular-aria.min.js.map': 'angular-aria/angular-aria.min.js.map',
-                    'angular-animate.min.js': 'angular-animate/angular-animate.min.js',
-                    'angular-animate.min.js.map': 'angular-animate/angular-animate.min.js.map',
-                    'angular.min.js': 'angular/angular.min.js',
-                    'angular.min.js.map': 'angular/angular.min.js.map',
-                    'ng-grid.min.js':'ng-grid/ng-grid-2.0.12.min.js',
                     'angular-ui-tinymce.min.js': 'angular-ui-tinymce/dist/tinymce.min.js',
                     'tinymce.min.js': 'tinymce-dist/tinymce.min.js',
                     'plugins': 'tinymce-dist/plugins',
                     'skins': 'tinymce-dist/skins',
-                    'themes': 'tinymce-dist/themes',
-                    'socket.io.js': 'socket.io-client/socket.io.js',
-                    'ng-file-upload-shim.min.js':'ng-file-upload/ng-file-upload-shim.min.js',
-                    'ng-file-upload.min.js':'ng-file-upload/ng-file-upload.min.js',
-                    'jquery.min.js': 'jquery/jquery.min.js'
+                    'themes': 'tinymce-dist/themes'
                 }
             },  
             assets: {
@@ -91,10 +72,7 @@ module.exports = function(grunt) {
                     srcPrefix: ''
                 },
                 files: {
-                    assets: 'assets/*',
-                    'assets/angular-material.min.css': 'bower_components/angular-material/angular-material.min.css'
-
-
+                    assets: 'assets/*'
                 }
             },
             html: {
