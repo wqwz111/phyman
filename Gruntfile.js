@@ -71,10 +71,9 @@ module.exports = function(grunt) {
                     'angular-aria.min.js.map': 'angular-aria/angular-aria.min.js.map',
                     'angular-animate.min.js': 'angular-animate/angular-animate.min.js',
                     'angular-animate.min.js.map': 'angular-animate/angular-animate.min.js.map',
-                    'angular.js': 'angular/angular.js',
                     'angular.min.js': 'angular/angular.min.js',
                     'angular.min.js.map': 'angular/angular.min.js.map',
-                    'ng-grid.debug.js':'ng-grid-2.0.12/ng-grid.debug.js',
+                    'ng-grid.min.js':'ng-grid/ng-grid-2.0.12.min.js',
                     'angular-ui-tinymce.min.js': 'angular-ui-tinymce/dist/tinymce.min.js',
                     'tinymce.min.js': 'tinymce-dist/tinymce.min.js',
                     'plugins': 'tinymce-dist/plugins',
@@ -82,7 +81,8 @@ module.exports = function(grunt) {
                     'themes': 'tinymce-dist/themes',
                     'socket.io.js': 'socket.io-client/socket.io.js',
                     'ng-file-upload-shim.min.js':'ng-file-upload/ng-file-upload-shim.min.js',
-                    'ng-file-upload.min.js':'ng-file-upload/ng-file-upload.min.js'
+                    'ng-file-upload.min.js':'ng-file-upload/ng-file-upload.min.js',
+                    'jquery.min.js': 'jquery/jquery.min.js'
                 }
             },  
             assets: {
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
         uglify: {
             js: {
                 files: [{
-                    expand: false,
+                    expand: true,
                     cwd: 'dist',
                     src: 'js/*.js',
                     dest: 'dist/'
@@ -129,7 +129,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
 
-    grunt.registerTask('build', ['concat','uglify','bowercopy']);
+    grunt.registerTask('build', ['concat','bowercopy','uglify']);
     grunt.registerTask('mock','Run this app on a mock http server.',function() {
         grunt.task.run('clean');
         grunt.task.run('build');
