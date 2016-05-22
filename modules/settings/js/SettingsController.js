@@ -16,5 +16,23 @@ angular.module('phyman.settings',['ngMaterial'])
           },function(error) {
 
           });
+
     };
+    $scope.onUpdateEmailClick = function () {
+      AuthService.resetEmail($scope.email)
+          .then(function(response) {
+            $mdToast.show(
+                $mdToast.simple()
+                  .textContent('邮箱修改成功')
+                  .hideDelay(2000)
+            );
+            
+            $state.go('index',null,{reload:true});
+            
+          },function(error) {
+
+          });
+
+    };
+
   }])

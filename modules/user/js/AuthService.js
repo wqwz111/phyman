@@ -96,6 +96,20 @@ angular.module('phyman.user')
             });
             return deferred.promise;
         },
+        resetEmail: function(email) {
+            var deferred = $q.defer();
+            $http.post($rootScope.API_HOST + '/Home/Admin/reset_email',{
+                new_email: email,
+                username:$rootScope.user.id
+            })
+            .then(function(response) {
+               
+                deferred.resolve(response);
+            },function(error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        },
         checkLoggedIn: function() {
             var token = localStorage.getItem('id_token');
             if(angular.equals(token,null) || jwtHelper.isTokenExpired(token)) {

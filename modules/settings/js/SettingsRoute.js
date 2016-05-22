@@ -15,5 +15,16 @@ angular.module('phyman.settings')
                     redirectTo: 'error'
                 }
             }
-        });
+        })
+        .state('settings.update_email',{    
+           url: '/update_email',   
+           templateUrl: 'views/update_email.html',   
+           controller: 'SettingsCtrl',   
+           data: {   
+               permissions: {    
+                   except: ['anonymous'],    
+                   redirectTo: 'error'   
+               }   
+           }   
+       });
   }])
