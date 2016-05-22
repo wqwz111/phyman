@@ -6,7 +6,7 @@
   </md-fab-trigger>
 </md-fab-speed-dial>
 <div flex-gt-sm="90" layout-padding layout="column">
-  <section>
+   <section ng-show="(vote | voteFilter: 'new').length != 0">
     <md-subheader class="md-primary">本月</md-subheader>
     <md-list class="content-list md-whiteframe-1dp">
       <md-list-item class="md-2-line" ng-repeat="item in vote | voteFilter: 'new'" 
@@ -21,7 +21,7 @@
       </md-list-item>
     </md-list>
   </section>
-  <section>
+   <section ng-show="(vote | voteFilter: 'old').length != 0">
     <md-subheader class="md-primary">早期</md-subheader>
     <md-list class="content-list md-whiteframe-1dp">
       <md-list-item class="md-2-line" ng-repeat="item in vote | voteFilter: 'old'" ng-click="viewVote(item.id)">

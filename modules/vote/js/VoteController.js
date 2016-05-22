@@ -147,7 +147,7 @@ angular.module('phyman.vote',[])
     	 $scope.userState = '';
          $scope.states = ('单选 多选').split(' ').map(function (state) { return { abbrev: state }; });
 
-         $scope.grades = ('大一 大二 大三 大四 研一 研二 研三 博士').split(' ').map(function (grade) { return { abbrev: grade }; });
+         $scope.grades = ('大一 大二 大三 大四 研一 研二 研三 博士 毕业生').split(' ').map(function (grade) { return { abbrev: grade }; });
          $scope.selnum1=0;
          $scope.gradesel=[];
          $scope.toggle1 = function (item, list) {

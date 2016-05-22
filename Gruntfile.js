@@ -45,9 +45,11 @@ module.exports = function(grunt) {
                         ],    
                     'dist/js/settings.js': [
                         'modules/settings/js/SettingsController.js',
-                        'modules/settings/js/SettingsRoute.js'],
+                        'modules/settings/js/SettingsRoute.js'
+                        ],
                     'dist/js/message.js': [
-                        'modules/message/js/Message.js'],
+                        'modules/message/js/Message.js'
+                        ],
                     'dist/lib/langs/zh_CN.js': 'assets/langs/zh_CN.js'
                 }
             }

@@ -3,8 +3,9 @@ angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','
     .run(['$rootScope','$mdToast','AuthService','PermissionStore',
       function($rootScope,$mdToast,AuthService,PermissionStore) { 
         $rootScope.API_HOST = 'http://115.159.180.167:8081/PHYMAN/index.php';
-/*		$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';
-*/        $rootScope.isLoggedIn = AuthService.checkLoggedIn();
+
+/*		$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';*/
+        $rootScope.isLoggedIn = AuthService.checkLoggedIn();
         if(AuthService.checkLoggedIn()) {
             $rootScope.user = AuthService.getUser();
         }
@@ -102,13 +103,17 @@ angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','
             var $state = $injector.get("$state");
             $state.go('index');
         });
-        $stateProvider.state('index',{
+        $stateProvider
+        .state('index',{
             url: '/',
             template: '<img src="assets/images/index.jpg">'
         })
         .state('error',{
             url: '/error',
             template: '<p>Something goes wrong.</p>'
+        }).state('permissionerro',{
+            url: '/permissionerro',
+            template: '<p>权限不足。</p>'
         });
 
     }])

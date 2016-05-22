@@ -26,7 +26,7 @@ angular.module('phyman.admin')
          data: {
             permissions: {
                 except: ['anonymous','user'],
-                redirectTo: 'error'
+                redirectTo: 'permissionerro'
             }
         }
     })

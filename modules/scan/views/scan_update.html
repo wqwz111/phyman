@@ -10,11 +10,19 @@
          </div>
       </md-input-container>
 
+      <md-input-container>
+        <label>年级</label>
+        <md-select ng-model="scan.grade" required>
+          <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+            {{state.abbrev}}
+          </md-option>
+        </md-select>
+      </md-input-container>
 
-      <h2 class="md-title">添加选项</h2>
-      <div flex-gt-sm="90" layout-padding layout="column">
+
+    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大一'">
         <section>
-          <div id="pagecss">
+         <div id="pagecss">
             <div style="display: inline;">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
@@ -22,10 +30,11 @@
                     <th width="10%"></th>
                     <th width="30%">学号</th>
                     <th width="30%">姓名</th>
-                    <th width="30%">扫码次数</th>
+                    <th width="30%">活动次数</th>
                   </tr>
-                  <tr ng-repeat="item in scan" >
-                    <td align="center" valign="middle"><md-checkbox ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+                  <tr ng-repeat="item in scan| scanFilter: 'benyi'" >
+                    <td align="center" valign="middle">
+                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
@@ -34,26 +43,202 @@
               </table>
             </div>
           </div>
+          </section>
+          </div>
+          </div>
+      
 
-
-<!-- 
-          <md-list class="content-list md-whiteframe-1dp">
-          <div layout="row" layout-wrap flex>
-            <div flex="90" ng-repeat="item in scan">
-              <md-checkbox ng-checked="exists(item, updated)" ng-click="toggle(item, updated)">
-              <tr>
-              <td>{{item.id }}</td>
-              <td>{{item.name}}</td>
-              <td>{{item.count}}</td>
-              </tr> -->
-                <!-- 学号：{{ item.id }}  姓名: {{item.name}}  扫码数：{{item.count}}   个  
-                <span ng-if="exists(item, updated)"></span>
-              </md-checkbox>
+    
+    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大二'">
+        <section>
+         <div id="pagecss">
+            <div style="display: inline;">
+              <table   width="80%" cellpadding="0" cellspacing="0">
+                <tbody >
+                  <tr>
+                    <th width="10%"></th>
+                    <th width="30%">学号</th>
+                    <th width="30%">姓名</th>
+                    <th width="30%">活动次数</th>
+                  </tr>
+                  <tr ng-repeat="item in scan| scanFilter: 'bener'" >
+                    <td align="center" valign="middle">
+                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+                    <td align="center" valign="middle">{{item.id }}</td>
+                    <td align="center" valign="middle">{{item.name}}</td>
+                    <td align="center" valign="middle">{{item.count}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-        </md-list> --> 
+          </section>
+          </div>
+
+   <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大三'">
+        <section>
+         <div id="pagecss">
+            <div style="display: inline;">
+              <table   width="80%" cellpadding="0" cellspacing="0">
+                <tbody >
+                  <tr>
+                    <th width="10%"></th>
+                    <th width="30%">学号</th>
+                    <th width="30%">姓名</th>
+                    <th width="30%">活动次数</th>
+                  </tr>
+                  <tr ng-repeat="item in scan| scanFilter: 'bensan'" >
+                    <td align="center" valign="middle">
+                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+                    <td align="center" valign="middle">{{item.id }}</td>
+                    <td align="center" valign="middle">{{item.name}}</td>
+                    <td align="center" valign="middle">{{item.count}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </section>
+          </div>
+          </div>
+      
+
+    
+    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大四'">
+        <section>
+         <div id="pagecss">
+            <div style="display: inline;">
+              <table   width="80%" cellpadding="0" cellspacing="0">
+                <tbody >
+                  <tr>
+                    <th width="10%"></th>
+                    <th width="30%">学号</th>
+                    <th width="30%">姓名</th>
+                    <th width="30%">活动次数</th>
+                  </tr>
+                  <tr ng-repeat="item in scan| scanFilter: 'bensi'" >
+                    <td align="center" valign="middle">
+                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+                    <td align="center" valign="middle">{{item.id }}</td>
+                    <td align="center" valign="middle">{{item.name}}</td>
+                    <td align="center" valign="middle">{{item.count}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </section>
+          </div>
+      <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研一'">
+        <section>
+         <div id="pagecss">
+            <div style="display: inline;">
+              <table   width="80%" cellpadding="0" cellspacing="0">
+                <tbody >
+                  <tr>
+                    <th width="10%"></th>
+                    <th width="30%">学号</th>
+                    <th width="30%">姓名</th>
+                    <th width="30%">活动次数</th>
+                  </tr>
+                  <tr ng-repeat="item in scan| scanFilter: 'yanyi'" >
+                    <td align="center" valign="middle">
+                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+                    <td align="center" valign="middle">{{item.id }}</td>
+                    <td align="center" valign="middle">{{item.name}}</td>
+                    <td align="center" valign="middle">{{item.count}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </section>
+          </div>
+          </div>
+      
+
+    
+    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研二'">
+        <section>
+         <div id="pagecss">
+            <div style="display: inline;">
+              <table   width="80%" cellpadding="0" cellspacing="0">
+                <tbody >
+                  <tr>
+                    <th width="10%"></th>
+                    <th width="30%">学号</th>
+                    <th width="30%">姓名</th>
+                    <th width="30%">活动次数</th>
+                  </tr>
+                  <tr ng-repeat="item in scan| scanFilter: 'yaner'" >
+                    <td align="center" valign="middle">
+                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+                    <td align="center" valign="middle">{{item.id }}</td>
+                    <td align="center" valign="middle">{{item.name}}</td>
+                    <td align="center" valign="middle">{{item.count}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </section>
+          </div>
+      <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研三'">
+        <section>
+         <div id="pagecss">
+            <div style="display: inline;">
+              <table   width="80%" cellpadding="0" cellspacing="0">
+                <tbody >
+                  <tr>
+                    <th width="10%"></th>
+                    <th width="30%">学号</th>
+                    <th width="30%">姓名</th>
+                    <th width="30%">活动次数</th>
+                  </tr>
+                  <tr ng-repeat="item in scan| scanFilter: 'yansan'" >
+                    <td align="center" valign="middle">
+                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+                    <td align="center" valign="middle">{{item.id }}</td>
+                    <td align="center" valign="middle">{{item.name}}</td>
+                    <td align="center" valign="middle">{{item.count}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </section>
+          </div>
+          </div>
+      
+
+    
+    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='博士'">
+        <section>
+         <div id="pagecss">
+            <div style="display: inline;">
+              <table   width="80%" cellpadding="0" cellspacing="0">
+                <tbody >
+                  <tr>
+                    <th width="10%"></th>
+                    <th width="30%">学号</th>
+                    <th width="30%">姓名</th>
+                    <th width="30%">活动次数</th>
+                  </tr>
+                  <tr ng-repeat="item in scan| scanFilter: 'boshi'" >
+                    <td align="center" valign="middle">
+                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+                    <td align="center" valign="middle">{{item.id }}</td>
+                    <td align="center" valign="middle">{{item.name}}</td>
+                    <td align="center" valign="middle">{{item.count}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </section>
+          </div>
+
         <md-button class="md-raised" ng-click="update()">确定 </md-button>
-      </section>
      </div>
     </div>
   </div>

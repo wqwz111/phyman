@@ -6,7 +6,7 @@
   </md-fab-trigger>
 </md-fab-speed-dial>
 <div flex-gt-sm="90" layout-padding layout="column">
-  <section>
+   <section ng-show="(qa | qaFilter: 'new').length != 0">
     <md-subheader class="md-primary">本月</md-subheader>
     <md-list class="content-list md-whiteframe-1dp">
       <md-list-item class="md-2-line" ng-repeat="item in qa | qaFilter: 'new'" layout-padding layout="column">
@@ -30,7 +30,7 @@
       </md-list-item>
     </md-list>
   </section>
-  <section>
+   <section ng-show="(qa | qaFilter: 'old').length != 0">
     <md-subheader class="md-primary">早期</md-subheader>
        <md-list class="content-list md-whiteframe-1dp">
       <md-list-item class="md-2-line" ng-repeat="item in qa | qaFilter: 'old'"  layout-padding layout="column">

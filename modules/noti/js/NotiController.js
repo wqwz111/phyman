@@ -12,7 +12,7 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload'])
             min_height:400,
             max_width:900
         };
-         $scope.grades = ('大一 大二 大三 大四 研一 研二 研三 博士').split(' ').map(function (grade) { return { abbrev: grade }; });
+         $scope.grades = ('大一 大二 大三 大四 研一 研二 研三 博士 毕业生').split(' ').map(function (grade) { return { abbrev: grade }; });
          $scope.selnum1=0;
          $scope.gradesel=[];
          $scope.toggle1 = function (item, list) {
@@ -95,7 +95,7 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload'])
                     //alert(response.data.list);
                     $scope.noti=JSON.parse(response.data.list);
                 },function(response){
-                    $state.transitionTo("NotiDetail",null,{
+                    $state.transitionTo("erro",null,{
                         reload:true
                     });
                 });
