@@ -48,8 +48,8 @@
           ng-repeat="item in options" md-colspan="4" md-rowspan="2">
           <md-input-container flex-gt-sm>
             <label>选项{{item.optid}}:</label>
-            <input ng-model="number.optcontent" required>
-            <div ng-show="number.optcontent.$dirty">
+            <input ng-model="item.optcontent" required>
+            <div ng-show="item.optcontent.$dirty">
                 <div ng-messages="pattern">选项不能超过20个字符.</div>
              </div>
           </md-input-container>
