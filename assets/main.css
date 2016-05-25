@@ -202,6 +202,17 @@ form .progress {
   width: 48px;
   margin: 16px; }
 
+div#settings md-input-container {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+div#vote-option-action {
+    margin: 20px 10px 20px 10px;
+}
+h1#vote-new-title {
+    text-align: center;
+}
+
 
 /*
 admin*/

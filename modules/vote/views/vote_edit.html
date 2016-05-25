@@ -1,60 +1,64 @@
-<div  class="md-padding" ng-cloak ><!-- https://material.angularjs.org/latest/demo/input -->
-  <div>
-    <h1 class="md-title">新增投票</h1>
-    <div name="voteNew" layout="column">
+<div  class="page md-whiteframe-1dp h-center" ng-cloak >
+    <h1 id="vote-new-title" class="md-headline">创建新的投票</h1>
+    <ng-form name="voteNewForm" layout="column">
       <md-input-container>
         <label>标题</label>
-        <input name="title" type="text" ng-disabled="isNewVote" ng-model="vote.title" ng-manlength="20" required>
+        <input name="title" type="text" ng-disabled="isNewVote" ng-model="vote.title" ng-maxlength="20" required>
         <div ng-show="vote.title.$dirty">
-            <div ng-messages="pattern">title should be less than 20 characters.</div>
+            <div ng-messages="pattern">标题不能超过20个字符.</div>
          </div>
       </md-input-container>
       
-      <md-input-container>
+      <md-input-container class="md-block">
         <label>说明</label> 
-        <input name="content" type="text" ng-disabled="isNewVote" ng-model="vote.content" ng-manlength="200" required>
+        <textarea rows="6" ng-disabled="isNewVote" ng-model="vote.content" ng-maxlength="200" required></textarea>
         <div ng-show="vote.content.$dirty">
-            <div ng-messages="pattern">content should be less than 200 characters.</div>
+            <div ng-messages="pattern">不能超过200个字符.</div>
          </div>
       </md-input-container>
-      <h4>截止日期</h4>
-    <md-datepicker ng-model="vote.date" md-placeholder="Enter date" required></md-datepicker>
-      <md-input-container>
-        <label>单选/多选</label>
-        <md-select ng-model="vote.type" required>
-          <md-option ng-repeat="state in states" value="{{state.abbrev}}">
-            {{state.abbrev}}
-          </md-option>
-        </md-select>
-      </md-input-container>
-      
-      <md-input-container>
-        <label>年级</label>
-        <md-select multiple ng-model="vote.grade">
-           <md-option ng-repeat="grade in grades" ng-click="toggle1(grade, gradesel)">
-               {{grade.abbrev}} 
-           </md-option>
-        </md-select>
-      </md-input-container>
-      
-
-
-      <h2 class="md-title">添加选项</h2>
-      
-      <section ng-repeat="number in options">
-      <md-input-container >
-        <label>选项{{number.optid}}:</label>
-        <input ng-model="number.optcontent">
-        <div ng-show="number.optcontent.$dirty">
-            <div ng-messages="pattern">options should be less than 20 characters.</div>
-         </div>
-      </md-input-container>
-      </section>
-      <section>
-      
-      <md-button class="md-raised" ng-click="votenew()">确定</md-button>
-      </section>
-    </div>
-  </div>
+      <div id="settings" layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>年级</label>
+          <md-select multiple ng-model="vote.grade" required>
+             <md-option ng-repeat="grade in grades" ng-click="toggle1(grade, gradesel)">
+                 {{grade.abbrev}} 
+             </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>单选/多选</label>
+          <md-select ng-model="vote.type" required>
+            <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+              {{state.abbrev}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-datepicker ng-model="vote.date" md-placeholder="截止日期" md-min-date="minDate" flex-gt-sm></md-datepicker>
+      </div>
+        
+      <h2 class="md-title"><strong>添加选项<strong></h2>     
+      <div id="vote-option-action">
+        <md-button class="md-raised md-warn" ng-click="addOption()" ng-disabled="options.length == 10">添加新选项</md-button>
+        <md-button class="md-raised" ng-click="deleteOption()" ng-disabled="options.length == 1">删除一项</md-button>
+      </div>
+      <md-grid-list
+        md-cols-gt-sm="12" md-cols-xs="8" md-cols="4" md-row-height="30px"
+        md-gutter-sm="8px" md-gutter="4px">
+        <md-grid-tile
+          ng-repeat="item in options" md-colspan="4" md-rowspan="2">
+          <md-input-container flex-gt-sm>
+            <label>选项{{item.optid}}:</label>
+            <input ng-model="number.optcontent" required>
+            <div ng-show="number.optcontent.$dirty">
+                <div ng-messages="pattern">选项不能超过20个字符.</div>
+             </div>
+          </md-input-container>
+        </md-grid-tile>
+      </md-grid-list>
+      <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary" ng-click="votenew()" ng-disabled="voteNewForm.$invalid">确定</md-button>
+      </div>
+    </ng-form>
 </div>
 
