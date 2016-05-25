@@ -1,10 +1,10 @@
-<div ng-controller="NotiEditorCtrl" layout="column">
-  <md-input-container>
+<div class="page md-whiteframe-1dp h-center" ng-controller="NotiEditorCtrl" layout="column">
+  <md-input-container id="noti-title">
     <label>标题：</label>
 
     <input name="title" type="text" ng-model="noti.title" md-maxlength="40" required>
   </md-input-container>
-  <md-input-container>
+  <md-input-container id="noti-view-grade">
         <label>年级</label>
         <md-select multiple ng-model="noti.grade">
            <md-option ng-repeat="grade in grades" ng-click="toggle1(grade, gradesel)">
@@ -25,7 +25,7 @@
     <div layout="row">
 
       <span flex></span>
-      <md-button class="md-raised md-primary" ng-click="submit()">发布</md-button>
+      <md-button class="md-raised md-primary" ng-disabled="!noti.title || !noti.content" ng-click="submit()">发布</md-button>
 
     </div>
   </div>

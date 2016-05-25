@@ -29,6 +29,10 @@ body {
     max-width: 1000px;
 }
 
+.h-center {
+    margin: 0 auto;
+}
+
 /*noti*/
 md-fab-speed-dial {
     float: left;
@@ -47,13 +51,23 @@ md-fab-speed-dial {
 .page {
     background-color: white;
     max-width: 900px;
-    padding:20px;
+    padding:50px 20px 20px 20px;
+    margin-top: 50px;
 }
 .page h2 {
     text-align: center;
 }
 .item-title {
     display: block;
+}
+md-input-container#noti-view-grade {
+    min-width: 150px;
+    margin-right: 10%;
+    align-self: flex-end;
+}
+md-input-container#noti-title {
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 /*settings*/
