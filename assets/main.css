@@ -42,6 +42,12 @@ md-fab-speed-dial {
     margin-right: 20px;
     margin-bottom: 20px;
 }
+div#no-content {
+    margin: 0 auto;
+}
+div#no-content h1 {
+    color: #a1a1a1;
+}
 #load-progress {
     position: fixed;
 }
