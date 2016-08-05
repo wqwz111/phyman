@@ -75,6 +75,9 @@ md-input-container#noti-title {
     margin-left: 10%;
     margin-right: 10%;
 }
+#view-stat-tabs {
+    height: 30%;
+}
 
 /*settings*/
 #account-settings {
