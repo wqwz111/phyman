@@ -15,18 +15,10 @@
 
   <div flex-gt-sm="85" layout="column">
     <textarea ui-tinymce="tinymceOptions" ng-model="noti.content" flex></textarea>
-
-    <!-- 
-    <md-button aria-label="menu" class="md-fab md-warn" ng-if="canadd" ng-click="addfile()">
-      <md-icon md-svg-src="assets/images/ic_add_48px.svg"></md-icon>
-    </md-button>ng-if="isadd"
- -->
-  <div class="button" ngf-select="upload($file)" >请先把标题和内容都写好了再点此处添加附件</div>
     <div layout="row">
-
+      <md-button class="md-raised md-primary" ngf-select="upload($file)" ng-disabled="!noti.title || !noti.content">添加附件</md-button>
       <span flex></span>
       <md-button class="md-raised md-primary" ng-disabled="!noti.title || !noti.content" ng-click="submit()">发布</md-button>
-
     </div>
   </div>
   </div>
