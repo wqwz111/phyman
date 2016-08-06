@@ -32,6 +32,24 @@ body {
 .h-center {
     margin: 0 auto;
 }
+md-sidenav {
+    width: 320px;
+    min-width: 320px;
+}
+#user-info-panel {
+    height: 200px;
+    display: flex;
+}
+#user-info-panel>p {
+    height: 50px;
+    position: relative;
+    left: 10px;
+    top: 120px;
+}
+#user-info-panel>img {
+    position: absolute;
+    z-index: -1;
+}
 
 /*noti*/
 md-fab-speed-dial {

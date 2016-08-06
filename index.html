@@ -50,6 +50,16 @@
         <md-sidenav class="md-sidenav-left"
          md-component-id="left"
          md-is-locked-open="$mdMedia('gt-sm')">
+          <header id="user-info-panel">
+            <p>
+              <span class="md-subhead">姓名：</span>
+              {{user.name}}
+              <br />
+              <span class="md-subhead">学号/工号：</span>
+              {{user.id}}
+            </p>
+            <img src="/assets/images/user_info_bg.png">
+          </header>
           <md-list layout-padding>
             <md-list-item class="md-1-line" ng-repeat="item in menuItems" ng-click="clickMenuItem(item.state)">
               <div layout="row">

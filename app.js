@@ -152,6 +152,8 @@ angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','
         $scope.toggleList = function() {
             $mdSidenav('left').toggle();
         };
+
+        $scope.user = $rootScope.user;
     }])
     .controller('toolbarCtrl',['$scope','$state','$rootScope','$mdSidenav','AuthDialog','AuthService',
         function($scope,$state,$rootScope,$mdSidenav,AuthDialog,AuthService) {
