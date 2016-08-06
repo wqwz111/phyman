@@ -4,13 +4,14 @@ angular.module('phyman.noti',['ui.tinymce','ngFileUpload'])
         $scope.tinymceOptions = {
             language: 'zh_CN',
             plugins: 'fullscreen,preview,table',
-            toolbar: 'undo,redo,bold,italic,styleselect,fontsizeselect,removeformat,'+
-                'bullist,numlist,outdent,indent,table,preview,fullscreen',
+            toolbar1: 'undo redo styleselect fontsizeselect removeformat',
+            toolbar2: 'bullist numlist outdent indent table preview fullscreen',
             trusted: true,
             menubar: false,
             statusbar: false,
             min_height:400,
-            max_width:900
+            max_width:900,
+            content_css: '//www.tinymce.com/css/codepen.min.css'
         };
          $scope.grades = ('大一 大二 大三 大四 研一 研二 研三 博士 毕业生').split(' ').map(function (grade) { return { abbrev: grade }; });
          $scope.selnum1=0;
