@@ -65,7 +65,7 @@ angular.module('phyman.scan',['ngMaterial'])
 
 
             $scope.scan.scans=[];
-            $scope.scan.grade="";
+            $scope.scan.grade=null;
 
             var promise =ScanService.getList();
             promise.then(function(response) {
@@ -74,84 +74,84 @@ angular.module('phyman.scan',['ngMaterial'])
                 alert("ScanList fail");
                 $state.go("login");
             });
-            var tmpl = "<md-dialog >\n"+
-                    "<md-dialog-content >\n"+
-                    "<h1 class=\"md-title\">活动条目</h1>\n"+
-                    "<ui ng-repeat=\"item in scans\">\n"+
-                    "<li>\n"+
-                    "<md-checkbox aria-label=\"item\" ng-checked=\"exists(item, deletelist)\" ng-click=\"toggle(item, deletelist)\"></md-checkbox>\n"+
-                    "{{item.scanname}}</li>\n"+
-                    "</ui>\n"+
+            $scope.openDialog = function(event,id) {
+                // var DialogCtrl = function($scope, dataToPass,$mdDialog) {
+                //     //console.log(dataToPass);
+                //     $scope.scans=[];
+                //     $scope.deletelist=[];
+                //     var promise =ScanService.getdiaDetail(dataToPass);
+                //             promise.then(function(response) {
+                //             $scope.scans=JSON.parse(response.data.scans);
+                //         },function(response){
+                //             alert("detail fail");
+                //             $state.go("login");
+                //         });
+                //     $scope.close = function() {
+                //         $mdDialog.cancel();
+                //     };
+                //     $scope.cancel = function() {
+                //         $mdDialog.cancel();
+                //     };
+                //     $scope.toggle = function (item,list){
+                //         var idx = list.indexOf(item);
+                //         if (idx > -1) {
+                //             list.splice(idx, 1);
+                //             $scope.selnum-=1;
+                //         }
+                //         else {
+                //             list.push(item);
+                //             $scope.selnum+=1;
+                //         }
+                //     };
+                //     $scope.exists = function (item,list){
+                //         return list.indexOf(item) > -1;
+                //     };
+                //     $scope.delete=function(ev){
+                //         //console.log($scope.deletelist);
+                //         $mdDialog.show($mdDialog.confirm()
+                //             .title('是否要删除所选条目？')
+                //             .textContent('删除后将不可恢复。')
+                //             .targetEvent(ev)
+                //             .ok('删除!')
+                //             .cancel('点错了')).then(function() {
+                //                 ScanService.deleteDetail($scope.deletelist,dataToPass)
+                //                   .then(function(response) {
+                //                     $mdDialog.cancel();
+                //                 },function(error) {
 
-                    "<md-button aria-label=\"menu\"  align=\"center\" valign=\"middle\" ng-click=\"delete($event)\">\n"+
-                        "<md-icon md-svg-src=\"assets/images/ic_edit_24px.svg\"></md-icon>\n"+
-                    "</md-button>\n"+
-                    "<md-button aria-label=\"menu\"  align=\"center\" valign=\"middle\" ng-click=\"close()\">\n"+
-                        "<md-icon md-svg-src=\"assets/images/ic_healing_24px.svg\"></md-icon>\n"+
-                    "</md-button>\n"+
-                "</md-dialog-content>\n"+
-              "</md-dialog>\n";
+                //                     $mdDialog.cancel();
+                //                     //do something when failed
+                //                 });
+                //             },function() {});
+                //     };
+                // };
+                // var tmpl = '<md-dialog >'+
+                //     '<md-dialog-content >'+
+                //     '<h1 class="md-title">活动条目</h1>'+
+                //     '<ui ng-repeat="item in scans">'+
+                //     '<li>'+
+                //     '<md-checkbox aria-label="item" ng-checked="exists(item, deletelist)" ng-click="toggle(item, deletelist)"></md-checkbox>'+
+                //     '{{item.scanname}}</li>'+
+                //     '</ui>'+
 
-            $scope.openDialog = function (event,id) {
+                //     '<md-button aria-label="menu"  align="center" valign="middle" ng-click="delete($event)">'+
+                //         '<md-icon md-svg-src="assets/images/ic_edit_24px.svg"></md-icon>'+
+                //     '</md-button>'+
+                //     '<md-button aria-label="menu"  align="center" valign="middle" ng-click="close()">'+
+                //         '<md-icon md-svg-src="assets/images/ic_healing_24px.svg"></md-icon>'+
+                //     '</md-button>'+
+                //     '</md-dialog-content>'+
+                //   '</md-dialog>';
 
-                $mdDialog.show({
-                    locals:{dataToPass: id},
-                    template: tmpl,
-
-                    controller: DialogCtrl,
-                    targetEvent: event,
-                    clickOutsideToClose: true,
-                });
-            };
-            var DialogCtrl = function($scope, dataToPass,$mdDialog) {
-                //console.log(dataToPass);
-                $scope.scans=[];
-                $scope.deletelist=[];
-                var promise =ScanService.getdiaDetail(dataToPass);
-                        promise.then(function(response) {
-                        $scope.scans=JSON.parse(response.data.scans);
-                    },function(response){
-                        alert("detail fail");
-                        $state.go("login");
-                    });
-                $scope.close = function() {
-                    $mdDialog.cancel();
-                };
-                $scope.cancel = function() {
-                    $mdDialog.cancel();
-                };
-                $scope.toggle = function (item,list){
-                    var idx = list.indexOf(item);
-                    if (idx > -1) {
-                        list.splice(idx, 1);
-                        $scope.selnum-=1;
-                    }
-                    else {
-                        list.push(item);
-                        $scope.selnum+=1;
-                    }
-                };
-                $scope.exists = function (item,list){
-                    return list.indexOf(item) > -1;
-                };
-                $scope.delete=function(ev){
-                    //console.log($scope.deletelist);
-                    $mdDialog.show($mdDialog.confirm()
-                        .title('是否要删除所选条目？')
-                        .textContent('删除后将不可恢复。')
-                        .targetEvent(ev)
-                        .ok('删除!')
-                        .cancel('点错了')).then(function() {
-                            ScanService.deleteDetail($scope.deletelist,dataToPass)
-                              .then(function(response) {
-                                $mdDialog.cancel();
-                            },function(error) {
-
-                                $mdDialog.cancel();
-                                //do something when failed
-                            });
-                        },function() {});
-                };
+                // var parentEl = angular.element(document.body);
+                // $mdDialog.show({
+                //     parent: parentEl,
+                //     locals:{dataToPass: id},
+                //     template: tmpl,
+                //     controller: DialogCtrl,
+                //     targetEvent: event,
+                //     clickOutsideToClose: true,
+                // });
             };
       }])
     .controller('updateCtrl',['$scope',  '$rootScope','$state','ScanService','$mdDialog','$mdMedia',
@@ -171,7 +171,8 @@ angular.module('phyman.scan',['ngMaterial'])
             $scope.updated = [];
             $scope.showdialog=false;
 
-            var tmpl = "<md-dialog >\n"+
+            $scope.openDialog = function (event,id) {
+                var tmpl = "<md-dialog >\n"+
                     "<md-dialog-content >\n"+
                     "<h1 class=\"md-title\">活动条目</h1>\n"+
                     "<ui ng-repeat=\"item in scans\">\n"+
@@ -186,10 +187,8 @@ angular.module('phyman.scan',['ngMaterial'])
                     "<md-button aria-label=\"menu\"  align=\"center\" valign=\"middle\" ng-click=\"close()\">\n"+
                         "<md-icon md-svg-src=\"assets/images/ic_healing_24px.svg\"></md-icon>\n"+
                     "</md-button>\n"+
-                "</md-dialog-content>\n"+
-              "</md-dialog>\n";
-
-            $scope.openDialog = function (event,id) {
+                    "</md-dialog-content>\n"+
+                  "</md-dialog>\n";
 
                 $mdDialog.show({
                     locals:{dataToPass: id},

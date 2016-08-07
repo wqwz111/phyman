@@ -114,70 +114,11 @@ angular.module('phyman.scan')
 .filter('scanFilter',function() {
     return function(items,grade) {
         var filterItems = new Array();
-        if(angular.equals(grade,'benyi')) {
-            angular.forEach(items,function(item) {
-                if(item.grade == "大一") {
-                    filterItems.push(item);
-                }
-            });
-            return filterItems;
-        }
-        if(angular.equals(grade,'bener')) {
-            angular.forEach(items,function(item) {
-                if(item.grade == "大二") {
-                    filterItems.push(item);
-                }
-            });
-            return filterItems;
-        }
-        if(angular.equals(grade,'bensan')) {
-            angular.forEach(items,function(item) {
-                if(item.grade == "大三") {
-                    filterItems.push(item);
-                }
-            });
-            return filterItems;
-        }
-        if(angular.equals(grade,'bensi')) {
-            angular.forEach(items,function(item) {
-                if(item.grade == "大四") {
-                    filterItems.push(item);
-                }
-            });
-            return filterItems;
-        }
-        if(angular.equals(grade,'yanyi')) {
-            angular.forEach(items,function(item) {
-                if(item.grade == "研一") {
-                    filterItems.push(item);
-                }
-            });
-            return filterItems;
-        }
-        if(angular.equals(grade,'yaner')) {
-            angular.forEach(items,function(item) {
-                if(item.grade == "研二") {
-                    filterItems.push(item);
-                }
-            });
-            return filterItems;
-        }
-        if(angular.equals(grade,'yansan')) {
-            angular.forEach(items,function(item) {
-                if(item.grade == "研三") {
-                    filterItems.push(item);
-                }
-            });
-            return filterItems;
-        }
-        if(angular.equals(grade,'boshi')) {
-            angular.forEach(items,function(item) {
-                if(item.grade == "博士") {
-                    filterItems.push(item);
-                }
-            });
-            return filterItems;
-        }
-        return items;
+        angular.forEach(items,function(item) {
+            if(item.grade == grade) {
+                filterItems.push(item);
+            }
+        });
+        return filterItems;
     }
 });

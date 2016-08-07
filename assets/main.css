@@ -282,3 +282,7 @@ md-toolbar.demo-toolbar .md-button {
   height: 260px;
 }
 
+/* scan */
+#activity-grid {
+    margin-top: 10px;
+}
