@@ -4,27 +4,27 @@ angular.module('phyman.scan')
     var scan={};
     //var notidetail={};
     var onIdentity  = function(response) {
-         scan=response.data.list;
+    	 scan=response.data.list;
      }
-    var onIdFail = function(error) {
+	var onIdFail = function(error) {
     };
 
     return {
 
         update:function(updated,title){
             //console.log(updated);
-             var deferred = $q.defer();
+        	 var deferred = $q.defer();
                 $http.post($rootScope.API_HOST+'/Home/Admin/updatescan', {
                     username: $rootScope.user.id,
                     title:title,
                     updated:updated
                 })
                 .then(function(response) {
-                    //$rootScope.list=response.data.list;
-                    onIdentity(response);
+                	//$rootScope.list=response.data.list;
+                	onIdentity(response);
                     deferred.resolve(response);
                 }, function(error) {
-                    //console.log(erro);
+                	//console.log(erro);
                     onIdFail(error);
                     deferred.reject(error);
                 });
@@ -54,12 +54,12 @@ angular.module('phyman.scan')
                 username: $rootScope.user.id,
             })
             .then(function(response) {
-                //$rootScope.list=response.data.list;
+            	//$rootScope.list=response.data.list;
                // console.log(response.data.list);
-                onIdentity(response);
+            	onIdentity(response);
                 deferred.resolve(response);
             }, function(error) {
-                //console.log(erro);
+            	//console.log(erro);
                 onIdFail(error);
                 deferred.reject(error);
             });
@@ -67,13 +67,13 @@ angular.module('phyman.scan')
         },
 
         getDetail: function() {
-             var deferred = $q.defer();
+        	 var deferred = $q.defer();
              $http.post($rootScope.API_HOST+'/Home/Admin/getScanDetail', {
-                 username:$rootScope.user.id,
+            	 username:$rootScope.user.id,
              })
              .then(function(response) {
-                //console.log("response");
-                //console.log(response.data);
+             	//console.log("response");
+             	//console.log(response.data);
                  deferred.resolve(response);
              }, function(error) {
                  onIdFail(error);

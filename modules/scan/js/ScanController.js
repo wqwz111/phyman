@@ -1,20 +1,20 @@
 angular.module('phyman.scan',['ngMaterial'])
-    .controller('ScanCtrl',['$scope','$rootScope','$state','ScanService',
+	.controller('ScanCtrl',['$scope','$rootScope','$state','ScanService',
         function($scope,$rootScope,$state,ScanService) {
-            var promise =ScanService.getDetail();
-                promise.then(function(response) {
-                    $scope.detail=response.data;
+    		var promise =ScanService.getDetail();
+   	 			promise.then(function(response) {
+   	 				$scope.detail=response.data;
                     $scope.scans=JSON.parse(response.data.scans);
-                },function(response){
+   	 			},function(response){
 
-                    $state.transitionTo("scan.detail",null,{
-                        reload:true
-                    });
-                });
+   	 				$state.transitionTo("scan.detail",null,{
+   	 					reload:true
+   	 				});
+   	 			});
 
-            $scope.newScan = function(id) {
-                $state.go('^.update');
-            };
+        	$scope.newScan = function(id) {
+        		$state.go('^.update');
+        	};
             $scope.ifAdmin=false;
             $scope.permission=$rootScope.user.permission;
             if($scope.permission.indexOf('admin')!=-1)
@@ -125,12 +125,12 @@ angular.module('phyman.scan',['ngMaterial'])
             $scope.scan=[];
             $scope.scan.scans=[];
             $scope.scan.grade="";
-            var promise =ScanService.getList();
+           	var promise =ScanService.getList();
             promise.then(function(response) {
                 $scope.scan.list=$scope.scan=JSON.parse(response.data.list);
-            },function(response){
-                alert("ScanList fail");
-                $state.go("login");
+       	    },function(response){
+            	alert("ScanList fail");
+             	$state.go("login");
             });
             $scope.title="";
             $scope.updated = [];
@@ -231,10 +231,10 @@ angular.module('phyman.scan',['ngMaterial'])
                 return list.indexOf(item) > -1;
             };
             $scope.update=function(){
-                var promise =ScanService.update($scope.updated,$scope.title);
-                $state.go('scan.detail',null,{
-                    reload:true
-                });
+              	var promise =ScanService.update($scope.updated,$scope.title);
+              	$state.go('scan.detail',null,{
+              		reload:true
+              	});
             };
       }]);
 

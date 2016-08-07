@@ -2,9 +2,9 @@ angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','
     'phyman.user','phyman.noti','phyman.settings','phyman.scan','phyman.vote','phyman.qa','phyman.admin'])
     .run(['$rootScope','$mdToast','AuthService','PermissionStore',
       function($rootScope,$mdToast,AuthService,PermissionStore) {
-        $rootScope.API_HOST = 'http://1ocalhost:8081/PHYMAN/index.php';
-
-		/*$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';*/
+       //rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';
+        //$rootScope.API_HOST = 'http://115.159.180.167:8081/PHYMAN/index.php';
+		$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';
         $rootScope.isLoggedIn = AuthService.checkLoggedIn();
         if(AuthService.checkLoggedIn()) {
             $rootScope.user = AuthService.getUser();

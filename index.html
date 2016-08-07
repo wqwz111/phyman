@@ -46,23 +46,26 @@
     </md-toolbar>
     <md-progress-linear id="load-progress" md-mode="indeterminate" ng-show="showLoadProgress"></md-progress-linear>
     <div id="main" layout="row">
-      <nav id="sidenav" ng-controller = 'navCtrl' ng-show="isLoggedIn">
+      <nav id="sidenav" ng-controller = 'navCtrl' ng-if="isLoggedIn">
         <md-sidenav class="md-sidenav-left"
          md-component-id="left"
          md-is-locked-open="$mdMedia('gt-sm')">
-          <header id="user-info-panel">
+         <header id="user-info-panel">
+          <img src="/assets/images/user_info_bg.png">
             <p>
-              <span class="md-subhead">姓名：</span>
+
+                  <span class="md-subhead">姓名：</span>
               {{user.name}}
               <br />
               <span class="md-subhead">学号/工号：</span>
               {{user.id}}
+
             </p>
-            <img src="/assets/images/user_info_bg.png">
+
           </header>
           <md-list layout-padding>
             <md-list-item class="md-1-line" ng-repeat="item in menuItems" ng-click="clickMenuItem(item.state)" ng-if="test(item.permission,permission)" >
-              <div layout="row">
+              <div layout="row" >
                 <md-icon md-svg-src="{{item.img}}"></md-icon>
                 <span class="nav-item-text">{{item.title}}</span>
               </div>
