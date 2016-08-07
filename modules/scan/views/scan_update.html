@@ -1,257 +1,49 @@
-
-    <h1 class="md-title">新增活动项</h1>
-    <div name="ScanNew" layout="column">
-      <md-input-container>
-        <label>活动条目</label>
-        <input name="title" type="text" ng-disabled="isNewScan" ng-model="title" ng-manlength="20" required>
-        <div ng-show="title.$dirty">
-            <div ng-messages="pattern">title should be less than 10 characters.</div>
-         </div>
-      </md-input-container>
-
-      <md-input-container>
-        <label>年级</label>
-        <md-select ng-model="scan.grade" required>
-          <md-option ng-repeat="state in states" value="{{state.abbrev}}">
-            {{state.abbrev}}
-          </md-option>
-        </md-select>
-      </md-input-container>
-
-
-        <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大一'">
-        <md-content  md-scroll-y class="demo-source-container">
-              <table   width="80%" cellpadding="0" cellspacing="0">
-                <tbody >
-                  <tr>
-                    <th width="10%"></th>
-                    <th width="25%">学号</th>
-                    <th width="25%">姓名</th>
-                    <th width="25%">活动次数</th>
-                    <th width="15%">详细</th>
-                  </tr>
-                  <tr ng-repeat="item in scan| scanFilter: 'benyi'" >
-                    <td align="center" valign="middle">
-                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
-                    <td align="center" valign="middle">{{item.id }}</td>
-                    <td align="center" valign="middle">{{item.name}}</td>
-                    <td align="center" valign="middle">{{item.count}}</td>
-                    <td align="center" valign="middle">
-                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
-                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
-                    </md-button></td>
-                  </tr>
-                </tbody>
-              </table>
-           </md-content>
-
-          </div>
-
-
-
-
-    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大二'">
-        <md-content  md-scroll-y class="demo-source-container">
-              <table   width="80%" cellpadding="0" cellspacing="0">
-                <tbody >
-                  <tr>
-                    <th width="10%"></th>
-                    <th width="25%">学号</th>
-                    <th width="25%">姓名</th>
-                    <th width="25%">活动次数</th>
-                    <th width="15%">详细</th>
-                  </tr>
-                  <tr ng-repeat="item in scan| scanFilter: 'bener'" >
-                    <td align="center" valign="middle">
-                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
-                    <td align="center" valign="middle">{{item.id }}</td>
-                    <td align="center" valign="middle">{{item.name}}</td>
-                    <td align="center" valign="middle">{{item.count}}</td>
-                    <td align="center" valign="middle">
-                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
-                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
-                    </md-button></td>
-                  </tr>
-                </tbody>
-              </table>
-           </md-content>
-
-          </div>
-
-   <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大三'">
-        <md-content  md-scroll-y class="demo-source-container">
-              <table   width="80%" cellpadding="0" cellspacing="0">
-                <tbody >
-                  <tr>
-                    <th width="10%"></th>
-                    <th width="25%">学号</th>
-                    <th width="25%">姓名</th>
-                    <th width="25%">活动次数</th>
-                    <th width="15%">详细</th>
-                  </tr>
-                  <tr ng-repeat="item in scan| scanFilter: 'bensan'" >
-                    <td align="center" valign="middle">
-                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
-                    <td align="center" valign="middle">{{item.id }}</td>
-                    <td align="center" valign="middle">{{item.name}}</td>
-                    <td align="center" valign="middle">{{item.count}}</td>
-                    <td align="center" valign="middle">
-                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
-                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
-                    </md-button></td>
-                  </tr>
-                </tbody>
-              </table>
-           </md-content>
-
-          </div>
-
-
-
-    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大四'">
-        <md-content  md-scroll-y class="demo-source-container">
-              <table   width="80%" cellpadding="0" cellspacing="0">
-                <tbody >
-                  <tr>
-                    <th width="10%"></th>
-                    <th width="25%">学号</th>
-                    <th width="25%">姓名</th>
-                    <th width="25%">活动次数</th>
-                    <th width="15%">详细</th>
-                  </tr>
-                  <tr ng-repeat="item in scan| scanFilter: 'bensi'" >
-                    <td align="center" valign="middle">
-                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
-                    <td align="center" valign="middle">{{item.id }}</td>
-                    <td align="center" valign="middle">{{item.name}}</td>
-                    <td align="center" valign="middle">{{item.count}}</td>
-                    <td align="center" valign="middle">
-                    <md-button aria-label="menu" align="center" valign="middle" ng-click="openDialog(item.id)">
-                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
-                    </md-button></td>
-                  </tr>
-                </tbody>
-              </table>
-           </md-content>
-
-          </div>
-      <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研一'">
-        <md-content  md-scroll-y class="demo-source-container">
-              <table   width="80%" cellpadding="0" cellspacing="0">
-                <tbody >
-                  <tr>
-                    <th width="10%"></th>
-                    <th width="25%">学号</th>
-                    <th width="25%">姓名</th>
-                    <th width="25%">活动次数</th>
-                    <th width="15%">详细</th>
-                  </tr>
-                  <tr ng-repeat="item in scan| scanFilter: 'yanyi'" >
-                    <td align="center" valign="middle">
-                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
-                    <td align="center" valign="middle">{{item.id }}</td>
-                    <td align="center" valign="middle">{{item.name}}</td>
-                    <td align="center" valign="middle">{{item.count}}</td>
-                    <td align="center" valign="middle">
-                    <md-button aria-label="menu"  align="center" valign="middle" ng-click="openDialog($event,item.id)">
-                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
-                    </md-button></td>
-                  </tr>
-                </tbody>
-              </table>
-           </md-content>
-
-          </div>
-
-
-
-    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研二'">
-        <md-content  md-scroll-y class="demo-source-container">
-              <table   width="80%" cellpadding="0" cellspacing="0">
-                <tbody >
-                  <tr>
-                    <th width="10%"></th>
-                    <th width="25%">学号</th>
-                    <th width="25%">姓名</th>
-                    <th width="25%">活动次数</th>
-                    <th width="15%">详细</th>
-                  </tr>
-                  <tr ng-repeat="item in scan| scanFilter: 'yaner'" >
-                    <td align="center" valign="middle">
-                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
-                    <td align="center" valign="middle">{{item.id }}</td>
-                    <td align="center" valign="middle">{{item.name}}</td>
-                    <td align="center" valign="middle">{{item.count}}</td>
-                    <td align="center" valign="middle">
-                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
-                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
-                    </md-button></td>
-                  </tr>
-                </tbody>
-              </table>
-           </md-content>
-
-          </div>
-      <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研三'">
-        <md-content  md-scroll-y class="demo-source-container">
-              <table   width="80%" cellpadding="0" cellspacing="0">
-                <tbody >
-                  <tr>
-                    <th width="10%"></th>
-                    <th width="25%">学号</th>
-                    <th width="25%">姓名</th>
-                    <th width="25%">活动次数</th>
-                    <th width="15%">详细</th>
-                  </tr>
-                  <tr ng-repeat="item in scan| scanFilter: 'yansan'" >
-                    <td align="center" valign="middle">
-                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
-                    <td align="center" valign="middle">{{item.id }}</td>
-                    <td align="center" valign="middle">{{item.name}}</td>
-                    <td align="center" valign="middle">{{item.count}}</td>
-                    <td align="center" valign="middle">
-                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
-                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
-                    </md-button></td>
-                  </tr>
-                </tbody>
-              </table>
-           </md-content>
-
-          </div>
-
-
-
-    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='博士'">
-        <md-content  md-scroll-y class="demo-source-container">
-              <table   width="80%" cellpadding="0" cellspacing="0">
-                <tbody >
-                  <tr>
-                    <th width="10%"></th>
-                    <th width="25%">学号</th>
-                    <th width="25%">姓名</th>
-                    <th width="25%">活动次数</th>
-                    <th width="15%">详细</th>
-                  </tr>
-                  <tr ng-repeat="item in scan| scanFilter: 'boshi'" >
-                    <td align="center" valign="middle">
-                    <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
-                    <td align="center" valign="middle">{{item.id }}</td>
-                    <td align="center" valign="middle">{{item.name}}</td>
-                    <td align="center" valign="middle">{{item.count}}</td>
-                    <td align="center" valign="middle">
-                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
-                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
-                    </md-button></td>
-                  </tr>
-                </tbody>
-              </table>
-           </md-content>
-
-          </div>
-
-        <md-button class="md-raised" ng-click="update()">确定 </md-button>
+<h1 class="md-title">新增活动项</h1>
+<div name="ScanNew" layout="column">
+  <md-input-container>
+    <label>活动条目</label>
+    <input name="title" type="text" ng-disabled="isNewScan" ng-model="title" ng-manlength="20" required>
+    <div ng-show="title.$dirty">
+        <div ng-messages="pattern">title should be less than 10 characters.</div>
      </div>
-    </div>
+  </md-input-container>
+
+  <md-input-container>
+    <label>年级</label>
+    <md-select ng-model="scan.grade" required>
+      <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+        {{state.abbrev}}
+      </md-option>
+    </md-select>
+  </md-input-container>
+
+
+  <div flex-gt-sm="90" layout-padding layout="column" ng-if="!scan.grade">
+    <md-content  md-scroll-y class="demo-source-container">
+      <table   width="80%" cellpadding="0" cellspacing="0">
+        <tbody >
+          <tr>
+            <th width="10%"></th>
+            <th width="25%">学号</th>
+            <th width="25%">姓名</th>
+            <th width="25%">活动次数</th>
+            <th width="15%">详细</th>
+          </tr>
+          <tr ng-repeat="item in scan| scanFilter: scan.grade" >
+            <td align="center" valign="middle">
+            <md-checkbox aria-label="item" ng-checked="exists(item, updated)" ng-click="toggle(item, updated)"></md-checkbox></td>
+            <td align="center" valign="middle">{{item.id }}</td>
+            <td align="center" valign="middle">{{item.name}}</td>
+            <td align="center" valign="middle">{{item.count}}</td>
+            <td align="center" valign="middle">
+            <md-button align="center" valign="middle" ng-click="openDialog($evevnt, item.id)">
+               <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+            </md-button></td>
+          </tr>
+        </tbody>
+      </table>
+    </md-content>
   </div>
+
+  <md-button class="md-raised" ng-click="update()">确定 </md-button>
 </div>
