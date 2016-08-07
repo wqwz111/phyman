@@ -1,7 +1,7 @@
 angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','ngAnimate','ngMaterial',
     'phyman.user','phyman.noti','phyman.settings','phyman.scan','phyman.vote','phyman.qa','phyman.admin'])
     .run(['$rootScope','$mdToast','AuthService','PermissionStore',
-      function($rootScope,$mdToast,AuthService,PermissionStore) { 
+      function($rootScope,$mdToast,AuthService,PermissionStore) {
         $rootScope.API_HOST = 'http://1ocalhost:8081/PHYMAN/index.php';
 
 		/*$rootScope.API_HOST = 'http://localhost:8081/PHYMAN/index.php';*/
@@ -119,30 +119,52 @@ angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','
     }])
     .controller('navCtrl',['$state','$scope','$rootScope','$mdSidenav',
         function($state,$scope,$rootScope,$mdSidenav) {
+        $scope.permission=$rootScope.user.permission;
+        console.log("$scope.permission"+$scope.permission);
+        $scope.test= function(itemper,per){
+
+            if(itemper.indexOf(per)!=-1)
+                return true;
+            else
+                return false;
+
+        };
         $scope.menuItems = [{
             title: '通知',
             state: 'noti.list',
-            img: 'assets/images/ic_new_releases_48px.svg'
+            img: 'assets/images/ic_new_releases_48px.svg',
+            permission:"user admin",
+
         },{
             title: '投票',
             state: 'vote.list',
-            img: 'assets/images/ic_check_48px.svg'
+            img: 'assets/images/ic_check_48px.svg',
+            permission:"user admin",
+
         },{
             title: '提问',
             state: 'qa.list',
-            img: 'assets/images/ic_chat_48px.svg'
+            img: 'assets/images/ic_chat_48px.svg',
+            permission:"user admin",
+
         },{
             title: '活动情况',
             state: 'scan.detail',
-            img: 'assets/images/ic_bookmark_48px.svg'
+            img: 'assets/images/ic_bookmark_48px.svg',
+            permission:"user admin"
+
         },{
             title: '用户管理',
             state: 'admin.adduser',
-            img: 'assets/images/ic_person_48px.svg'
+            img: 'assets/images/ic_person_48px.svg',
+            permission:"admin",
+
         },{
             title: '设置',
             state: 'settings',
-            img: 'assets/images/ic_settings_48px.svg'
+            img: 'assets/images/ic_settings_48px.svg',
+            permission:"user admin",
+
         }];
 
         $scope.clickMenuItem = function(state) {
@@ -152,8 +174,6 @@ angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','
         $scope.toggleList = function() {
             $mdSidenav('left').toggle();
         };
-
-        $scope.user = $rootScope.user;
     }])
     .controller('toolbarCtrl',['$scope','$state','$rootScope','$mdSidenav','AuthDialog','AuthService',
         function($scope,$state,$rootScope,$mdSidenav,AuthDialog,AuthService) {

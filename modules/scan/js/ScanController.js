@@ -1,108 +1,240 @@
-angular.module('phyman.scan',[])
-	.controller('ScanCtrl',['$scope','$rootScope','$state','ScanService',
+angular.module('phyman.scan',['ngMaterial'])
+    .controller('ScanCtrl',['$scope','$rootScope','$state','ScanService',
         function($scope,$rootScope,$state,ScanService) {
-    		var promise =ScanService.getDetail();
-   	 			promise.then(function(response) {
-   	 				//alert(response.data.list);
-   	 				$scope.detail=response.data;
-            $scope.scans=JSON.parse(response.data.scans);
-   	 			},function(response){
-   	 				
-   	 				$state.transitionTo("scan.detail",null,{
-   	 					reload:true
-   	 				});
-   	 			});
-        	
-        	$scope.newScan = function(id) {
-        		$state.go('^.update');
-        	};
+            var promise =ScanService.getDetail();
+                promise.then(function(response) {
+                    $scope.detail=response.data;
+                    $scope.scans=JSON.parse(response.data.scans);
+                },function(response){
+
+                    $state.transitionTo("scan.detail",null,{
+                        reload:true
+                    });
+                });
+
+            $scope.newScan = function(id) {
+                $state.go('^.update');
+            };
+            $scope.ifAdmin=false;
+            $scope.permission=$rootScope.user.permission;
+            if($scope.permission.indexOf('admin')!=-1)
+                    $scope.ifAdmin=true;
+
+            console.log("permission"+ $scope.permission);
+
      }])
-     
-    .controller('updateCtrl',['$scope', '$rootScope','$state','ScanService',
-          function($scope,$rootScope,$state,ScanService){
+    .controller('DetailCtrl',['$scope',  '$rootScope','$state','ScanService','$mdDialog','$mdMedia',
+          function($scope, $rootScope,$state,ScanService,$mdDialog,$mdMedia){
             $scope.states = ('大一 大二 大三 大四 研一 研二 研三 博士').split(' ').map(function (state) { return { abbrev: state }; });
             $scope.scan=[];
+
+
+            $scope.scan.scans=[];
             $scope.scan.grade="";
-            /*
-              $scope.scan.benyi=false;
-              $scope.scan.bener=false;
-              $scope.scan.bensan=false;
-              $scope.scan.bensi=false;
-              $scope.scan.yanyi=false;
-              $scope.scan.yaner=false;
-              $scope.scan.yansan=false;
-              $scope.scan.boshi=false;
-*/
 
+            var promise =ScanService.getList();
+            promise.then(function(response) {
+                $scope.scan.list=$scope.scan=JSON.parse(response.data.list);
+            },function(response){
+                alert("ScanList fail");
+                $state.go("login");
+            });
+            var tmpl = "<md-dialog >\n"+
+                    "<md-dialog-content >\n"+
+                    "<h1 class=\"md-title\">活动条目</h1>\n"+
+                    "<ui ng-repeat=\"item in scans\">\n"+
+                    "<li>\n"+
+                    "<md-checkbox aria-label=\"item\" ng-checked=\"exists(item, deletelist)\" ng-click=\"toggle(item, deletelist)\"></md-checkbox>\n"+
+                    "{{item.scanname}}</li>\n"+
+                    "</ui>\n"+
 
+                    "<md-button aria-label=\"menu\"  align=\"center\" valign=\"middle\" ng-click=\"delete($event)\">\n"+
+                        "<md-icon md-svg-src=\"assets/images/ic_edit_24px.svg\"></md-icon>\n"+
+                    "</md-button>\n"+
+                    "<md-button aria-label=\"menu\"  align=\"center\" valign=\"middle\" ng-click=\"close()\">\n"+
+                        "<md-icon md-svg-src=\"assets/images/ic_healing_24px.svg\"></md-icon>\n"+
+                    "</md-button>\n"+
+                "</md-dialog-content>\n"+
+              "</md-dialog>\n";
 
+            $scope.openDialog = function (event,id) {
 
-          /*  if($scope.scan.grade=="大一"){
-              $scope.scan.benyi=true;
+                $mdDialog.show({
+                    locals:{dataToPass: id},
+                    template: tmpl,
 
-            }else if($scope.scan.grade=="大二"){
-              $scope.scan.bener=true;
+                    controller: DialogCtrl,
+                    targetEvent: event,
+                    clickOutsideToClose: true,
+                });
+            };
+            var DialogCtrl = function($scope, dataToPass,$mdDialog) {
+                //console.log(dataToPass);
+                $scope.scans=[];
+                $scope.deletelist=[];
+                var promise =ScanService.getdiaDetail(dataToPass);
+                        promise.then(function(response) {
+                        $scope.scans=JSON.parse(response.data.scans);
+                    },function(response){
+                        alert("detail fail");
+                        $state.go("login");
+                    });
+                $scope.close = function() {
+                    $mdDialog.cancel();
+                };
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                };
+                $scope.toggle = function (item,list){
+                    var idx = list.indexOf(item);
+                    if (idx > -1) {
+                        list.splice(idx, 1);
+                        $scope.selnum-=1;
+                    }
+                    else {
+                        list.push(item);
+                        $scope.selnum+=1;
+                    }
+                };
+                $scope.exists = function (item,list){
+                    return list.indexOf(item) > -1;
+                };
+                $scope.delete=function(ev){
+                    //console.log($scope.deletelist);
+                    $mdDialog.show($mdDialog.confirm()
+                        .title('是否要删除所选条目？')
+                        .textContent('删除后将不可恢复。')
+                        .targetEvent(ev)
+                        .ok('删除!')
+                        .cancel('点错了')).then(function() {
+                            ScanService.deleteDetail($scope.deletelist,dataToPass)
+                              .then(function(response) {
+                                $mdDialog.cancel();
+                            },function(error) {
 
-            }else if($scope.scan.grade=="大三"){
-              $scope.scan.bensan=true;
+                                $mdDialog.cancel();
+                                //do something when failed
+                            });
+                        },function() {});
+                };
+            };
+      }])
+    .controller('updateCtrl',['$scope',  '$rootScope','$state','ScanService','$mdDialog','$mdMedia',
+          function($scope, $rootScope,$state,ScanService,$mdDialog,$mdMedia){
+            $scope.states = ('大一 大二 大三 大四 研一 研二 研三 博士').split(' ').map(function (state) { return { abbrev: state }; });
+            $scope.scan=[];
+            $scope.scan.scans=[];
+            $scope.scan.grade="";
+            var promise =ScanService.getList();
+            promise.then(function(response) {
+                $scope.scan.list=$scope.scan=JSON.parse(response.data.list);
+            },function(response){
+                alert("ScanList fail");
+                $state.go("login");
+            });
+            $scope.title="";
+            $scope.updated = [];
+            $scope.showdialog=false;
 
-            }else if($scope.scan.grade=="大四"){
-              $scope.scan.bensi=true;
+            var tmpl = "<md-dialog >\n"+
+                    "<md-dialog-content >\n"+
+                    "<h1 class=\"md-title\">活动条目</h1>\n"+
+                    "<ui ng-repeat=\"item in scans\">\n"+
+                    "<li>\n"+
+                    "<md-checkbox aria-label=\"item\" ng-checked=\"exists(item, deletelist)\" ng-click=\"toggle(item, deletelist)\"></md-checkbox>\n"+
+                    "{{item.scanname}}</li>\n"+
+                    "</ui>\n"+
 
-            }else if($scope.scan.grade=="研一"){
-              $scope.scan.yanyi=true;
+                    "<md-button aria-label=\"menu\"  align=\"center\" valign=\"middle\" ng-click=\"delete($event)\">\n"+
+                        "<md-icon md-svg-src=\"assets/images/ic_edit_24px.svg\"></md-icon>\n"+
+                    "</md-button>\n"+
+                    "<md-button aria-label=\"menu\"  align=\"center\" valign=\"middle\" ng-click=\"close()\">\n"+
+                        "<md-icon md-svg-src=\"assets/images/ic_healing_24px.svg\"></md-icon>\n"+
+                    "</md-button>\n"+
+                "</md-dialog-content>\n"+
+              "</md-dialog>\n";
 
-            }else if($scope.scan.grade=="研二"){
-              $scope.scan.yaner=true;
+            $scope.openDialog = function (event,id) {
 
-            }else if($scope.scan.grade=="研三"){
-              $scope.scan.yansan=true;
+                $mdDialog.show({
+                    locals:{dataToPass: id},
+                    template: tmpl,
 
-            }
-            else if($scope.scan.grade=="博士"){
-              $scope.scan.boshi=true;
+                    controller: DialogCtrl,
+                    targetEvent: event,
+                    clickOutsideToClose: true,
+                });
+            };
+            var DialogCtrl = function($scope, dataToPass,$mdDialog) {
+                //console.log(dataToPass);
+                $scope.scans=[];
+                $scope.deletelist=[];
+                var promise =ScanService.getdiaDetail(dataToPass);
+                        promise.then(function(response) {
+                        $scope.scans=JSON.parse(response.data.scans);
+                    },function(response){
+                        alert("detail fail");
+                        $state.go("login");
+                    });
+                $scope.close = function() {
+                    $mdDialog.cancel();
+                };
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                };
+                $scope.toggle = function (item,list){
+                    var idx = list.indexOf(item);
+                    if (idx > -1) {
+                        list.splice(idx, 1);
+                        $scope.selnum-=1;
+                    }
+                    else {
+                        list.push(item);
+                        $scope.selnum+=1;
+                    }
+                };
+                $scope.exists = function (item,list){
+                    return list.indexOf(item) > -1;
+                };
+                $scope.delete=function(ev){
+                    //console.log($scope.deletelist);
+                    $mdDialog.show($mdDialog.confirm()
+                        .title('是否要删除所选条目？')
+                        .textContent('删除后将不可恢复。')
+                        .targetEvent(ev)
+                        .ok('删除!')
+                        .cancel('点错了')).then(function() {
+                            ScanService.deleteDetail($scope.deletelist,dataToPass)
+                              .then(function(response) {
+                                $mdDialog.cancel();
+                            },function(error) {
 
-            }*/
+                                $mdDialog.cancel();
+                                //do something when failed
+                            });
+                        },function() {});
+                };
+            };
 
-
-          	var promise =ScanService.getList();
-            	 promise.then(function(response) {
-            		  //$scope.scan=JSON.parse(response.data.list);
-                  $scope.scan.list=$scope.scan=JSON.parse(response.data.list);
-                  /*$scope.scan.benyi=JSON.parse(response.data.benyi);
-                  $scope.scan.bener=JSON.parse(response.data.bener);
-                  $scope.scan.bensan=JSON.parse(response.data.bensan);
-                  $scope.scan.bensi=JSON.parse(response.data.bensi);
-                  $scope.scan.yanyi=JSON.parse(response.data.yanyi);
-                  $scope.scan.yaner=JSON.parse(response.data.yaner);
-                  $scope.scan.yansan=JSON.parse(response.data.yansan);
-                  $scope.scan.boshi=JSON.parse(response.data.boshi);*/
-
-            	  },function(response){
-            	 	  alert("ScanList fail");
-             		  $state.go("login");
-            	  });
-                $scope.title="";
-                $scope.updated = [];
-                $scope.toggle = function (item, list) {
-                   var idx = list.indexOf(item);
-                   if (idx > -1) {
-                       list.splice(idx, 1);
-                       $scope.selnum-=1;
-                   }
-                   else {
-                       list.push(item);
-                       $scope.selnum+=1;
-                   }
-                 };
-                 $scope.exists = function (item, list) {
-                   return list.indexOf(item) > -1;
-                 };
-              	 $scope.update=function(){
-                  
-              		 var promise =ScanService.update($scope.updated,$scope.title);
-              		 $state.go('scan.detail',null,{
-              			 reload:true
-              		 });
-              	 };
+            $scope.toggle = function (item, list) {
+                var idx = list.indexOf(item);
+                if (idx > -1) {
+                    list.splice(idx, 1);
+                    $scope.selnum-=1;
+                }
+                else {
+                    list.push(item);
+                    $scope.selnum+=1;
+                }
+            };
+            $scope.exists = function (item, list) {
+                return list.indexOf(item) > -1;
+            };
+            $scope.update=function(){
+                var promise =ScanService.update($scope.updated,$scope.title);
+                $state.go('scan.detail',null,{
+                    reload:true
+                });
+            };
       }]);
+

@@ -1,5 +1,4 @@
-<div  class="md-padding" ng-cloak >
-  <div>
+
     <h1 class="md-title">新增活动项</h1>
     <div name="ScanNew" layout="column">
       <md-input-container>
@@ -20,17 +19,16 @@
       </md-input-container>
 
 
-    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大一'">
-        <section>
-         <div id="pagecss">
-            <div style="display: inline;">
+        <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大一'">
+        <md-content  md-scroll-y class="demo-source-container">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
                   <tr>
                     <th width="10%"></th>
-                    <th width="30%">学号</th>
-                    <th width="30%">姓名</th>
-                    <th width="30%">活动次数</th>
+                    <th width="25%">学号</th>
+                    <th width="25%">姓名</th>
+                    <th width="25%">活动次数</th>
+                    <th width="15%">详细</th>
                   </tr>
                   <tr ng-repeat="item in scan| scanFilter: 'benyi'" >
                     <td align="center" valign="middle">
@@ -38,28 +36,30 @@
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
+                    <td align="center" valign="middle">
+                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
+                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+                    </md-button></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          </section>
-          </div>
-          </div>
-      
+           </md-content>
 
-    
+          </div>
+
+
+
+
     <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大二'">
-        <section>
-         <div id="pagecss">
-            <div style="display: inline;">
+        <md-content  md-scroll-y class="demo-source-container">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
                   <tr>
                     <th width="10%"></th>
-                    <th width="30%">学号</th>
-                    <th width="30%">姓名</th>
-                    <th width="30%">活动次数</th>
+                    <th width="25%">学号</th>
+                    <th width="25%">姓名</th>
+                    <th width="25%">活动次数</th>
+                    <th width="15%">详细</th>
                   </tr>
                   <tr ng-repeat="item in scan| scanFilter: 'bener'" >
                     <td align="center" valign="middle">
@@ -67,25 +67,27 @@
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
+                    <td align="center" valign="middle">
+                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
+                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+                    </md-button></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          </section>
+           </md-content>
+
           </div>
 
    <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大三'">
-        <section>
-         <div id="pagecss">
-            <div style="display: inline;">
+        <md-content  md-scroll-y class="demo-source-container">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
                   <tr>
                     <th width="10%"></th>
-                    <th width="30%">学号</th>
-                    <th width="30%">姓名</th>
-                    <th width="30%">活动次数</th>
+                    <th width="25%">学号</th>
+                    <th width="25%">姓名</th>
+                    <th width="25%">活动次数</th>
+                    <th width="15%">详细</th>
                   </tr>
                   <tr ng-repeat="item in scan| scanFilter: 'bensan'" >
                     <td align="center" valign="middle">
@@ -93,28 +95,29 @@
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
+                    <td align="center" valign="middle">
+                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
+                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+                    </md-button></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          </section>
-          </div>
-          </div>
-      
+           </md-content>
 
-    
+          </div>
+
+
+
     <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='大四'">
-        <section>
-         <div id="pagecss">
-            <div style="display: inline;">
+        <md-content  md-scroll-y class="demo-source-container">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
                   <tr>
                     <th width="10%"></th>
-                    <th width="30%">学号</th>
-                    <th width="30%">姓名</th>
-                    <th width="30%">活动次数</th>
+                    <th width="25%">学号</th>
+                    <th width="25%">姓名</th>
+                    <th width="25%">活动次数</th>
+                    <th width="15%">详细</th>
                   </tr>
                   <tr ng-repeat="item in scan| scanFilter: 'bensi'" >
                     <td align="center" valign="middle">
@@ -122,24 +125,26 @@
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
+                    <td align="center" valign="middle">
+                    <md-button aria-label="menu" align="center" valign="middle" ng-click="openDialog(item.id)">
+                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+                    </md-button></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          </section>
+           </md-content>
+
           </div>
       <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研一'">
-        <section>
-         <div id="pagecss">
-            <div style="display: inline;">
+        <md-content  md-scroll-y class="demo-source-container">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
                   <tr>
                     <th width="10%"></th>
-                    <th width="30%">学号</th>
-                    <th width="30%">姓名</th>
-                    <th width="30%">活动次数</th>
+                    <th width="25%">学号</th>
+                    <th width="25%">姓名</th>
+                    <th width="25%">活动次数</th>
+                    <th width="15%">详细</th>
                   </tr>
                   <tr ng-repeat="item in scan| scanFilter: 'yanyi'" >
                     <td align="center" valign="middle">
@@ -147,28 +152,29 @@
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
+                    <td align="center" valign="middle">
+                    <md-button aria-label="menu"  align="center" valign="middle" ng-click="openDialog($event,item.id)">
+                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+                    </md-button></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          </section>
-          </div>
-          </div>
-      
+           </md-content>
 
-    
+          </div>
+
+
+
     <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研二'">
-        <section>
-         <div id="pagecss">
-            <div style="display: inline;">
+        <md-content  md-scroll-y class="demo-source-container">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
                   <tr>
                     <th width="10%"></th>
-                    <th width="30%">学号</th>
-                    <th width="30%">姓名</th>
-                    <th width="30%">活动次数</th>
+                    <th width="25%">学号</th>
+                    <th width="25%">姓名</th>
+                    <th width="25%">活动次数</th>
+                    <th width="15%">详细</th>
                   </tr>
                   <tr ng-repeat="item in scan| scanFilter: 'yaner'" >
                     <td align="center" valign="middle">
@@ -176,24 +182,26 @@
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
+                    <td align="center" valign="middle">
+                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
+                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+                    </md-button></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          </section>
+           </md-content>
+
           </div>
       <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='研三'">
-        <section>
-         <div id="pagecss">
-            <div style="display: inline;">
+        <md-content  md-scroll-y class="demo-source-container">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
                   <tr>
                     <th width="10%"></th>
-                    <th width="30%">学号</th>
-                    <th width="30%">姓名</th>
-                    <th width="30%">活动次数</th>
+                    <th width="25%">学号</th>
+                    <th width="25%">姓名</th>
+                    <th width="25%">活动次数</th>
+                    <th width="15%">详细</th>
                   </tr>
                   <tr ng-repeat="item in scan| scanFilter: 'yansan'" >
                     <td align="center" valign="middle">
@@ -201,28 +209,29 @@
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
+                    <td align="center" valign="middle">
+                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
+                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+                    </md-button></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          </section>
-          </div>
-          </div>
-      
+           </md-content>
 
-    
+          </div>
+
+
+
     <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade=='博士'">
-        <section>
-         <div id="pagecss">
-            <div style="display: inline;">
+        <md-content  md-scroll-y class="demo-source-container">
               <table   width="80%" cellpadding="0" cellspacing="0">
                 <tbody >
                   <tr>
                     <th width="10%"></th>
-                    <th width="30%">学号</th>
-                    <th width="30%">姓名</th>
-                    <th width="30%">活动次数</th>
+                    <th width="25%">学号</th>
+                    <th width="25%">姓名</th>
+                    <th width="25%">活动次数</th>
+                    <th width="15%">详细</th>
                   </tr>
                   <tr ng-repeat="item in scan| scanFilter: 'boshi'" >
                     <td align="center" valign="middle">
@@ -230,12 +239,15 @@
                     <td align="center" valign="middle">{{item.id }}</td>
                     <td align="center" valign="middle">{{item.name}}</td>
                     <td align="center" valign="middle">{{item.count}}</td>
+                    <td align="center" valign="middle">
+                    <md-button align="center" valign="middle" ng-click="openDialog(item.id)">
+                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
+                    </md-button></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-          </section>
+           </md-content>
+
           </div>
 
         <md-button class="md-raised" ng-click="update()">确定 </md-button>

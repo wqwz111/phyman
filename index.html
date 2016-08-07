@@ -9,7 +9,7 @@
      <title>PHYMAN SIS</title>
 
     <link href="//cdn.bootcss.com/angular-material/1.0.7/angular-material.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/main.css">        
+    <link rel="stylesheet" href="assets/main.css">
      <style>
        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, x-ng-cloak {
          display: none !important;
@@ -17,7 +17,7 @@
      </style>
    </head>
 
-  
+
    <body ng-app="phyman" layout="column" ng-cloak>
 
     <md-toolbar class="md-theme-indigo md-whiteframe-3dp" layout="row" layout-align="start center"
@@ -61,7 +61,7 @@
             <img src="/assets/images/user_info_bg.png">
           </header>
           <md-list layout-padding>
-            <md-list-item class="md-1-line" ng-repeat="item in menuItems" ng-click="clickMenuItem(item.state)">
+            <md-list-item class="md-1-line" ng-repeat="item in menuItems" ng-click="clickMenuItem(item.state)" ng-if="test(item.permission,permission)" >
               <div layout="row">
                 <md-icon md-svg-src="{{item.img}}"></md-icon>
                 <span class="nav-item-text">{{item.title}}</span>
@@ -90,17 +90,17 @@
 
     <script src="lib/angular-ui-tinymce.min.js"></script>
     <script src="lib/tinymce.min.js"></script>
-    <script src="lib/angular-jwt.min.js"></script>              
-         
+    <script src="lib/angular-jwt.min.js"></script>
+
     <script src="js/user.js"></script>
     <script src="js/noti.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/message.js"></script>
     <script src="js/vote.js"></script>
-    <script src="js/scan.js"></script>  
+    <script src="js/scan.js"></script>
     <script src="js/qa.js"></script>
     <script src="js/admin.js"></script>
- 
+
     <script src="app.js"></script>
 
 
