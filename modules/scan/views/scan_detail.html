@@ -29,16 +29,21 @@
       <div ng-if="ifAdmin" ng-controller='DetailCtrl' >
         <h3>活动详细统计</h3>
         <md-divider></md-divider>
-        <md-input-container>
-          <label>年级</label>
-          <md-select ng-model="scan.grade" required>
-            <md-option ng-repeat="state in states" value="{{state.abbrev}}">
-              {{state.abbrev}}
-            </md-option>
-          </md-select>
-        </md-input-container>
 
-        <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade">
+        <md-button aria-label="menu" class="md-raised md-primary" ng-click="getthefile(this)" >下载本年度年活动情况</md-button>
+        <md-input-container>
+        <label>年级</label>
+        <md-select ng-model="scan.grade" required>
+          <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+            {{state.abbrev}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+
+
+
+       <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade">
           <md-content  md-scroll-y class="demo-source-container">
             <table   width="80%" cellpadding="0" cellspacing="0">
               <tbody >
@@ -53,7 +58,7 @@
                   <td align="center" valign="middle">{{item.name}}</td>
                   <td align="center" valign="middle">{{item.count}}</td>
                   <td align="center" valign="middle">
-                    <md-button align="center" valign="middle" ng-click="openDialog($event,item.id);">
+                    <md-button aria-label="menu" align="center" valign="middle" ng-click="openDialog($event,item.id);">
                       <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
                     </md-button>
                   </td>

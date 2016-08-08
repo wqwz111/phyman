@@ -1,24 +1,26 @@
-<h1 class="md-title">新增活动项</h1>
-<div name="ScanNew" layout="column">
-  <md-input-container>
-    <label>活动条目</label>
-    <input name="title" type="text" ng-disabled="isNewScan" ng-model="title" ng-manlength="20" required>
-    <div ng-show="title.$dirty">
-        <div ng-messages="pattern">title should be less than 10 characters.</div>
-     </div>
-  </md-input-container>
 
-  <md-input-container>
-    <label>年级</label>
-    <md-select ng-model="scan.grade" required>
-      <md-option ng-repeat="state in states" value="{{state.abbrev}}">
-        {{state.abbrev}}
-      </md-option>
-    </md-select>
-  </md-input-container>
+    <h1 class="md-title">新增活动项</h1>
+    <div name="ScanNew" layout="column">
+      <md-input-container>
+        <label>活动条目</label>
+        <input name="title" type="text" ng-disabled="isNewScan" ng-model="title" ng-manlength="20" required>
+        <div ng-show="title.$dirty">
+            <div ng-messages="pattern">title should be less than 10 characters.</div>
+         </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>年级</label>
+        <md-select ng-model="scan.grade" required>
+          <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+            {{state.abbrev}}
+          </md-option>
+        </md-select>
+      </md-input-container>
 
 
-  <div flex-gt-sm="90" layout-padding layout="column" ng-if="!scan.grade">
+
+       <div flex-gt-sm="90" layout-padding layout="column" ng-if="scan.grade">
     <md-content  md-scroll-y class="demo-source-container">
       <table   width="80%" cellpadding="0" cellspacing="0">
         <tbody >
@@ -36,7 +38,7 @@
             <td align="center" valign="middle">{{item.name}}</td>
             <td align="center" valign="middle">{{item.count}}</td>
             <td align="center" valign="middle">
-            <md-button align="center" valign="middle" ng-click="openDialog($evevnt, item.id)">
+            <md-button  aria-label="menu"  align="center" valign="middle" ng-click="openDialog($evevnt, item.id)">
                <md-icon md-svg-src="assets/images/ic_view_comfy_24px.svg"></md-icon>
             </md-button></td>
           </tr>
@@ -45,5 +47,5 @@
     </md-content>
   </div>
 
-  <md-button class="md-raised" ng-click="update()">确定 </md-button>
+  <md-button  aria-label="menu"  class="md-raised" ng-click="update()">确定 </md-button>
 </div>

@@ -23,7 +23,7 @@ module.exports = function(grunt) {
                         'modules/noti/js/NotiController.js',
                         'modules/noti/js/NotiService.js',
                         'modules/noti/js/NotiRoute.js'],
-                   
+
                     'dist/js/qa.js': [
                         'modules/qa/js/QaController.js',
                         'modules/qa/js/QaService.js',
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                         'modules/scan/js/ScanController.js',
                         'modules/scan/js/ScanService.js',
                         'modules/scan/js/ScanRoute.js'
-                        ],    
+                        ],
                     'dist/js/settings.js': [
                         'modules/settings/js/SettingsController.js',
                         'modules/settings/js/SettingsRoute.js'
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
                     'skins': 'tinymce-dist/skins',
                     'themes': 'tinymce-dist/themes'
                 }
-            },  
+            },
             assets: {
                 options: {
                     destPrefix: 'dist/',
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
         uglify: {
             js: {
                 files: [{
-                    expand: true,
+                    expand: false,
                     cwd: 'dist',
                     src: 'js/*.js',
                     dest: 'dist/'

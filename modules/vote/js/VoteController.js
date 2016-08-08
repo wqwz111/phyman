@@ -66,6 +66,7 @@ angular.module('phyman.vote',[])
                         });
 
             }
+            $scope.ifcanvote=response.data.ifcanvote;
             $scope.detail=response.data;
             $scope.items=JSON.parse(response.data.options);
             $scope.ifsingle=response.data.type;
@@ -77,8 +78,9 @@ angular.module('phyman.vote',[])
             $scope.selnum=0;
             $scope.selected = [];
             $scope.votenow = function(){
-            //console.log($scope.selected);
-                if($scope.ifsingle==0&& $scope.selnum!=1 )
+                if(!$scope.ifcanvote)
+                    alert("不在投票时间");
+                else if($scope.ifsingle==0&& $scope.selnum!=1 )
                     alert("当前为单选，请选择一个选项");
                 else{
                 var promise =VoteService.setVote($scope.selected,$stateParams.id);
@@ -106,7 +108,7 @@ angular.module('phyman.vote',[])
              $scope.exists = function (item, list) {
                return list.indexOf(item) > -1;
              };
- }])  
+ }])
 .controller('votelistCtrl',['$scope', '$rootScope','$state','VoteService',
       function($scope,$rootScope,$state,VoteService){
     var promise =VoteService.getlist();
@@ -171,8 +173,8 @@ angular.module('phyman.vote',[])
              var options="";
              for(var i=0;i<$scope.options.length;i++){
                     if(!$scope.options[i]['optcontent']==""){
-                        options=options+$scope.options[i]['optcontent']+";";  
-                 } 
+                        options=options+$scope.options[i]['optcontent']+";";
+                 }
              }
              if($scope.selnum1<=0){
                 alert("至少选择一个年级");
@@ -183,7 +185,7 @@ angular.module('phyman.vote',[])
                  promise.then(function(response) {
                      $scope.isNewVote = false;
                      if(response){
-                       
+
                         $state.go("vote.list",null,{
                             reload:true
                         });
@@ -198,10 +200,10 @@ angular.module('phyman.vote',[])
                  });
              }
          };
-    
-  }]);  
+
+  }]);
 
 /**
-Copyright 2016 Google Inc. All Rights Reserved. 
+Copyright 2016 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
 **/

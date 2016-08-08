@@ -4,9 +4,10 @@
     <div ng-bind-html="content | trustedHtml"></div>
   </md-content>
 
-  
+
   <ul>
-    <li ng-if="hasfile" ng-click="getthefile()">点击下载附件</li>
+  <md-button class="md-raised md-primary" ng-click="getthefile()" >点击下载附件</md-button>
+
     </ul>
   <div permission permission-only="'admin'">
     <h4>查看人数统计：</h4>

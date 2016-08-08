@@ -112,9 +112,7 @@ angular.module('phyman.vote')
             	 id:vote
              })
              .then(function(response) {
-             	//console.log("response");
-             	//console.log(response.data);
-                // onVotedetail(response);
+
                  deferred.resolve(response);
              }, function(error) {
                  onIdFail(error);
@@ -122,7 +120,7 @@ angular.module('phyman.vote')
              });
              return deferred.promise;
 
-        }       
+        }
     };
 }])
 .filter('votedetailFilter',function() {
@@ -131,7 +129,7 @@ angular.module('phyman.vote')
 		//console.log(out);
 	return out;
 	}
-	
+
 })
 .filter('perFilter',function() {
 	return function(input,num){
@@ -139,7 +137,7 @@ angular.module('phyman.vote')
 		//console.log(out);
 	return out.toFixed(2)+"%";
 	}
-	
+
 })
 
 
@@ -157,7 +155,7 @@ angular.module('phyman.vote')
                 }
             });
             return filterItems;
-        } 
+        }
         if(angular.equals(createdTime,'old')) {
             angular.forEach(items,function(item) {
                 if(item.begtime.slice(0,10) < thisMonth) {
