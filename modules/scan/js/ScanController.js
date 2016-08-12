@@ -76,7 +76,11 @@ angular.module('phyman.scan',['ngMaterial'])
 
             var promise =ScanService.getList();
             promise.then(function(response) {
-                $scope.scan.list=$scope.scan=JSON.parse(response.data.list);
+                $tmp=JSON.parse(response.data.list);
+                for(var i = 0; i < $tmp.length; i++) {
+                    $tmp[i].count=(parseInt($tmp[i].count)-1).toString();
+                }
+                $scope.scan=$tmp;
             },function(response){
                 alert("ScanList fail");
                 $state.go("login");
@@ -168,8 +172,13 @@ angular.module('phyman.scan',['ngMaterial'])
             $scope.scan.grade="";
            	var promise =ScanService.getList();
             promise.then(function(response) {
-                $scope.scan.list=$scope.scan=JSON.parse(response.data.list);
-       	    },function(response){
+                 $tmp=JSON.parse(response.data.list);
+                for(var i = 0; i < $tmp.length; i++) {
+                    $tmp[i].count=(parseInt($tmp[i].count)-1).toString();
+
+                }
+                $scope.scan=$tmp;
+            },function(response){
             	alert("ScanList fail");
              	$state.go("login");
             });

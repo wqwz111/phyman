@@ -120,7 +120,7 @@ angular.module('phyman',['ui.router','permission','permission.ui','ngMessages','
     .controller('navCtrl',['$state','$scope','$rootScope','$mdSidenav',
         function($state,$scope,$rootScope,$mdSidenav) {
         $scope.permission=$rootScope.user.permission;
-        console.log("$scope.permission"+$scope.permission);
+        //console.log("$scope.permission"+$scope.permission);
         $scope.test= function(itemper,per){
 
             if(itemper.indexOf(per)!=-1)

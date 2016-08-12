@@ -101,7 +101,7 @@ angular.module('phyman.scan')
 }])
 
 
-.filter('scandetaillist',function(){
+/*.filter('scandetaillist',function(){
     return function(items){
         var filterItems="";
         angular.forEach(items,function(item) {
@@ -110,14 +110,16 @@ angular.module('phyman.scan')
             });
             return filterItems;
     }
-})
+})*/
 .filter('scanFilter',function() {
     return function(items,grade) {
         var filterItems = new Array();
         angular.forEach(items,function(item) {
             if(item.grade == grade) {
+
                 filterItems.push(item);
             }
+
         });
         return filterItems;
     }
